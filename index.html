@@ -130,7 +130,6 @@ tr:hover td{background:var(--surface2);}
 <script>
 // ── CONFIGURAÇÃO ──────────────────────────────────────────
 // Após publicar no GitHub, troque por:
-// const DADOS_URL = 'https://raw.githubusercontent.com/nairomoreira/relatorio-campanhas/main/dados.json';
 const DADOS_URL = 'https://raw.githubusercontent.com/nairomoreira/relatorio-campanhas/main/dados.json';
 
 // ── ESTADO ────────────────────────────────────────────────
@@ -228,8 +227,8 @@ function fmtDate(s){ const[,m,d]=s.split('-'); return d+'/'+m; }
 function fmtMes(s){ const ms=['Jan','Fev','Mar','Abr','Mai','Jun','Jul','Ago','Set','Out','Nov','Dez'],[,m]=s.split('-'); return ms[+m-1]; }
 function fmtN(n){ if(n>=1e6) return (n/1e6).toFixed(1).replace('.',',')+' M'; if(n>=1e3) return n.toLocaleString('pt-BR'); return String(Math.round(n)); }
 function fmtR(n){ return 'R$\u00a0'+Number(n).toLocaleString('pt-BR',{minimumFractionDigits:2,maximumFractionDigits:2}); }
-function fmtPct(n){ return Number(n).toFixed(2).replace('.',',')+'\%'; }
-function fmtX(n){ return Number(n).toFixed(2).replace('.',',')+'\x'; }
+function fmtPct(n){ return Number(n).toFixed(2).replace('.',',')+'%'; }
+function fmtX(n){ return Number(n).toFixed(2).replace('.',',')+'x'; }
 function delta(a,b){ return b ? (a-b)/b*100 : null; }
 
 // ── BUILD APP ─────────────────────────────────────────────
