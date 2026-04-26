@@ -1,4 +1,20 @@
 {
-  "atualizadoEm": "—",
-  "dias": []
+  "atualizadoEm": "26/04/2026 17:22",
+  "dias": [
+    {
+      "data": "2026-04-26",
+      "valorUsado": 312.5,
+      "impressoes": 74200,
+      "alcance": 31400,
+      "cliquesLink": 980,
+      "cliquesTodos": 1240,
+      "ctr": 1.32,
+      "resultados": 28,
+      "addCarrinho": 74,
+      "custoAddCarrinho": 4.22,
+      "compras": 18,
+      "valorCompras": 3240,
+      "custoCompra": 17.36
+    }
+  ]
 }
