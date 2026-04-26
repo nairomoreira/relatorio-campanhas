@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Resultados de Campanhas</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap');
+
+  :root {
+    --bg: #f5f4f0; --surface: #ffffff; --surface2: #f0efe9;
+    --border: rgba(0,0,0,0.08); --border-strong: rgba(0,0,0,0.14);
+    --text: #1a1917; --text-muted: #6b6a65; --text-faint: #9e9d98;
+    --blue: #1a56db; --blue-bg: #eff4ff;
+    --green: #1a7f4b; --green-bg: #ecfdf3;
+    --amber: #92400e; --amber-bg: #fffbeb;
+    --red: #991b1b; --red-bg: #fef2f2;
+    --purple: #5b21b6; --purple-bg: #f5f3ff;
+    --radius: 12px; --radius-sm: 8px;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--text); font-size: 14px; line-height: 1.5; min-height: 100vh; }
+
+  .page-header {
+    background: var(--surface); border-bottom: 1px solid var(--border);
+    padding: 20px 32px; display: flex; align-items: center;
+    justify-content: space-between; flex-wrap: wrap; gap: 12px;
+    position: sticky; top: 0; z-index: 10;
+  }
+  .logo-area { display: flex; align-items: center; gap: 12px; }
+  .logo-dot { width: 32px; height: 32px; border-radius: 8px; background: var(--text); display: flex; align-items: center; justify-content: center; }
+  .logo-dot svg { width: 16px; height: 16px; fill: white; }
+  .brand-name { font-size: 15px; font-weight: 600; letter-spacing: -0.02em; }
+  .period-tag { font-size: 11px; font-weight: 500; color: var(--text-muted); background: var(--surface2); border: 1px solid var(--border); padding: 4px 10px; border-radius: 20px; font-family: 'DM Mono', monospace; }
+
+  .filters-bar { padding: 16px 32px; display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+  .filters-label { font-size: 11px; color: var(--text-faint); font-weight: 500; text-transform: uppercase; letter-spacing: 0.06em; margin-right: 4px; }
+  .filter-btn { font-family: 'DM Sans', sans-serif; font-size: 12px; font-weight: 500; padding: 6px 14px; border-radius: 20px; border: 1px solid var(--border-strong); background: var(--surface); color: var(--text-muted); cursor: pointer; transition: all 0.15s; }
+  .filter-btn:hover { background: var(--surface2); color: var(--text); }
+  .filter-btn.active { background: var(--text); color: white; border-color: var(--text); }
+
+  .main { padding: 0 32px 40px; display: flex; flex-direction: column; gap: 20px; }
+
+  .kpi-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 10px; }
+  .kpi-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 16px 18px; position: relative; overflow: hidden; }
+  .kpi-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; }
+  .kpi-card.c-blue::before { background: var(--blue); }
+  .kpi-card.c-green::before { background: var(--green); }
+  .kpi-card.c-amber::before { background: #d97706; }
+  .kpi-card.c-purple::before { background: var(--purple); }
+  .kpi-label { font-size: 11px; color: var(--text-faint); text-transform: uppercase; letter-spacing: 0.05em; font-weight: 500; margin-bottom: 8px; }
+  .kpi-value { font-size: 22px; font-weight: 600; color: var(--text); letter-spacing: -0.03em; font-family: 'DM Mono', monospace; }
+  .kpi-delta { font-size: 11px; margin-top: 6px; font-weight: 500; display: inline-flex; align-items: center; gap: 3px; padding: 2px 6px; border-radius: 4px; }
+  .delta-up { background: var(--green-bg); color: var(--green); }
+  .delta-down { background: var(--red-bg); color: var(--red); }
+
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 20px 22px; }
+  .card-title { font-size: 13px; font-weight: 600; color: var(--text); margin-bottom: 2px; letter-spacing: -0.01em; }
+  .card-sub { font-size: 11px; color: var(--text-faint); margin-bottom: 16px; }
+
+  .legend { display: flex; flex-wrap: wrap; gap: 14px; margin-bottom: 14px; }
+  .leg-item { display: flex; align-items: center; gap: 5px; font-size: 11px; color: var(--text-muted); }
+  .leg-dot { width: 8px; height: 8px; border-radius: 2px; flex-shrink: 0; }
+
+  .funil { display: flex; flex-direction: column; gap: 6px; }
+  .funil-step { display: flex; align-items: center; gap: 12px; }
+  .funil-bar-wrap { flex: 1; height: 36px; background: var(--surface2); border-radius: 6px; overflow: hidden; }
+  .funil-bar { height: 100%; border-radius: 6px; display: flex; align-items: center; padding-left: 12px; font-size: 12px; font-weight: 600; color: white; transition: width 0.6s cubic-bezier(0.16,1,0.3,1); white-space: nowrap; }
+  .funil-meta { min-width: 130px; }
+  .funil-name { font-size: 12px; font-weight: 500; color: var(--text); }
+  .funil-number { font-size: 11px; color: var(--text-muted); font-family: 'DM Mono', monospace; }
+  .funil-pct { min-width: 48px; text-align: right; font-size: 11px; font-family: 'DM Mono', monospace; color: var(--text-faint); }
+  .funil-arrow { color: var(--text-faint); font-size: 10px; padding: 0 0 0 142px; }
+
+  .table-wrap { overflow-x: auto; }
+  table { width: 100%; border-collapse: collapse; font-size: 12px; }
+  th { font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em; color: var(--text-faint); text-align: left; padding: 8px 10px; border-bottom: 1px solid var(--border); white-space: nowrap; }
+  td { padding: 10px 10px; border-bottom: 1px solid var(--border); color: var(--text); vertical-align: middle; }
+  tr:last-child td { border-bottom: none; }
+  tr:hover td { background: var(--surface2); }
+  .tag { display: inline-flex; align-items: center; padding: 3px 8px; border-radius: 4px; font-size: 10px; font-weight: 600; }
+  .tag-meta { background: var(--blue-bg); color: var(--blue); }
+  .tag-google { background: var(--green-bg); color: var(--green); }
+  .tag-email { background: var(--amber-bg); color: var(--amber); }
+  .mono { font-family: 'DM Mono', monospace; }
+  .num-up { color: var(--green); font-weight: 500; }
+  .num-neutral { color: var(--text-muted); }
+
+  /* LOADING / ERRO */
+  .state-screen { display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 60vh; gap: 12px; color: var(--text-muted); }
+  .spinner { width: 32px; height: 32px; border: 2px solid var(--border); border-top-color: var(--text); border-radius: 50%; animation: spin 0.8s linear infinite; }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  .error-box { background: var(--red-bg); border: 1px solid rgba(153,27,27,0.15); border-radius: var(--radius); padding: 20px 24px; max-width: 480px; color: var(--red); font-size: 13px; line-height: 1.6; }
+  .error-box strong { display: block; margin-bottom: 6px; font-size: 14px; }
+
+  .page-footer { text-align: center; font-size: 11px; color: var(--text-faint); padding: 24px 32px; border-top: 1px solid var(--border); background: var(--surface); }
+
+  @media (max-width: 700px) {
+    .page-header, .filters-bar, .main { padding-left: 16px; padding-right: 16px; }
+    .two-col { grid-template-columns: 1fr; }
+    .kpi-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+</style>
+</head>
+<body>
+
+<header class="page-header">
+  <div class="logo-area">
+    <div class="logo-dot">
+      <svg viewBox="0 0 16 16"><path d="M2 2h5v5H2zM9 2h5v5H9zM2 9h5v5H2zM9 9h5v5H9z" opacity=".4"/><path d="M3 3h3v3H3zM10 3h3v3H10zM3 10h3v3H3z"/></svg>
+    </div>
+    <span class="brand-name">Resultados de Campanhas</span>
+  </div>
+  <span class="period-tag" id="periodo-label">carregando…</span>
+</header>
+
+<div id="app">
+  <div class="state-screen">
+    <div class="spinner"></div>
+    <span>Carregando dados…</span>
+  </div>
+</div>
+
+<script>
+// ─── CONFIGURAÇÃO ─────────────────────────────────────────
+// IMPORTANTE: troque pela URL raw do seu arquivo dados.json no GitHub
+// Exemplo: https://raw.githubusercontent.com/SEU-USUARIO/relatorio-campanhas/main/dados.json
+const DADOS_URL = 'dados.json';
+
+// ─── ESTADO ───────────────────────────────────────────────
+let todosOsDados = null;
+let canalAtivo = 'todos';
+let charts = {};
+
+// ─── BOOT ─────────────────────────────────────────────────
+async function init() {
+  try {
+    const res = await fetch(DADOS_URL + '?t=' + Date.now());
+    if (!res.ok) throw new Error('HTTP ' + res.status);
+    const raw = await res.json();
+    todosOsDados = processar(raw);
+    renderApp();
+    render('todos');
+  } catch (e) {
+    document.getElementById('app').innerHTML = `
+      <div style="padding:32px">
+        <div class="error-box">
+          <strong>Não foi possível carregar os dados</strong>
+          Verifique se o arquivo <code>dados.json</code> está na mesma pasta que este HTML,
+          ou se a URL configurada em <code>DADOS_URL</code> está correta.<br><br>
+          Erro técnico: ${e.message}
+        </div>
+      </div>`;
+  }
+}
+
+// ─── PROCESSAR JSON → estrutura interna ───────────────────
+function processar(raw) {
+  const fmt = n => n >= 1000000
+    ? (n/1000000).toFixed(1).replace('.',',') + 'M'
+    : n >= 1000
+    ? n.toLocaleString('pt-BR')
+    : String(n);
+
+  const fmtR = n => 'R$' + n.toLocaleString('pt-BR');
+
+  const todos = {
+    impressoes: raw.canais.reduce((s,c) => s + c.impressoes, 0),
+    cliques:    raw.canais.reduce((s,c) => s + c.cliques, 0),
+    conversoes: raw.canais.reduce((s,c) => s + c.conversoes, 0),
+    addCarrinho:   raw.canais.reduce((s,c) => s + c.addCarrinho, 0),
+    valorCarrinho: raw.canais.reduce((s,c) => s + c.valorCarrinho, 0),
+    vendas:        raw.canais.reduce((s,c) => s + c.vendas, 0),
+    valorVendido:  raw.canais.reduce((s,c) => s + c.valorVendido, 0),
+    investNum: raw.canais.reduce((s,c) => s + parseFloat(c.investimento.replace(/[R$.,]/g,'').replace(',','.')), 0),
+  };
+
+  const roasTotal = (todos.valorVendido / todos.investNum).toFixed(1).replace('.',',');
+  const ctrTotal = ((todos.cliques / todos.impressoes) * 100).toFixed(2).replace('.',',');
+
+  const cores = { 'Meta Ads': '#1a56db', 'Google Ads': '#1a7f4b', 'E-mail': '#d97706' };
+
+  return {
+    periodo: raw.periodo,
+    canais: raw.canais,
+    todos: {
+      kpis: [
+        { label: 'Impressões',     valor: fmt(todos.impressoes),       cor: 'c-blue'   },
+        { label: 'Cliques',        valor: fmt(todos.cliques),          cor: 'c-blue'   },
+        { label: 'CTR médio',      valor: ctrTotal + '%',             cor: 'c-green'  },
+        { label: 'Conversões',     valor: fmt(todos.conversoes),       cor: 'c-green'  },
+        { label: 'ROAS médio',     valor: roasTotal + 'x',            cor: 'c-purple' },
+        { label: 'Add carrinho',   valor: fmt(todos.addCarrinho),      cor: 'c-purple' },
+        { label: 'Valor carrinho', valor: fmtR(todos.valorCarrinho),   cor: 'c-purple' },
+        { label: 'Vendas',         valor: fmt(todos.vendas),           cor: 'c-green'  },
+        { label: 'Valor vendido',  valor: fmtR(todos.valorVendido),    cor: 'c-green'  },
+      ],
+      funil: [
+        { nome: 'Cliques',           valor: todos.cliques,       cor: '#1a56db' },
+        { nome: 'Add ao carrinho',   valor: todos.addCarrinho,   cor: '#5b21b6' },
+        { nome: 'Conversões',        valor: todos.conversoes,    cor: '#1a7f4b' },
+        { nome: 'Vendas efetivadas', valor: todos.vendas,        cor: '#065f46' },
+      ],
+      semanas: raw.canais[0]?.seriesSemanas.map((_,i) => 'Sem '+(i+1)) || [],
+      impSeries: raw.canais.map(c => ({ label: c.canal, data: c.seriesSemanas, bg: cores[c.canal] || '#888' })),
+      invest:    somarSeries(raw.canais, 'seriesInvest'),
+      conv:      somarSeries(raw.canais, 'seriesConv'),
+      valCart:   somarSeries(raw.canais, 'seriesCart'),
+      valVend:   somarSeries(raw.canais, 'seriesVend'),
+    }
+  };
+}
+
+function somarSeries(canais, key) {
+  const len = canais[0][key].length;
+  return Array.from({length: len}, (_,i) => canais.reduce((s,c) => s + c[key][i], 0));
+}
+
+// ─── RENDER APP (estrutura HTML) ──────────────────────────
+function renderApp() {
+  document.getElementById('app').innerHTML = `
+    <div class="filters-bar">
+      <span class="filters-label">Canal</span>
+      <button class="filter-btn active" data-canal="todos">Todos</button>
+      ${todosOsDados.canais.map(c => `<button class="filter-btn" data-canal="${c.canal}">${c.canal}</button>`).join('')}
+    </div>
+    <main class="main">
+      <div class="kpi-grid" id="kpis"></div>
+      <div class="two-col">
+        <div class="card">
+          <div class="card-title">Impressões por semana</div>
+          <div class="card-sub">Volume de exibições ao longo do período</div>
+          <div class="legend" id="leg-imp"></div>
+          <div style="position:relative;height:200px"><canvas id="chartImp" role="img" aria-label="Impressões por semana"></canvas></div>
+        </div>
+        <div class="card">
+          <div class="card-title">Investimento vs Conversões</div>
+          <div class="card-sub">Relação entre custo e resultado</div>
+          <div class="legend">
+            <span class="leg-item"><span class="leg-dot" style="background:#5b21b6"></span>Investimento</span>
+            <span class="leg-item"><span class="leg-dot" style="background:#1a7f4b"></span>Conversões</span>
+          </div>
+          <div style="position:relative;height:200px"><canvas id="chartInv" role="img" aria-label="Investimento vs Conversões"></canvas></div>
+        </div>
+      </div>
+      <div class="two-col">
+        <div class="card">
+          <div class="card-title">Funil de conversão</div>
+          <div class="card-sub">Do clique até a venda efetivada</div>
+          <div class="funil" id="funil"></div>
+        </div>
+        <div class="card">
+          <div class="card-title">Carrinho vs Vendas por semana</div>
+          <div class="card-sub">Evolução do valor adicionado e vendido</div>
+          <div class="legend">
+            <span class="leg-item"><span class="leg-dot" style="background:#5b21b6"></span>Valor no carrinho</span>
+            <span class="leg-item"><span class="leg-dot" style="background:#1a7f4b"></span>Valor vendido</span>
+          </div>
+          <div style="position:relative;height:220px"><canvas id="chartCart" role="img" aria-label="Carrinho vs Vendas"></canvas></div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-title">Detalhamento por canal</div>
+        <div class="card-sub">Todas as métricas consolidadas</div>
+        <div class="table-wrap">
+          <table>
+            <thead><tr>
+              <th>Canal</th><th>Impressões</th><th>Cliques</th><th>CTR</th>
+              <th>Investimento</th><th>CPC</th><th>Conversões</th><th>ROAS</th>
+              <th>Add carrinho</th><th>Valor carrinho</th><th>Vendas</th><th>Valor vendido</th>
+            </tr></thead>
+            <tbody id="tbody"></tbody>
+          </table>
+        </div>
+      </div>
+    </main>
+    <footer class="page-footer">
+      Dados atualizados via Google Sheets &mdash; <span id="footer-periodo"></span>
+    </footer>
+  `;
+
+  document.querySelectorAll('.filter-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      render(btn.dataset.canal);
+    });
+  });
+}
+
+// ─── RENDER POR CANAL ─────────────────────────────────────
+function render(canal) {
+  canalAtivo = canal;
+  document.getElementById('periodo-label').textContent = todosOsDados.periodo;
+  document.getElementById('footer-periodo').textContent = todosOsDados.periodo;
+
+  const cores = { 'Meta Ads': '#1a56db', 'Google Ads': '#1a7f4b', 'E-mail': '#d97706' };
+  const funisCores = ['#1a56db','#5b21b6','#1a7f4b','#065f46'];
+
+  if (canal === 'todos') {
+    const d = todosOsDados.todos;
+    renderKPIs(d.kpis);
+    renderFunil(d.funil);
+    renderTabelaTodos();
+    renderChartImp(d.semanas, d.impSeries);
+    renderChartInv(d.semanas, d.invest, d.conv);
+    renderChartCart(d.semanas, d.valCart, d.valVend);
+  } else {
+    const c = todosOsDados.canais.find(x => x.canal === canal);
+    const cor = cores[c.canal] || '#888';
+    const fmtR = n => 'R$' + n.toLocaleString('pt-BR');
+    renderKPIs([
+      { label: 'Impressões',     valor: c.impressoes.toLocaleString('pt-BR'),   cor: 'c-blue'   },
+      { label: 'Cliques',        valor: c.cliques.toLocaleString('pt-BR'),       cor: 'c-blue'   },
+      { label: 'CTR',            valor: c.ctr,                                   cor: 'c-green'  },
+      { label: 'Investimento',   valor: c.investimento,                          cor: 'c-amber'  },
+      { label: 'CPC',            valor: c.cpc,                                   cor: 'c-amber'  },
+      { label: 'Conversões',     valor: String(c.conversoes),                    cor: 'c-green'  },
+      { label: 'ROAS',           valor: c.roas,                                  cor: 'c-purple' },
+      { label: 'Add carrinho',   valor: c.addCarrinho.toLocaleString('pt-BR'),   cor: 'c-purple' },
+      { label: 'Valor carrinho', valor: fmtR(c.valorCarrinho),                  cor: 'c-purple' },
+      { label: 'Vendas',         valor: String(c.vendas),                        cor: 'c-green'  },
+      { label: 'Valor vendido',  valor: fmtR(c.valorVendido),                   cor: 'c-green'  },
+    ]);
+    const semanas = c.seriesSemanas.map((_,i) => 'Sem '+(i+1));
+    renderFunil([
+      { nome: 'Cliques',           valor: c.cliques,       cor: funisCores[0] },
+      { nome: 'Add ao carrinho',   valor: c.addCarrinho,   cor: funisCores[1] },
+      { nome: 'Conversões',        valor: c.conversoes,    cor: funisCores[2] },
+      { nome: 'Vendas efetivadas', valor: c.vendas,        cor: funisCores[3] },
+    ]);
+    renderTabelaCanal(c);
+    renderChartImp(semanas, [{ label: c.canal, data: c.seriesSemanas, bg: cor }]);
+    renderChartInv(semanas, c.seriesInvest, c.seriesConv);
+    renderChartCart(semanas, c.seriesCart, c.seriesVend);
+  }
+}
+
+function renderKPIs(kpis) {
+  document.getElementById('kpis').innerHTML = kpis.map(k => `
+    <div class="kpi-card ${k.cor}">
+      <div class="kpi-label">${k.label}</div>
+      <div class="kpi-value">${k.valor}</div>
+    </div>`).join('');
+}
+
+function renderFunil(steps) {
+  const max = steps[0].valor;
+  document.getElementById('funil').innerHTML = steps.map((s,i) => {
+    const pct = Math.round((s.valor / max) * 100);
+    const taxa = i === 0 ? '' : Math.round((s.valor / steps[i-1].valor) * 100) + '% do anterior';
+    return `
+      ${i > 0 ? `<div class="funil-arrow">↓ ${taxa}</div>` : ''}
+      <div class="funil-step">
+        <div class="funil-meta">
+          <div class="funil-name">${s.nome}</div>
+          <div class="funil-number">${s.valor.toLocaleString('pt-BR')}</div>
+        </div>
+        <div class="funil-bar-wrap">
+          <div class="funil-bar" style="width:${pct}%;background:${s.cor}">
+            ${pct > 20 ? pct + '%' : ''}
+          </div>
+        </div>
+        <div class="funil-pct">${pct}%</div>
+      </div>`;
+  }).join('');
+}
+
+function renderTabelaTodos() {
+  const fmtR = n => 'R$' + n.toLocaleString('pt-BR');
+  document.getElementById('tbody').innerHTML = todosOsDados.canais.map(c => `
+    <tr>
+      <td><span class="tag ${c.tag}">${c.canal}</span></td>
+      <td class="mono">${c.impressoes.toLocaleString('pt-BR')}</td>
+      <td class="mono">${c.cliques.toLocaleString('pt-BR')}</td>
+      <td class="mono num-up">${c.ctr}</td>
+      <td class="mono">${c.investimento}</td>
+      <td class="mono num-neutral">${c.cpc}</td>
+      <td class="mono num-up">${c.conversoes}</td>
+      <td class="mono num-up">${c.roas}</td>
+      <td class="mono">${c.addCarrinho.toLocaleString('pt-BR')}</td>
+      <td class="mono">${fmtR(c.valorCarrinho)}</td>
+      <td class="mono num-up">${c.vendas}</td>
+      <td class="mono num-up">${fmtR(c.valorVendido)}</td>
+    </tr>`).join('');
+}
+
+function renderTabelaCanal(c) {
+  const fmtR = n => 'R$' + n.toLocaleString('pt-BR');
+  document.getElementById('tbody').innerHTML = `
+    <tr>
+      <td><span class="tag ${c.tag}">${c.canal}</span></td>
+      <td class="mono">${c.impressoes.toLocaleString('pt-BR')}</td>
+      <td class="mono">${c.cliques.toLocaleString('pt-BR')}</td>
+      <td class="mono num-up">${c.ctr}</td>
+      <td class="mono">${c.investimento}</td>
+      <td class="mono num-neutral">${c.cpc}</td>
+      <td class="mono num-up">${c.conversoes}</td>
+      <td class="mono num-up">${c.roas}</td>
+      <td class="mono">${c.addCarrinho.toLocaleString('pt-BR')}</td>
+      <td class="mono">${fmtR(c.valorCarrinho)}</td>
+      <td class="mono num-up">${c.vendas}</td>
+      <td class="mono num-up">${fmtR(c.valorVendido)}</td>
+    </tr>`;
+}
+
+// ─── CHARTS ───────────────────────────────────────────────
+function destroyChart(id) { if (charts[id]) { charts[id].destroy(); delete charts[id]; } }
+
+function renderChartImp(semanas, series) {
+  destroyChart('imp');
+  const legEl = document.getElementById('leg-imp');
+  if (legEl) legEl.innerHTML = series.map(s => `<span class="leg-item"><span class="leg-dot" style="background:${s.bg}"></span>${s.label}</span>`).join('');
+  charts.imp = new Chart(document.getElementById('chartImp'), {
+    type: 'bar',
+    data: { labels: semanas, datasets: series.map(s => ({ label: s.label, data: s.data, backgroundColor: s.bg, borderRadius: 3, borderSkipped: false })) },
+    options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } },
+      scales: { x: { stacked: true, grid: { display: false }, ticks: { font: { size: 10 }, color: '#9e9d98' } }, y: { stacked: true, grid: { color: 'rgba(0,0,0,0.05)' }, ticks: { font: { size: 10 }, color: '#9e9d98', callback: v => v + 'k' } } } }
+  });
+}
+
+function renderChartInv(semanas, invest, conv) {
+  destroyChart('inv');
+  charts.inv = new Chart(document.getElementById('chartInv'), {
+    type: 'line',
+    data: { labels: semanas, datasets: [
+      { label: 'Investimento', data: invest, borderColor: '#5b21b6', backgroundColor: 'rgba(91,33,182,0.07)', fill: true, tension: 0.35, pointRadius: 3, borderWidth: 2, yAxisID: 'y' },
+      { label: 'Conversões',   data: conv,   borderColor: '#1a7f4b', backgroundColor: 'transparent', tension: 0.35, pointRadius: 3, borderWidth: 2, borderDash: [5,3], yAxisID: 'y1' }
+    ]},
+    options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } },
+      scales: { x: { grid: { display: false }, ticks: { font: { size: 10 }, color: '#9e9d98' } },
+        y:  { grid: { color: 'rgba(0,0,0,0.05)' }, ticks: { font: { size: 10 }, color: '#5b21b6', callback: v => 'R$'+v } },
+        y1: { position: 'right', grid: { display: false }, ticks: { font: { size: 10 }, color: '#1a7f4b' } } } }
+  });
+}
+
+function renderChartCart(semanas, cart, vend) {
+  destroyChart('cart');
+  charts.cart = new Chart(document.getElementById('chartCart'), {
+    type: 'line',
+    data: { labels: semanas, datasets: [
+      { label: 'Valor carrinho', data: cart, borderColor: '#5b21b6', backgroundColor: 'rgba(91,33,182,0.07)', fill: true, tension: 0.35, pointRadius: 3, borderWidth: 2 },
+      { label: 'Valor vendido',  data: vend, borderColor: '#1a7f4b', backgroundColor: 'rgba(26,127,75,0.07)',  fill: true, tension: 0.35, pointRadius: 3, borderWidth: 2 }
+    ]},
+    options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } },
+      scales: { x: { grid: { display: false }, ticks: { font: { size: 10 }, color: '#9e9d98' } },
+        y: { grid: { color: 'rgba(0,0,0,0.05)' }, ticks: { font: { size: 10 }, color: '#9e9d98', callback: v => 'R$'+(v/1000).toFixed(0)+'k' } } } }
+  });
+}
+
+init();
+</script>
+</body>
+</html>
