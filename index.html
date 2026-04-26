@@ -9,207 +9,137 @@
 @import url('https://fonts.googleapis.com/css2?family=Rajdhani:wght@600;700&family=DM+Sans:wght@400;500&family=DM+Mono:wght@400&display=swap');
 
 :root {
-  --bg: #0a0a0c;
-  --surface: #111114;
-  --surface2: #18181d;
-  --border: rgba(255,255,255,0.06);
-  --border-md: rgba(255,255,255,0.11);
-  --text: #ededf0;
-  --text-2: #8a8a9a;
-  --text-3: #4a4a5a;
-  --accent: #e63946;
-  --accent2: #ff6b35;
-  --green: #22c55e;
-  --green-bg: rgba(34,197,94,0.08);
-  --red: #ef4444;
-  --red-bg: rgba(239,68,68,0.08);
-  --amber: #f59e0b;
-  --amber-bg: rgba(245,158,11,0.08);
-  --purple: #a78bfa;
-  --r: 14px; --r-sm: 8px;
+  --bg:#0a0a0c; --surface:#111114; --surface2:#18181d; --surface3:#1e1e24;
+  --border:rgba(255,255,255,0.06); --border-md:rgba(255,255,255,0.11);
+  --text:#ededf0; --text-2:#8a8a9a; --text-3:#4a4a5a;
+  --accent:#e63946; --accent2:#ff6b35;
+  --green:#22c55e; --green-bg:rgba(34,197,94,0.08);
+  --red:#ef4444; --red-bg:rgba(239,68,68,0.08);
+  --amber:#f59e0b; --amber-bg:rgba(245,158,11,0.08);
+  --purple:#a78bfa;
+  --r:14px; --r-sm:8px;
 }
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;}
 
-* { box-sizing: border-box; margin: 0; padding: 0; }
-body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; }
-
-@keyframes rot { to { transform: rotate(360deg); } }
-@keyframes fadeUp { from { opacity:0; transform:translateY(20px); } to { opacity:1; transform:translateY(0); } }
-.fu { animation: fadeUp .5s ease both; }
-.fu1 { animation-delay: .0s; }
-.fu2 { animation-delay: .08s; }
-.fu3 { animation-delay: .16s; }
-.fu4 { animation-delay: .24s; }
+@keyframes rot{to{transform:rotate(360deg)}}
+@keyframes fadeUp{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
+.fu{animation:fadeUp .45s ease both;}
+.fu1{animation-delay:.00s}.fu2{animation-delay:.07s}.fu3{animation-delay:.14s}.fu4{animation-delay:.21s}.fu5{animation-delay:.28s}
 
 /* HEADER */
-.hdr {
-  padding: 18px 36px;
-  display: flex; align-items: center; justify-content: space-between;
-  border-bottom: 1px solid var(--border);
-  background: var(--surface);
-  position: sticky; top: 0; z-index: 20;
-}
-.hdr-left { display: flex; align-items: center; gap: 14px; }
-.ax-pill {
-  background: linear-gradient(135deg, var(--accent), var(--accent2));
-  font-family: 'Rajdhani', sans-serif; font-size: 12px; font-weight: 700;
-  letter-spacing: .1em; color: white;
-  padding: 4px 10px; border-radius: 6px;
-}
-.hdr-name { font-family: 'Rajdhani', sans-serif; font-size: 18px; font-weight: 700; }
-.hdr-sub { font-size: 11px; color: var(--text-3); margin-top: 1px; }
-.hdr-right { display: flex; align-items: center; gap: 12px; }
-.upd { font-size: 11px; color: var(--text-3); font-family: 'DM Mono', monospace; }
+.hdr{padding:16px 36px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--border);background:var(--surface);position:sticky;top:0;z-index:20;}
+.hdr-left{display:flex;align-items:center;gap:14px;}
+.ax-pill{background:linear-gradient(135deg,var(--accent),var(--accent2));font-family:'Rajdhani',sans-serif;font-size:12px;font-weight:700;letter-spacing:.1em;color:white;padding:4px 10px;border-radius:6px;}
+.hdr-name{font-family:'Rajdhani',sans-serif;font-size:18px;font-weight:700;}
+.hdr-sub{font-size:11px;color:var(--text-3);margin-top:1px;}
+.upd{font-size:11px;color:var(--text-3);font-family:'DM Mono',monospace;}
 
 /* PERIOD */
-.period {
-  background: var(--surface); border-bottom: 1px solid var(--border);
-  padding: 0 36px; display: flex; align-items: center; flex-wrap: wrap; gap: 0;
-}
-.pb {
-  font-family: 'DM Sans', sans-serif; font-size: 12px; font-weight: 500;
-  padding: 13px 16px; border: none; background: transparent;
-  color: var(--text-2); cursor: pointer;
-  border-bottom: 2px solid transparent; transition: all .15s; white-space: nowrap;
-}
-.pb:hover { color: var(--text); }
-.pb.active { color: var(--accent); border-bottom-color: var(--accent); }
-.cr { display: none; align-items: center; gap: 8px; margin-left: auto; padding: 8px 0; }
-.cr.on { display: flex; }
-.cr input { font-family: 'DM Mono', monospace; font-size: 11px; padding: 5px 10px; border: 1px solid var(--border-md); border-radius: 6px; background: var(--surface2); color: var(--text); }
-.cr-btn { font-size: 11px; font-weight: 600; padding: 5px 14px; background: var(--accent); color: white; border: none; border-radius: 6px; cursor: pointer; }
+.period{background:var(--surface);border-bottom:1px solid var(--border);padding:0 36px;display:flex;align-items:center;flex-wrap:wrap;}
+.pb{font-family:'DM Sans',sans-serif;font-size:12px;font-weight:500;padding:13px 16px;border:none;background:transparent;color:var(--text-2);cursor:pointer;border-bottom:2px solid transparent;transition:all .15s;white-space:nowrap;}
+.pb:hover{color:var(--text);}
+.pb.active{color:var(--accent);border-bottom-color:var(--accent);}
+.cr{display:none;align-items:center;gap:8px;margin-left:auto;padding:8px 0;}
+.cr.on{display:flex;}
+.cr input{font-family:'DM Mono',monospace;font-size:11px;padding:5px 10px;border:1px solid var(--border-md);border-radius:6px;background:var(--surface2);color:var(--text);}
+.cr-btn{font-size:11px;font-weight:600;padding:5px 14px;background:var(--accent);color:white;border:none;border-radius:6px;cursor:pointer;}
 
-/* MAIN */
-.main { padding: 28px 36px 56px; display: flex; flex-direction: column; gap: 20px; max-width: 1400px; margin: 0 auto; }
+.main{padding:28px 36px 56px;display:flex;flex-direction:column;gap:20px;max-width:1400px;margin:0 auto;}
 
-/* HERO KPIs */
-.hero {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 2px;
-  background: var(--border);
-  border-radius: var(--r);
-  overflow: hidden;
+/* NARRATIVA */
+.narrativa{
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-left:3px solid var(--accent);
+  border-radius:var(--r);
+  padding:18px 24px;
+  font-size:15px;
+  line-height:1.6;
+  color:var(--text-2);
 }
-.hero-kpi {
-  background: var(--surface);
-  padding: 28px 28px 24px;
-  position: relative;
-  transition: background .2s;
-}
-.hero-kpi:hover { background: var(--surface2); }
-.hero-kpi::after {
-  content: '';
-  position: absolute;
-  bottom: 0; left: 28px; right: 28px;
-  height: 2px; border-radius: 2px;
-  opacity: 0; transition: opacity .2s;
-}
-.hero-kpi:hover::after { opacity: 1; }
-.hk-label {
-  font-size: 11px; font-weight: 500; text-transform: uppercase;
-  letter-spacing: .07em; color: var(--text-3); margin-bottom: 12px;
-}
-.hk-val {
-  font-family: 'Rajdhani', sans-serif; font-size: 40px; font-weight: 700;
-  letter-spacing: -.01em; line-height: 1;
-}
-.hk-delta {
-  margin-top: 10px; font-size: 12px; font-weight: 500;
-  display: inline-flex; align-items: center; gap: 4px;
-  padding: 3px 8px; border-radius: 5px;
-}
-.up { background: var(--green-bg); color: var(--green); }
-.dn { background: var(--red-bg); color: var(--red); }
-.nt { background: rgba(255,255,255,.04); color: var(--text-3); }
+.narrativa strong{color:var(--text);font-weight:500;}
 
-/* MID ROW */
-.mid { display: grid; grid-template-columns: 1fr 340px; gap: 20px; }
+/* HERO */
+.hero{display:grid;grid-template-columns:repeat(4,1fr);gap:2px;background:var(--border);border-radius:var(--r);overflow:hidden;}
+.hk{background:var(--surface);padding:24px 26px 20px;position:relative;overflow:hidden;transition:background .2s;}
+.hk:hover{background:var(--surface2);}
+.hk-top{display:flex;align-items:flex-start;justify-content:space-between;gap:8px;margin-bottom:10px;}
+.hk-label{font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.07em;color:var(--text-3);}
+.hk-badge{font-size:10px;font-weight:600;padding:2px 7px;border-radius:4px;white-space:nowrap;}
+.badge-ok{background:var(--green-bg);color:var(--green);}
+.badge-warn{background:var(--amber-bg);color:var(--amber);}
+.badge-bad{background:var(--red-bg);color:var(--red);}
+.badge-nt{background:rgba(255,255,255,.04);color:var(--text-3);}
+.hk-val{font-family:'Rajdhani',sans-serif;font-size:38px;font-weight:700;letter-spacing:-.01em;line-height:1;}
+.hk-ctx{font-size:11px;color:var(--text-3);margin-top:6px;line-height:1.4;}
+.hk-delta{margin-top:8px;font-size:11px;font-weight:500;display:inline-flex;align-items:center;gap:3px;padding:2px 7px;border-radius:4px;}
+.up{background:var(--green-bg);color:var(--green);}
+.dn{background:var(--red-bg);color:var(--red);}
+.nt{background:rgba(255,255,255,.04);color:var(--text-3);}
 
-/* ALERTS */
-.alerts { display: flex; flex-direction: column; gap: 6px; margin-bottom: 16px; }
-.alert {
-  display: flex; align-items: center; gap: 10px;
-  padding: 10px 14px; border-radius: var(--r-sm);
-  font-size: 12px; border-left: 3px solid;
-  background: var(--surface2);
-}
-.alert-ok  { border-color: var(--green); }
-.alert-warn{ border-color: var(--amber); }
-.alert-bad { border-color: var(--red);   }
-.alert-dot { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; }
-.alert-ok  .alert-dot { background: var(--green); }
-.alert-warn .alert-dot { background: var(--amber); }
-.alert-bad  .alert-dot { background: var(--red); }
-.alert-body { flex: 1; }
-.alert-title { font-weight: 500; color: var(--text); }
-.alert-desc { color: var(--text-3); font-size: 11px; margin-top: 1px; }
-.alert-num { font-family: 'DM Mono', monospace; font-size: 12px; font-weight: 500; color: var(--text-2); }
+/* MID */
+.mid{display:grid;grid-template-columns:1fr 1fr;gap:20px;}
 
-/* CHART CARD */
-.card {
-  background: var(--surface); border: 1px solid var(--border);
-  border-radius: var(--r); padding: 22px 24px;
-}
-.card-hd { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; margin-bottom: 20px; }
-.card-title { font-family: 'Rajdhani', sans-serif; font-size: 15px; font-weight: 700; letter-spacing: .02em; }
-.card-sub { font-size: 11px; color: var(--text-3); margin-top: 2px; }
-.gran { display: flex; gap: 3px; }
-.gb {
-  font-family: 'DM Sans', sans-serif; font-size: 10px; font-weight: 600;
-  padding: 3px 8px; border-radius: 4px;
-  border: 1px solid var(--border-md); background: transparent;
-  color: var(--text-3); cursor: pointer; transition: all .12s;
-  text-transform: uppercase; letter-spacing: .04em;
-}
-.gb.active { background: var(--accent); color: white; border-color: var(--accent); }
+/* CARD */
+.card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:22px 24px;}
+.card-title{font-family:'Rajdhani',sans-serif;font-size:15px;font-weight:700;letter-spacing:.02em;}
+.card-sub{font-size:11px;color:var(--text-3);margin-top:2px;margin-bottom:16px;}
 
-.leg { display: flex; gap: 14px; margin-bottom: 14px; flex-wrap: wrap; }
-.li { display: flex; align-items: center; gap: 5px; font-size: 11px; color: var(--text-2); }
-.ls { width: 8px; height: 8px; border-radius: 2px; }
+/* ALERTAS */
+.alerts{display:flex;flex-direction:column;gap:6px;margin-bottom:16px;}
+.alert{display:flex;align-items:flex-start;gap:10px;padding:10px 12px;border-radius:var(--r-sm);font-size:12px;border-left:2px solid;}
+.aok{border-color:var(--green);background:rgba(34,197,94,.05);}
+.awk{border-color:var(--amber);background:rgba(245,158,11,.05);}
+.abd{border-color:var(--red);background:rgba(239,68,68,.05);}
+.a-dot{width:6px;height:6px;border-radius:50%;flex-shrink:0;margin-top:3px;}
+.aok .a-dot{background:var(--green);}
+.awk .a-dot{background:var(--amber);}
+.abd .a-dot{background:var(--red);}
+.a-body{flex:1;}
+.a-title{font-weight:500;color:var(--text);}
+.a-desc{color:var(--text-3);font-size:11px;margin-top:1px;}
+.a-val{font-family:'DM Mono',monospace;font-size:12px;color:var(--text-2);white-space:nowrap;margin-left:8px;}
 
-/* FUNIL (direita) */
-.funil-card { display: flex; flex-direction: column; }
-.funnel { display: flex; flex-direction: column; gap: 10px; margin-top: 4px; }
-.fs { display: flex; align-items: center; gap: 10px; }
-.fl { min-width: 100px; }
-.fn { font-size: 11px; font-weight: 500; }
-.fnum { font-size: 10px; color: var(--text-3); font-family: 'DM Mono', monospace; }
-.ftrack { flex: 1; height: 32px; background: var(--surface2); border-radius: 5px; overflow: hidden; }
-.fbar { height: 100%; border-radius: 5px; display: flex; align-items: center; padding-left: 10px; font-size: 10px; font-weight: 700; color: white; transition: width .6s cubic-bezier(.16,1,.3,1); }
-.fpct { min-width: 34px; text-align: right; font-size: 10px; font-family: 'DM Mono', monospace; color: var(--text-3); }
-.farrow { font-size: 9px; color: var(--text-3); padding-left: 110px; }
+/* GRAN */
+.gran{display:flex;gap:3px;}
+.gb{font-family:'DM Sans',sans-serif;font-size:10px;font-weight:600;padding:3px 8px;border-radius:4px;border:1px solid var(--border-md);background:transparent;color:var(--text-3);cursor:pointer;transition:all .12s;text-transform:uppercase;letter-spacing:.04em;}
+.gb.active{background:var(--accent);color:white;border-color:var(--accent);}
+
+.leg{display:flex;gap:14px;margin-bottom:12px;flex-wrap:wrap;}
+.li{display:flex;align-items:center;gap:5px;font-size:11px;color:var(--text-2);}
+.ls{width:8px;height:8px;border-radius:2px;}
+
+/* FUNIL */
+.funnel{display:flex;flex-direction:column;gap:10px;}
+.fs{display:flex;align-items:center;gap:10px;}
+.fl{min-width:100px;}
+.fn{font-size:11px;font-weight:500;}
+.fnum{font-size:10px;color:var(--text-3);font-family:'DM Mono',monospace;}
+.ftrack{flex:1;height:32px;background:var(--surface2);border-radius:5px;overflow:hidden;}
+.fbar{height:100%;border-radius:5px;display:flex;align-items:center;padding-left:10px;font-size:10px;font-weight:700;color:white;transition:width .6s cubic-bezier(.16,1,.3,1);}
+.fpct{min-width:34px;text-align:right;font-size:10px;font-family:'DM Mono',monospace;color:var(--text-3);}
+.farrow{font-size:9px;color:var(--text-3);padding-left:110px;}
 
 /* TABLE */
-.tbl-toggle {
-  display: flex; align-items: center; justify-content: space-between;
-  cursor: pointer; user-select: none;
-  padding: 16px 0 0;
-}
-.tbl-toggle-label { font-family: 'Rajdhani', sans-serif; font-size: 15px; font-weight: 700; letter-spacing: .02em; }
-.tbl-toggle-icon { font-size: 12px; color: var(--text-3); transition: transform .2s; }
-.tbl-toggle-icon.open { transform: rotate(180deg); }
-.tbl-body { overflow: hidden; transition: max-height .3s ease; max-height: 0; }
-.tbl-body.open { max-height: 2000px; }
-.gran-tbl { display: flex; gap: 4px; margin: 14px 0 12px; }
+.tbl-wrap{overflow-x:auto;}
+table{width:100%;border-collapse:collapse;font-size:12px;}
+th{font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.05em;color:var(--text-3);padding:8px 10px;border-bottom:1px solid var(--border);text-align:left;white-space:nowrap;}
+th.r{text-align:right;}
+td{padding:9px 10px;border-bottom:1px solid var(--border);color:var(--text);vertical-align:middle;}
+td.r{text-align:right;font-family:'DM Mono',monospace;font-size:11px;}
+tr:last-child td{border-bottom:none;}
+tr:hover td{background:var(--surface2);}
+.dc{font-family:'DM Mono',monospace;font-size:11px;color:var(--text-2);}
+.vup{color:var(--green);} .vdn{color:var(--red);}
 
-.tbl-wrap { overflow-x: auto; }
-table { width: 100%; border-collapse: collapse; font-size: 12px; }
-th { font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: .05em; color: var(--text-3); padding: 8px 10px; border-bottom: 1px solid var(--border); text-align: left; white-space: nowrap; }
-th.r { text-align: right; }
-td { padding: 9px 10px; border-bottom: 1px solid var(--border); color: var(--text); vertical-align: middle; }
-td.r { text-align: right; font-family: 'DM Mono', monospace; font-size: 11px; }
-tr:last-child td { border-bottom: none; }
-tr:hover td { background: var(--surface2); }
-.dc { font-family: 'DM Mono', monospace; font-size: 11px; color: var(--text-2); }
-.vup { color: var(--green); } .vdn { color: var(--red); }
+.empty{display:flex;align-items:center;justify-content:center;min-height:120px;color:var(--text-3);font-size:13px;}
+.err{background:var(--red-bg);border:1px solid rgba(239,68,68,.15);border-radius:var(--r);padding:20px 24px;color:var(--red);font-size:13px;line-height:1.6;max-width:480px;margin:32px;}
 
-.empty { display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 140px; color: var(--text-3); font-size: 13px; gap: 8px; }
-.err { background: var(--red-bg); border: 1px solid rgba(239,68,68,.15); border-radius: var(--r); padding: 20px 24px; color: var(--red); font-size: 13px; line-height: 1.6; max-width: 480px; margin: 32px; }
-
-@media (max-width: 900px) {
-  .hdr, .period, .main { padding-left: 16px; padding-right: 16px; }
-  .hero { grid-template-columns: repeat(2,1fr); }
-  .mid { grid-template-columns: 1fr; }
+@media(max-width:900px){
+  .hdr,.period,.main{padding-left:16px;padding-right:16px;}
+  .hero{grid-template-columns:repeat(2,1fr);}
+  .mid{grid-template-columns:1fr;}
 }
 </style>
 </head>
@@ -223,9 +153,7 @@ tr:hover td { background: var(--surface2); }
       <div class="hdr-sub">Meta Ads — Resultados de campanha</div>
     </div>
   </div>
-  <div class="hdr-right">
-    <span class="upd" id="upd">—</span>
-  </div>
+  <span class="upd" id="upd">—</span>
 </header>
 
 <nav class="period">
@@ -244,7 +172,7 @@ tr:hover td { background: var(--surface2); }
 
 <div id="app">
   <div style="display:flex;align-items:center;justify-content:center;min-height:60vh;flex-direction:column;gap:12px;color:var(--text-3)">
-    <div style="width:28px;height:28px;border:2px solid rgba(255,255,255,.1);border-top-color:var(--accent);border-radius:50%;animation:rot .7s linear infinite"></div>
+    <div style="width:28px;height:28px;border:2px solid rgba(255,255,255,.08);border-top-color:var(--accent);border-radius:50%;animation:rot .7s linear infinite"></div>
     <span style="font-size:13px">Carregando dados…</span>
   </div>
 </div>
@@ -254,7 +182,8 @@ const DADOS_URL = 'https://raw.githubusercontent.com/nairomoreira/relatorio-camp
 
 const METAS = {
   roasMin: 2.0, roasOtimo: 3.0,
-  custoCompraMax: 30, ctrMin: 1.0, freqMax: 4.0,
+  custoCompraMax: 30, custoCompraOtimo: 20,
+  ctrMin: 1.0, freqMax: 4.0,
 };
 
 let raw = [], periodo = '7d', gran = 'dia', granTbl = 'dia';
@@ -270,12 +199,13 @@ async function init() {
     const json = await res.json();
     raw = (json.dias || []).filter(d => d && d.data).sort((a,b) => a.data.localeCompare(b.data));
     const upd = document.getElementById('upd');
-    if (upd) upd.textContent = json.atualizadoEm && json.atualizadoEm !== '—' ? 'Atualizado em ' + json.atualizadoEm : '';
+    if (upd && json.atualizadoEm && json.atualizadoEm !== '—') upd.textContent = 'Atualizado em ' + json.atualizadoEm;
     buildApp();
     render();
   } catch(e) {
     document.getElementById('app').innerHTML =
-      '<div class="err"><strong style="display:block;margin-bottom:6px">Erro ao carregar dados</strong>Verifique se dados.json está publicado no GitHub.<br><br>' + (e.name === 'AbortError' ? 'Tempo limite excedido.' : e.message) + '</div>';
+      '<div class="err"><strong style="display:block;margin-bottom:6px">Erro ao carregar dados</strong>Verifique se dados.json foi publicado no GitHub.<br><br>' +
+      (e.name === 'AbortError' ? 'Tempo limite excedido.' : e.message) + '</div>';
   }
 }
 
@@ -304,61 +234,84 @@ function filtrarAnt() {
   return raw.filter(d=>d.data>=deA.toISOString().slice(0,10)&&d.data<=ateA.toISOString().slice(0,10));
 }
 
-// ── SOMA ──────────────────────────────────────────────────
-const SKEYS = ['valorUsado','impressoes','alcance','cliquesLink','cliquesTodos','resultados','addCarrinho','compras','valorCompras'];
-function somar(dias) {
-  const t = SKEYS.reduce((a,m)=>{ a[m]=dias.reduce((s,d)=>s+(+d[m]||0),0); return a; },{});
-  t.ctr     = t.impressoes  ? t.cliquesLink/t.impressoes*100 : 0;
-  t.cpc     = t.cliquesLink ? t.valorUsado/t.cliquesLink : 0;
-  t.roas    = t.valorUsado  ? t.valorCompras/t.valorUsado : 0;
-  t.custoC  = t.compras     ? t.valorUsado/t.compras : 0;
-  t.custoA  = t.addCarrinho ? t.valorUsado/t.addCarrinho : 0;
-  t.freq    = t.alcance     ? t.impressoes/t.alcance : 0;
-  t.cpm     = t.impressoes  ? t.valorUsado/t.impressoes*1000 : 0;
+// ── AGREGAR ───────────────────────────────────────────────
+const SK=['valorUsado','impressoes','alcance','cliquesLink','cliquesTodos','resultados','addCarrinho','compras','valorCompras'];
+function somar(dias){
+  const t=SK.reduce((a,m)=>{a[m]=dias.reduce((s,d)=>s+(+d[m]||0),0);return a;},{});
+  t.ctr    = t.impressoes  ? t.cliquesLink/t.impressoes*100 : 0;
+  t.roas   = t.valorUsado  ? t.valorCompras/t.valorUsado : 0;
+  t.custoC = t.compras     ? t.valorUsado/t.compras : 0;
+  t.custoA = t.addCarrinho ? t.valorUsado/t.addCarrinho : 0;
+  t.freq   = t.alcance     ? t.impressoes/t.alcance : 0;
+  t.cpm    = t.impressoes  ? t.valorUsado/t.impressoes*1000 : 0;
   return t;
 }
 
-function agrupar(dias, g) {
-  if (g==='dia') return dias.map(d=>({label:fd(d.data),...d,...somar([d])}));
+function agrupar(dias,g){
+  if(g==='dia') return dias.map(d=>({label:fd(d.data),...d,...somar([d])}));
   const map={};
   dias.forEach(d=>{
     let key;
-    if (g==='semana') {
-      const dt=new Date(d.data+'T00:00:00'), dom=new Date(dt);
-      dom.setDate(dt.getDate()-dt.getDay()); key=dom.toISOString().slice(0,10);
-    } else key=d.data.slice(0,7);
-    if (!map[key]) map[key]=[];
-    map[key].push(d);
+    if(g==='semana'){const dt=new Date(d.data+'T00:00:00'),dom=new Date(dt);dom.setDate(dt.getDate()-dt.getDay());key=dom.toISOString().slice(0,10);}
+    else key=d.data.slice(0,7);
+    if(!map[key])map[key]=[];map[key].push(d);
   });
-  return Object.entries(map).sort((a,b)=>a[0].localeCompare(b[0])).map(([k,v])=>({
-    label:g==='semana'?'Sem '+fd(k):fm(k),...somar(v)
-  }));
+  return Object.entries(map).sort((a,b)=>a[0].localeCompare(b[0])).map(([k,v])=>({label:g==='semana'?'Sem '+fd(k):fm(k),...somar(v)}));
 }
 
 // ── FORMATOS ──────────────────────────────────────────────
-function fd(s){ const[,m,d]=s.split('-'); return d+'/'+m; }
-function fm(s){ const ms=['Jan','Fev','Mar','Abr','Mai','Jun','Jul','Ago','Set','Out','Nov','Dez'],[,m]=s.split('-'); return ms[+m-1]; }
-function fN(n){ if(n>=1e6) return (n/1e6).toFixed(1).replace('.',',')+' M'; if(n>=1e3) return n.toLocaleString('pt-BR'); return String(Math.round(n)); }
-function fR(n){ return 'R$\u00a0'+Number(n).toLocaleString('pt-BR',{minimumFractionDigits:2,maximumFractionDigits:2}); }
-function fP(n){ return Number(n).toFixed(2).replace('.',',')+'\u0025'; }
-function fX(n){ return Number(n).toFixed(2).replace('.',',')+'x'; }
-function dlt(a,b){ return b?(a-b)/b*100:null; }
+function fd(s){const[,m,d]=s.split('-');return d+'/'+m;}
+function fm(s){const ms=['Jan','Fev','Mar','Abr','Mai','Jun','Jul','Ago','Set','Out','Nov','Dez'],[,m]=s.split('-');return ms[+m-1];}
+function fN(n){if(n>=1e6)return(n/1e6).toFixed(1).replace('.',',')+' M';if(n>=1e3)return n.toLocaleString('pt-BR');return String(Math.round(n));}
+function fR(n){return 'R$\u00a0'+Number(n).toLocaleString('pt-BR',{minimumFractionDigits:2,maximumFractionDigits:2});}
+function fP(n){return Number(n).toFixed(2).replace('.',',')+'\u0025';}
+function fX(n){return Number(n).toFixed(2).replace('.',',')+'x';}
+function dlt(a,b){return b?(a-b)/b*100:null;}
+
+// ── NARRATIVA ─────────────────────────────────────────────
+function gerarNarrativa(tot, dias) {
+  if (!dias.length) return 'Sem dados no período selecionado.';
+
+  const partes = [];
+  const n = dias.length;
+
+  // Investimento e retorno
+  partes.push('Em <strong>' + n + ' dia' + (n>1?'s':'') + '</strong> de campanha, foram investidos <strong>' + fR(tot.valorUsado) + '</strong>');
+  if (tot.valorCompras > 0) partes[0] += ', gerando <strong>' + fR(tot.valorCompras) + '</strong> em compras';
+  partes[0] += '.';
+
+  // Eficiência
+  if (tot.custoC > 0) {
+    const efic = tot.custoC <= METAS.custoCompraOtimo ? 'ótimo' : tot.custoC <= METAS.custoCompraMax ? 'dentro do esperado' : 'acima do ideal';
+    partes.push('Cada compra custou em média <strong>' + fR(tot.custoC) + '</strong> — ' + efic + ' para o período.');
+  }
+
+  // ROAS
+  if (tot.roas > 0) {
+    const avalRoas = tot.roas >= METAS.roasOtimo ? 'acima da meta' : tot.roas >= METAS.roasMin ? 'dentro do mínimo aceitável' : 'abaixo do esperado';
+    partes.push('O ROAS foi de <strong>' + fX(tot.roas) + '</strong> — ' + avalRoas + '.');
+  }
+
+  // Alerta de frequência
+  if (tot.freq > METAS.freqMax) {
+    partes.push('Atenção: a frequência está em <strong>' + tot.freq.toFixed(1) + 'x</strong> — o público está vendo o anúncio muitas vezes.');
+  }
+
+  return partes.join(' ');
+}
 
 // ── BUILD APP ─────────────────────────────────────────────
 function buildApp() {
   document.getElementById('app').innerHTML = `
   <div class="main">
-
-    <!-- HERO -->
-    <div class="hero fu fu1" id="hero"></div>
-
-    <!-- MID -->
-    <div class="mid fu fu2">
+    <div class="narrativa fu fu1" id="narrativa"></div>
+    <div class="hero fu fu2" id="hero"></div>
+    <div class="mid fu fu3">
       <div class="card">
-        <div class="card-hd">
+        <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:12px">
           <div>
-            <div class="card-title">Investimento vs Compras</div>
-            <div class="card-sub">Evolução no período</div>
+            <div class="card-title">Evolução do ROAS</div>
+            <div class="card-sub">Com linha de meta — pontos verdes = acima, vermelhos = abaixo</div>
           </div>
           <div class="gran">
             <button class="gb active" data-g="dia">Dia</button>
@@ -367,237 +320,285 @@ function buildApp() {
           </div>
         </div>
         <div class="alerts" id="alerts"></div>
-        <div class="leg">
-          <span class="li"><span class="ls" style="background:var(--accent)"></span>Valor usado</span>
-          <span class="li"><span class="ls" style="background:var(--green)"></span>Valor compras</span>
-        </div>
-        <div style="position:relative;height:220px">
-          <canvas id="cInvest" role="img" aria-label="Investimento e compras"></canvas>
+        <div style="position:relative;height:240px">
+          <canvas id="cRoas" role="img" aria-label="Evolução do ROAS"></canvas>
         </div>
       </div>
-
-      <div class="card funil-card fu fu3">
-        <div class="card-hd">
-          <div>
-            <div class="card-title">Funil</div>
-            <div class="card-sub">Do clique à compra</div>
-          </div>
-        </div>
+      <div class="card">
+        <div class="card-title">Funil de conversão</div>
+        <div class="card-sub">Do clique à compra efetivada</div>
         <div class="funnel" id="funnel"></div>
       </div>
     </div>
-
-    <!-- TABLE -->
     <div class="card fu fu4">
-      <div class="tbl-toggle" onclick="toggleTbl(this)">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;flex-wrap:wrap;gap:10px">
         <div>
-          <div class="tbl-toggle-label">Detalhamento completo</div>
+          <div class="card-title">Detalhamento por período</div>
           <div style="font-size:11px;color:var(--text-3);margin-top:2px" id="tbl-sub"></div>
         </div>
-        <span class="tbl-toggle-icon">▼</span>
-      </div>
-      <div class="tbl-body" id="tbl-body">
-        <div class="gran-tbl">
+        <div class="gran">
           <button class="gb active" data-gt="dia">Dia</button>
           <button class="gb" data-gt="semana">Semana</button>
           <button class="gb" data-gt="mes">Mês</button>
         </div>
-        <div class="tbl-wrap">
-          <table>
-            <thead><tr>
-              <th>Período</th>
-              <th class="r">Valor usado</th>
-              <th class="r">Impressões</th>
-              <th class="r">Alcance</th>
-              <th class="r">Freq.</th>
-              <th class="r">Cliques</th>
-              <th class="r">CTR</th>
-              <th class="r">CPM</th>
-              <th class="r">Resultados</th>
-              <th class="r">Add carrinho</th>
-              <th class="r">Custo/add</th>
-              <th class="r">Compras</th>
-              <th class="r">Vlr compras</th>
-              <th class="r">Custo/compra</th>
-              <th class="r">ROAS</th>
-            </tr></thead>
-            <tbody id="tbody"></tbody>
-          </table>
-        </div>
+      </div>
+      <div class="tbl-wrap">
+        <table>
+          <thead><tr>
+            <th>Período</th>
+            <th class="r">Valor usado</th>
+            <th class="r">Impressões</th>
+            <th class="r">Alcance</th>
+            <th class="r">Freq.</th>
+            <th class="r">Cliques</th>
+            <th class="r">CTR</th>
+            <th class="r">CPM</th>
+            <th class="r">Resultados</th>
+            <th class="r">Add carrinho</th>
+            <th class="r">Custo/add</th>
+            <th class="r">Compras</th>
+            <th class="r">Vlr compras</th>
+            <th class="r">Custo/compra</th>
+            <th class="r">ROAS</th>
+          </tr></thead>
+          <tbody id="tbody"></tbody>
+        </table>
       </div>
     </div>
-
   </div>`;
 
-  // Eventos período
-  document.querySelectorAll('.pb').forEach(b => b.addEventListener('click', () => {
+  document.querySelectorAll('.pb').forEach(b=>b.addEventListener('click',()=>{
     document.querySelectorAll('.pb').forEach(x=>x.classList.remove('active'));
-    b.classList.add('active'); periodo = b.dataset.p;
-    const cr = document.getElementById('cr');
-    periodo==='custom' ? cr.classList.add('on') : cr.classList.remove('on');
-    if (periodo !== 'custom') render();
+    b.classList.add('active'); periodo=b.dataset.p;
+    const cr=document.getElementById('cr');
+    periodo==='custom'?cr.classList.add('on'):cr.classList.remove('on');
+    if(periodo!=='custom') render();
   }));
-
-  // Granularidade chart
-  document.querySelectorAll('.gb[data-g]').forEach(b => b.addEventListener('click', () => {
+  document.querySelectorAll('.gb[data-g]').forEach(b=>b.addEventListener('click',()=>{
     document.querySelectorAll('.gb[data-g]').forEach(x=>x.classList.remove('active'));
-    b.classList.add('active'); gran = b.dataset.g;
-    renderChart(filtrar(periodo));
+    b.classList.add('active'); gran=b.dataset.g;
+    renderRoas(filtrar(periodo));
   }));
-
-  // Granularidade tabela
-  document.querySelectorAll('.gb[data-gt]').forEach(b => b.addEventListener('click', () => {
+  document.querySelectorAll('.gb[data-gt]').forEach(b=>b.addEventListener('click',()=>{
     document.querySelectorAll('.gb[data-gt]').forEach(x=>x.classList.remove('active'));
-    b.classList.add('active'); granTbl = b.dataset.gt;
-    renderTabela(filtrar(periodo), granTbl);
+    b.classList.add('active'); granTbl=b.dataset.gt;
+    renderTabela(filtrar(periodo),granTbl);
   }));
 }
 
-function toggleTbl(el) {
-  const body = document.getElementById('tbl-body');
-  const icon = el.querySelector('.tbl-toggle-icon');
-  body.classList.toggle('open');
-  icon.classList.toggle('open');
-}
-
-function applyCustom() {
-  customFrom = document.getElementById('df').value;
-  customTo   = document.getElementById('dt').value;
-  if (customFrom && customTo) render();
+function applyCustom(){
+  customFrom=document.getElementById('df').value;
+  customTo=document.getElementById('dt').value;
+  if(customFrom&&customTo) render();
 }
 
 // ── RENDER ────────────────────────────────────────────────
-function render() {
-  const dias = filtrar(periodo);
-  const ant  = filtrarAnt();
-  const tot  = somar(dias);
-  const totA = somar(ant);
+function render(){
+  const dias=filtrar(periodo);
+  const ant=filtrarAnt();
+  const tot=somar(dias);
+  const totA=somar(ant);
 
+  document.getElementById('narrativa').innerHTML = gerarNarrativa(tot, dias);
   renderHero(tot, totA, dias.length);
   renderAlertas(tot);
   renderFunil(tot, dias.length);
-  renderChart(dias);
-  renderTabela(dias, 'dia');
+  renderRoas(dias);
+  renderTabela(dias,'dia');
   document.querySelectorAll('.gb[data-gt]').forEach(b=>b.classList.remove('active'));
-  const gtDia = document.querySelector('.gb[data-gt="dia"]');
-  if (gtDia) gtDia.classList.add('active');
-  granTbl = 'dia';
+  const gtDia=document.querySelector('.gb[data-gt="dia"]');
+  if(gtDia) gtDia.classList.add('active');
+  granTbl='dia';
 }
 
-// ── HERO KPIs ─────────────────────────────────────────────
-function renderHero(tot, ant, qtd) {
+// ── HERO ──────────────────────────────────────────────────
+function renderHero(tot, ant, qtd){
+  const empty=!qtd;
+
+  // Custo/compra badge
+  const ccBadge = !qtd ? 'badge-nt' :
+    tot.custoC <= METAS.custoCompraOtimo ? 'badge-ok' :
+    tot.custoC <= METAS.custoCompraMax   ? 'badge-warn' : 'badge-bad';
+  const ccBadgeTxt = !qtd ? '—' :
+    tot.custoC <= METAS.custoCompraOtimo ? 'Ótimo' :
+    tot.custoC <= METAS.custoCompraMax   ? 'Aceitável' : 'Acima do limite';
+  const ccCtx = !qtd ? '' : 'Meta: até ' + fR(METAS.custoCompraMax);
+
+  // CTR badge
+  const ctrBadge = !qtd ? 'badge-nt' : tot.ctr >= METAS.ctrMin*1.5 ? 'badge-ok' : tot.ctr >= METAS.ctrMin ? 'badge-warn' : 'badge-bad';
+  const ctrBadgeTxt = !qtd ? '—' : tot.ctr >= METAS.ctrMin*1.5 ? 'Ótimo' : tot.ctr >= METAS.ctrMin ? 'Aceitável' : 'Abaixo';
+  const ctrCtx = !qtd ? '' : 'Meta: acima de ' + METAS.ctrMin.toFixed(1).replace('.',',') + '\u0025';
+
+  // ROAS badge
+  const roasBadge = !qtd ? 'badge-nt' : tot.roas >= METAS.roasOtimo ? 'badge-ok' : tot.roas >= METAS.roasMin ? 'badge-warn' : 'badge-bad';
+  const roasBadgeTxt = !qtd ? '—' : tot.roas >= METAS.roasOtimo ? 'Acima da meta' : tot.roas >= METAS.roasMin ? 'Aceitável' : 'Crítico';
   const roasColor = !qtd ? 'var(--text-2)' : tot.roas >= METAS.roasOtimo ? 'var(--green)' : tot.roas >= METAS.roasMin ? 'var(--amber)' : 'var(--red)';
-  const items = [
-    { label: 'Valor investido',  val: qtd ? fR(tot.valorUsado)  : '—', d: dlt(tot.valorUsado,ant.valorUsado),   inv: true,  color: 'var(--accent)' },
-    { label: 'Valor em compras', val: qtd ? fR(tot.valorCompras): '—', d: dlt(tot.valorCompras,ant.valorCompras),inv: false, color: 'var(--green)'  },
-    { label: 'Compras',          val: qtd ? fN(tot.compras)     : '—', d: dlt(tot.compras,ant.compras),          inv: false, color: 'var(--text)'   },
-    { label: 'ROAS',             val: qtd ? fX(tot.roas)        : '—', d: dlt(tot.roas,ant.roas),                inv: false, color: roasColor        },
+
+  function dBlock(d, inv){
+    if(d===null||empty) return '';
+    const isUp=inv?d<0:d>0;
+    const cls=isUp?'up':'dn', icon=isUp?'↑ ':'↓ ';
+    return '<div class="hk-delta '+cls+'">'+icon+Math.abs(d).toFixed(1)+'% vs anterior</div>';
+  }
+
+  const items=[
+    {
+      label:'Custo por compra',
+      val: empty ? '—' : fR(tot.custoC),
+      badge: ccBadge, badgeTxt: ccBadgeTxt,
+      ctx: ccCtx,
+      delta: dBlock(dlt(tot.custoC, ant.custoC), true),
+      color:'var(--text)',
+    },
+    {
+      label:'CTR — taxa de cliques',
+      val: empty ? '—' : fP(tot.ctr),
+      badge: ctrBadge, badgeTxt: ctrBadgeTxt,
+      ctx: ctrCtx,
+      delta: dBlock(dlt(tot.ctr, ant.ctr), false),
+      color:'var(--text)',
+    },
+    {
+      label:'Valor investido',
+      val: empty ? '—' : fR(tot.valorUsado),
+      badge:'badge-nt', badgeTxt: empty?'—': tot.compras+' compras',
+      ctx: empty?'':fN(tot.impressoes)+' impressões',
+      delta: dBlock(dlt(tot.valorUsado, ant.valorUsado), true),
+      color:'var(--accent)',
+    },
+    {
+      label:'ROAS',
+      val: empty ? '—' : fX(tot.roas),
+      badge: roasBadge, badgeTxt: roasBadgeTxt,
+      ctx: empty?'':'Meta: '+fX(METAS.roasOtimo),
+      delta: dBlock(dlt(tot.roas, ant.roas), false),
+      color: roasColor,
+    },
   ];
-  document.getElementById('hero').innerHTML = items.map((k,i) => {
-    const dv  = k.d !== null ? Math.abs(k.d).toFixed(1)+'%' : null;
-    const isUp = k.inv ? k.d < 0 : k.d > 0;
-    const cls  = k.d === null ? 'nt' : isUp ? 'up' : 'dn';
-    const icon = k.d === null ? '' : isUp ? '↑ ' : '↓ ';
-    const colors = ['var(--accent)','var(--green)','var(--purple)',''];
-    return `<div class="hero-kpi" style="--hc:${colors[i]}">
-      <div class="hk-label">${k.label}</div>
+
+  document.getElementById('hero').innerHTML = items.map(k=>`
+    <div class="hk">
+      <div class="hk-top">
+        <div class="hk-label">${k.label}</div>
+        <div class="hk-badge ${k.badge}">${k.badgeTxt}</div>
+      </div>
       <div class="hk-val" style="color:${k.color}">${k.val}</div>
-      ${dv ? '<div class="hk-delta '+cls+'">'+icon+dv+' vs anterior</div>' : ''}
-    </div>`;
-  }).join('');
+      <div class="hk-ctx">${k.ctx}</div>
+      ${k.delta}
+    </div>`).join('');
 }
 
 // ── ALERTAS ───────────────────────────────────────────────
-function renderAlertas(tot) {
-  const el = document.getElementById('alerts');
-  if (!tot.roas) { el.innerHTML = ''; return; }
+function renderAlertas(tot){
+  const el=document.getElementById('alerts');
+  if(!tot.roas){el.innerHTML='';return;}
+  const list=[];
 
-  const list = [];
-  if (tot.roas >= METAS.roasOtimo)
-    list.push({c:'alert-ok',  t:'ROAS acima da meta',        d:'Campanha gerando retorno acima do esperado', v:fX(tot.roas)});
-  else if (tot.roas >= METAS.roasMin)
-    list.push({c:'alert-warn',t:'ROAS abaixo do ideal',      d:'Meta é '+fX(METAS.roasOtimo)+' — revisar criativos', v:fX(tot.roas)});
+  if(tot.roas>=METAS.roasOtimo)
+    list.push({c:'aok',t:'ROAS acima da meta',d:'Campanha gerando retorno acima de '+fX(METAS.roasOtimo),v:fX(tot.roas)});
+  else if(tot.roas>=METAS.roasMin)
+    list.push({c:'awk',t:'ROAS abaixo do ideal',d:'Meta é '+fX(METAS.roasOtimo)+' — revisar criativos ou segmentação',v:fX(tot.roas)});
   else
-    list.push({c:'alert-bad', t:'ROAS crítico',              d:'Abaixo do mínimo de '+fX(METAS.roasMin), v:fX(tot.roas)});
+    list.push({c:'abd',t:'ROAS crítico',d:'Abaixo do mínimo aceitável de '+fX(METAS.roasMin),v:fX(tot.roas)});
 
-  if (tot.custoC > METAS.custoCompraMax)
-    list.push({c:'alert-bad', t:'Custo por compra elevado',  d:'Acima do limite de '+fR(METAS.custoCompraMax), v:fR(tot.custoC)});
+  if(tot.custoC>METAS.custoCompraMax)
+    list.push({c:'abd',t:'Custo por compra elevado',d:'Acima do limite de '+fR(METAS.custoCompraMax)+' — revisar público e criativos',v:fR(tot.custoC)});
 
-  if (tot.ctr < METAS.ctrMin)
-    list.push({c:'alert-warn',t:'CTR abaixo do esperado',    d:'Criativos podem estar perdendo relevância', v:fP(tot.ctr)});
+  if(tot.ctr<METAS.ctrMin)
+    list.push({c:'awk',t:'CTR baixo',d:'Anúncios com baixo engajamento — considere novos criativos',v:fP(tot.ctr)});
 
-  if (tot.freq > METAS.freqMax)
-    list.push({c:'alert-warn',t:'Frequência alta',           d:'Risco de fadiga criativa no público', v:fX(tot.freq)});
+  if(tot.freq>METAS.freqMax)
+    list.push({c:'awk',t:'Frequência elevada ('+tot.freq.toFixed(1)+'x)',d:'Público vendo o mesmo anúncio com muita frequência',v:''});
 
-  el.innerHTML = list.map(a =>
+  el.innerHTML=list.map(a=>
     `<div class="alert ${a.c}">
-      <div class="alert-dot"></div>
-      <div class="alert-body">
-        <div class="alert-title">${a.t}</div>
-        <div class="alert-desc">${a.d}</div>
-      </div>
-      <div class="alert-num">${a.v}</div>
-    </div>`
-  ).join('');
+      <div class="a-dot"></div>
+      <div class="a-body"><div class="a-title">${a.t}</div><div class="a-desc">${a.d}</div></div>
+      ${a.v?'<div class="a-val">'+a.v+'</div>':''}
+    </div>`).join('');
 }
 
 // ── FUNIL ─────────────────────────────────────────────────
-function renderFunil(tot, qtd) {
-  const el = document.getElementById('funnel');
-  if (!qtd) { el.innerHTML = '<div class="empty">Sem dados no período</div>'; return; }
-  const steps = [
-    {n:'Cliques',        v:tot.cliquesLink,  c:'var(--accent)'},
-    {n:'Add carrinho',   v:tot.addCarrinho,  c:'var(--purple)'},
-    {n:'Resultados',     v:tot.resultados,   c:'#60a5fa'},
-    {n:'Compras',        v:tot.compras,      c:'var(--green)'},
+function renderFunil(tot,qtd){
+  const el=document.getElementById('funnel');
+  if(!qtd){el.innerHTML='<div class="empty">Sem dados no período</div>';return;}
+  const steps=[
+    {n:'Cliques (link)',  v:tot.cliquesLink, c:'var(--accent)'},
+    {n:'Add carrinho',    v:tot.addCarrinho, c:'var(--purple)'},
+    {n:'Resultados',      v:tot.resultados,  c:'#60a5fa'},
+    {n:'Compras',         v:tot.compras,     c:'var(--green)'},
   ];
-  const max = steps[0].v || 1;
-  el.innerHTML = steps.map((s,i) => {
-    const pct  = Math.round(s.v/max*100);
-    const taxa = i===0 ? '' : Math.round(s.v/(steps[i-1].v||1)*100)+'% do anterior';
-    return (i>0?'<div class="farrow">↓ '+taxa+'</div>':'')+
-      '<div class="fs">'+
-        '<div class="fl"><div class="fn">'+s.n+'</div><div class="fnum">'+fN(s.v)+'</div></div>'+
-        '<div class="ftrack"><div class="fbar" style="width:'+pct+'%;background:'+s.c+'">'+(pct>20?pct+'%':'')+'</div></div>'+
-        '<div class="fpct">'+pct+'%</div>'+
-      '</div>';
+  const max=steps[0].v||1;
+  el.innerHTML=steps.map((s,i)=>{
+    const pct=Math.round(s.v/max*100);
+    const taxa=i===0?'':Math.round(s.v/(steps[i-1].v||1)*100)+'% do anterior';
+    return(i>0?'<div class="farrow">↓ '+taxa+'</div>':'')+
+    '<div class="fs">'+
+      '<div class="fl"><div class="fn">'+s.n+'</div><div class="fnum">'+fN(s.v)+'</div></div>'+
+      '<div class="ftrack"><div class="fbar" style="width:'+pct+'%;background:'+s.c+'">'+(pct>20?pct+'%':'')+'</div></div>'+
+      '<div class="fpct">'+pct+'%</div>'+
+    '</div>';
   }).join('');
 }
 
-// ── CHART ─────────────────────────────────────────────────
-function renderChart(dias) {
-  if (charts.inv) { charts.inv.destroy(); delete charts.inv; }
-  const rows = agrupar(dias, gran);
-  if (!rows.length) return;
-  charts.inv = new Chart(document.getElementById('cInvest'), {
-    type: 'line',
-    data: { labels: rows.map(r=>r.label), datasets: [
-      { label:'Valor usado',   data:rows.map(r=>r.valorUsado||0),   borderColor:'#e63946', backgroundColor:'rgba(230,57,70,0.07)',  fill:true, tension:0.4, pointRadius:rows.length>20?0:3, borderWidth:2 },
-      { label:'Vlr compras',   data:rows.map(r=>r.valorCompras||0), borderColor:'#22c55e', backgroundColor:'rgba(34,197,94,0.07)',  fill:true, tension:0.4, pointRadius:rows.length>20?0:3, borderWidth:2, borderDash:[5,4] },
+// ── CHART ROAS ────────────────────────────────────────────
+function renderRoas(dias){
+  if(charts.roas){charts.roas.destroy();delete charts.roas;}
+  const rows=agrupar(dias,gran);
+  if(!rows.length) return;
+  const roasData=rows.map(r=>+((r.roas||0).toFixed(2)));
+  const metaData=rows.map(()=>METAS.roasOtimo);
+
+  charts.roas=new Chart(document.getElementById('cRoas'),{
+    type:'line',
+    data:{labels:rows.map(r=>r.label),datasets:[
+      {
+        label:'ROAS',
+        data:roasData,
+        borderColor:'#a78bfa',
+        backgroundColor:'rgba(167,139,250,0.07)',
+        fill:true, tension:0.4,
+        borderWidth:2,
+        pointRadius:rows.length>20?0:5,
+        pointBackgroundColor:roasData.map(v=>v>=METAS.roasOtimo?'#22c55e':v>=METAS.roasMin?'#f59e0b':'#ef4444'),
+        pointBorderColor:'transparent',
+      },
+      {
+        label:'Meta ('+fX(METAS.roasOtimo)+')',
+        data:metaData,
+        borderColor:'rgba(230,57,70,0.5)',
+        backgroundColor:'transparent',
+        borderDash:[5,4], borderWidth:1.5, pointRadius:0,
+      },
     ]},
-    options: {
+    options:{
       responsive:true, maintainAspectRatio:false,
       interaction:{mode:'index',intersect:false},
-      plugins:{legend:{display:false},tooltip:{backgroundColor:'#18181d',borderColor:'rgba(255,255,255,0.08)',borderWidth:1,padding:10,callbacks:{label:ctx=>ctx.dataset.label+': '+fR(ctx.parsed.y)}}},
+      plugins:{
+        legend:{display:false},
+        tooltip:{
+          backgroundColor:'#18181d',borderColor:'rgba(255,255,255,0.08)',borderWidth:1,padding:10,
+          callbacks:{label:ctx=>ctx.dataset.label+': '+fX(ctx.parsed.y)}
+        }
+      },
       scales:{
         x:{grid:{color:'rgba(255,255,255,0.02)'},ticks:{font:{size:10},color:'#4a4a5a',maxTicksLimit:14,maxRotation:0}},
-        y:{grid:{color:'rgba(255,255,255,0.03)'},ticks:{font:{size:10},color:'#4a4a5a',callback:v=>'R$'+(v>=1000?(v/1000).toFixed(0)+'k':v)}}
+        y:{grid:{color:'rgba(255,255,255,0.03)'},ticks:{font:{size:10},color:'#4a4a5a',callback:v=>fX(v)},min:0}
       }
     }
   });
 }
 
 // ── TABELA ────────────────────────────────────────────────
-function renderTabela(dias, g) {
-  const rows = agrupar(dias, g);
-  const sub  = document.getElementById('tbl-sub');
-  if (sub) sub.textContent = rows.length ? rows.length+' '+(g==='dia'?'dias':g==='semana'?'semanas':'meses') : 'Sem dados';
-
-  if (!rows.length) {
-    document.getElementById('tbody').innerHTML = '<tr><td colspan="15" style="text-align:center;padding:24px;color:var(--text-3)">Sem dados no período</td></tr>';
+function renderTabela(dias,g){
+  const rows=agrupar(dias,g);
+  const sub=document.getElementById('tbl-sub');
+  if(sub) sub.textContent=rows.length?rows.length+' '+(g==='dia'?'dias':g==='semana'?'semanas':'meses')+' no período':'Sem dados';
+  if(!rows.length){
+    document.getElementById('tbody').innerHTML='<tr><td colspan="15" style="text-align:center;padding:24px;color:var(--text-3)">Sem dados no período</td></tr>';
     return;
   }
-  document.getElementById('tbody').innerHTML = rows.map(r => `
+  document.getElementById('tbody').innerHTML=rows.map(r=>`
     <tr>
       <td class="dc">${r.label}</td>
       <td class="r">${fR(r.valorUsado||0)}</td>
