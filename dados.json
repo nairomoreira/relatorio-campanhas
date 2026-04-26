@@ -1,20 +1,12 @@
 {
-  "atualizadoEm": "26/04/2026 17:22",
+  "atualizadoEm": "26/04/2025",
   "dias": [
-    {
-      "data": "2026-04-26",
-      "valorUsado": 312.5,
-      "impressoes": 74200,
-      "alcance": 31400,
-      "cliquesLink": 980,
-      "cliquesTodos": 1240,
-      "ctr": 1.32,
-      "resultados": 28,
-      "addCarrinho": 74,
-      "custoAddCarrinho": 4.22,
-      "compras": 18,
-      "valorCompras": 3240,
-      "custoCompra": 17.36
-    }
+    { "data": "2025-04-20", "valorUsado": 312.50, "impressoes": 74200, "alcance": 31400, "cliquesLink": 980, "cliquesTodos": 1240, "ctr": 1.32, "resultados": 28, "addCarrinho": 74, "custoAddCarrinho": 4.22, "compras": 18, "valorCompras": 3240.00, "custoCompra": 17.36 },
+    { "data": "2025-04-21", "valorUsado": 298.00, "impressoes": 68900, "alcance": 29100, "cliquesLink": 910, "cliquesTodos": 1150, "ctr": 1.32, "resultados": 24, "addCarrinho": 61, "custoAddCarrinho": 4.89, "compras": 14, "valorCompras": 2520.00, "custoCompra": 21.29 },
+    { "data": "2025-04-22", "valorUsado": 342.00, "impressoes": 81500, "alcance": 34500, "cliquesLink": 1050, "cliquesTodos": 1320, "ctr": 1.29, "resultados": 31, "addCarrinho": 82, "custoAddCarrinho": 4.17, "compras": 20, "valorCompras": 3600.00, "custoCompra": 17.10 },
+    { "data": "2025-04-23", "valorUsado": 307.50, "impressoes": 73100, "alcance": 30900, "cliquesLink": 940, "cliquesTodos": 1190, "ctr": 1.29, "resultados": 26, "addCarrinho": 68, "custoAddCarrinho": 4.52, "compras": 16, "valorCompras": 2880.00, "custoCompra": 19.22 },
+    { "data": "2025-04-24", "valorUsado": 404.00, "impressoes": 95800, "alcance": 40500, "cliquesLink": 1240, "cliquesTodos": 1560, "ctr": 1.29, "resultados": 38, "addCarrinho": 99, "custoAddCarrinho": 4.08, "compras": 25, "valorCompras": 4500.00, "custoCompra": 16.16 },
+    { "data": "2025-04-25", "valorUsado": 378.50, "impressoes": 89700, "alcance": 37900, "cliquesLink": 1160, "cliquesTodos": 1460, "ctr": 1.29, "resultados": 35, "addCarrinho": 91, "custoAddCarrinho": 4.16, "compras": 22, "valorCompras": 3960.00, "custoCompra": 17.20 },
+    { "data": "2025-04-26", "valorUsado": 339.00, "impressoes": 80400, "alcance": 34000, "cliquesLink": 1040, "cliquesTodos": 1310, "ctr": 1.29, "resultados": 30, "addCarrinho": 79, "custoAddCarrinho": 4.29, "compras": 19, "valorCompras": 3420.00, "custoCompra": 17.84 }
   ]
 }
