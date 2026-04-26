@@ -7,6 +7,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;600;700&family=DM+Sans:wght@400;500&family=DM+Mono:wght@400;500&display=swap');
+
 :root {
   --bg:#0d0d0f; --surface:#141418; --surface2:#1c1c22; --surface3:#242430;
   --border:rgba(255,255,255,0.06); --border-md:rgba(255,255,255,0.12);
@@ -22,6 +23,19 @@
 *{box-sizing:border-box;margin:0;padding:0;}
 body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);font-size:14px;min-height:100vh;}
 
+/* ANIMAÇÕES */
+@keyframes rot{to{transform:rotate(360deg)}}
+@keyframes fadeUp{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.5}}
+@keyframes countUp{from{opacity:0}to{opacity:1}}
+.fade-up{animation:fadeUp .4s ease both;}
+.fade-up-1{animation-delay:.05s}
+.fade-up-2{animation-delay:.1s}
+.fade-up-3{animation-delay:.15s}
+.fade-up-4{animation-delay:.2s}
+.fade-up-5{animation-delay:.25s}
+
+/* HEADER */
 .header{background:var(--surface);border-bottom:1px solid var(--border);padding:0 28px;display:flex;align-items:center;justify-content:space-between;height:58px;position:sticky;top:0;z-index:20;}
 .header-brand{display:flex;align-items:center;gap:12px;}
 .ax-badge{background:linear-gradient(135deg,var(--accent),var(--accent2));color:white;font-family:'Rajdhani',sans-serif;font-size:13px;font-weight:700;letter-spacing:0.08em;padding:5px 10px;border-radius:6px;}
@@ -29,6 +43,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);fon
 .brand-sub{font-size:11px;color:var(--text-3);margin-top:1px;}
 .last-update{font-size:11px;color:var(--text-3);font-family:'DM Mono',monospace;}
 
+/* PERIOD BAR */
 .period-bar{background:var(--surface);border-bottom:1px solid var(--border);padding:0 28px;display:flex;align-items:center;flex-wrap:wrap;}
 .period-btn{font-family:'DM Sans',sans-serif;font-size:12px;font-weight:500;padding:14px 16px;border:none;background:transparent;color:var(--text-2);cursor:pointer;border-bottom:2px solid transparent;transition:all .15s;white-space:nowrap;}
 .period-btn:hover{color:var(--text);}
@@ -40,10 +55,48 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);fon
 
 .main{padding:20px 28px 48px;display:flex;flex-direction:column;gap:16px;}
 
-.compare-strip{background:var(--accent-bg);border:1px solid rgba(230,57,70,0.2);border-radius:var(--r-sm);padding:8px 14px;font-size:12px;color:var(--accent);display:flex;align-items:center;gap:8px;}
+/* RESUMO EXECUTIVO */
+.exec-summary{
+  background:linear-gradient(135deg,rgba(230,57,70,0.15) 0%,rgba(255,107,53,0.08) 100%);
+  border:1px solid rgba(230,57,70,0.25);
+  border-radius:var(--r);
+  padding:20px 24px;
+  display:grid;
+  grid-template-columns:1fr auto;
+  gap:16px;
+  align-items:center;
+}
+.exec-title{font-family:'Rajdhani',sans-serif;font-size:11px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--accent);margin-bottom:12px;}
+.exec-metrics{display:flex;gap:32px;flex-wrap:wrap;}
+.exec-metric{}
+.exec-label{font-size:10px;color:var(--text-3);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:4px;}
+.exec-val{font-family:'Rajdhani',sans-serif;font-size:32px;font-weight:700;letter-spacing:-0.01em;line-height:1;}
+.exec-sub{font-size:11px;color:var(--text-2);margin-top:4px;}
+.exec-divider{width:1px;background:rgba(255,255,255,0.08);align-self:stretch;}
+.exec-health{text-align:center;padding:0 8px;}
+.health-label{font-size:10px;color:var(--text-3);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:8px;}
+.health-score{font-family:'Rajdhani',sans-serif;font-size:48px;font-weight:700;line-height:1;}
+.health-desc{font-size:11px;color:var(--text-2);margin-top:4px;}
 
+/* ALERTAS */
+.alerts-grid{display:flex;flex-direction:column;gap:8px;}
+.alert{
+  display:flex;align-items:center;gap:12px;
+  padding:10px 14px;border-radius:var(--r-sm);
+  border:1px solid; font-size:12px;
+}
+.alert-ok{background:var(--green-bg);border-color:rgba(34,197,94,0.2);color:var(--green);}
+.alert-warn{background:var(--amber-bg);border-color:rgba(245,158,11,0.2);color:var(--amber);}
+.alert-bad{background:var(--red-bg);border-color:rgba(239,68,68,0.2);color:var(--red);}
+.alert-icon{font-size:14px;flex-shrink:0;}
+.alert-text strong{display:block;font-weight:600;margin-bottom:1px;}
+.alert-text span{opacity:.8;}
+.alert-val{margin-left:auto;font-family:'DM Mono',monospace;font-weight:600;font-size:13px;}
+
+/* KPI GRID */
 .kpi-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(148px,1fr));gap:10px;}
-.kpi{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:14px 16px;position:relative;overflow:hidden;}
+.kpi{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:14px 16px;position:relative;overflow:hidden;transition:border-color .2s;}
+.kpi:hover{border-color:var(--border-md);}
 .kpi-accent{position:absolute;top:0;left:0;right:0;height:2px;}
 .kpi-label{font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:0.07em;color:var(--text-3);margin-bottom:6px;}
 .kpi-val{font-size:21px;font-weight:700;font-family:'Rajdhani',sans-serif;letter-spacing:0.01em;line-height:1.1;}
@@ -52,7 +105,9 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);fon
 .dn{background:var(--red-bg);color:var(--red);}
 .nt{background:var(--surface2);color:var(--text-3);}
 
-.charts-grid{display:grid;grid-template-columns:2fr 1fr;gap:16px;}
+/* CHARTS */
+.charts-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+.charts-grid-3{display:grid;grid-template-columns:2fr 1fr;gap:16px;}
 .card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:18px 20px;}
 .card-title{font-family:'Rajdhani',sans-serif;font-size:15px;font-weight:700;letter-spacing:0.03em;}
 .card-sub{font-size:11px;color:var(--text-3);margin-top:2px;}
@@ -65,16 +120,23 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);fon
 .leg{display:flex;align-items:center;gap:5px;font-size:11px;color:var(--text-2);}
 .leg-sq{width:8px;height:8px;border-radius:2px;flex-shrink:0;}
 
+/* ROAS TARGET LINE */
+.roas-meta-ctrl{display:flex;align-items:center;gap:8px;margin-bottom:12px;}
+.roas-meta-ctrl label{font-size:11px;color:var(--text-3);}
+.roas-meta-ctrl input{width:60px;font-family:'DM Mono',monospace;font-size:11px;padding:3px 8px;border:1px solid var(--border-md);border-radius:4px;background:var(--surface2);color:var(--text);text-align:center;}
+
+/* FUNIL */
 .funnel{display:flex;flex-direction:column;gap:8px;}
 .funnel-step{display:flex;align-items:center;gap:10px;}
 .funnel-label{min-width:110px;}
 .funnel-name{font-size:11px;font-weight:500;color:var(--text);}
 .funnel-num{font-size:10px;color:var(--text-3);font-family:'DM Mono',monospace;}
 .funnel-track{flex:1;height:28px;background:var(--surface2);border-radius:5px;overflow:hidden;}
-.funnel-bar{height:100%;border-radius:5px;display:flex;align-items:center;padding-left:10px;font-size:10px;font-weight:700;color:white;transition:width .5s cubic-bezier(.16,1,.3,1);}
+.funnel-bar{height:100%;border-radius:5px;display:flex;align-items:center;padding-left:10px;font-size:10px;font-weight:700;color:white;transition:width .6s cubic-bezier(.16,1,.3,1);}
 .funnel-pct{min-width:36px;text-align:right;font-size:10px;font-family:'DM Mono',monospace;color:var(--text-3);}
 .funnel-arrow{font-size:9px;color:var(--text-3);padding-left:120px;}
 
+/* TABLE */
 .tbl-wrap{overflow-x:auto;}
 table{width:100%;border-collapse:collapse;font-size:12px;}
 th{font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.05em;color:var(--text-3);padding:8px 10px;border-bottom:1px solid var(--border);text-align:left;white-space:nowrap;}
@@ -88,13 +150,14 @@ tr:hover td{background:var(--surface2);}
 .val-dn{color:var(--red);}
 
 .empty-state{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:160px;gap:8px;color:var(--text-3);font-size:13px;text-align:center;}
-
 .error-box{background:var(--red-bg);border:1px solid rgba(239,68,68,.2);border-radius:var(--r);padding:20px;color:var(--red);font-size:13px;line-height:1.6;max-width:480px;margin:32px;}
 
 @media(max-width:720px){
   .header,.period-bar,.main{padding-left:16px;padding-right:16px;}
-  .charts-grid{grid-template-columns:1fr;}
+  .charts-grid,.charts-grid-3{grid-template-columns:1fr;}
   .kpi-grid{grid-template-columns:repeat(2,1fr);}
+  .exec-summary{grid-template-columns:1fr;}
+  .exec-divider{display:none;}
 }
 </style>
 </head>
@@ -125,124 +188,148 @@ tr:hover td{background:var(--surface2);}
   </div>
 </div>
 
-<div id="app"></div>
+<div id="app">
+  <div style="display:flex;align-items:center;justify-content:center;min-height:60vh;flex-direction:column;gap:12px;color:var(--text-3)">
+    <div style="width:28px;height:28px;border:2px solid var(--border-md);border-top-color:var(--accent);border-radius:50%;animation:rot .7s linear infinite"></div>
+    <span>Carregando dados…</span>
+  </div>
+</div>
 
 <script>
-// ── CONFIGURAÇÃO ──────────────────────────────────────────
-// Após publicar no GitHub, troque por:
+// ── CONFIG ─────────────────────────────────────────────────
 const DADOS_URL = 'https://raw.githubusercontent.com/nairomoreira/relatorio-campanhas/main/dados.json';
 
-// ── ESTADO ────────────────────────────────────────────────
-let rawData = [], periodoAtivo = '7d', granAtiva = 'dia', charts = {};
+// Metas configuráveis — ajuste conforme o objetivo da campanha
+const METAS = {
+  roasMin:       2.0,   // ROAS mínimo aceitável
+  roasOtimo:     3.0,   // ROAS ótimo
+  custoCompraMax: 30,   // Custo por compra máximo (R$)
+  ctrMin:        1.0,   // CTR mínimo (%)
+  freqMax:       4.0,   // Frequência máxima
+};
+
+// ── ESTADO ─────────────────────────────────────────────────
+let rawData = [], periodoAtivo = '7d', granAtiva = 'dia', granTblAtiva = 'dia';
+let roasMeta = METAS.roasOtimo;
+let charts = {};
 let customFrom = null, customTo = null;
 
-// ── BOOT ──────────────────────────────────────────────────
+// ── BOOT ───────────────────────────────────────────────────
 async function init() {
-  showLoading();
   try {
     const ctrl = new AbortController();
-    setTimeout(() => ctrl.abort(), 8000); // timeout 8s
+    setTimeout(() => ctrl.abort(), 10000);
     const res = await fetch(DADOS_URL + '?t=' + Date.now(), { signal: ctrl.signal });
     if (!res.ok) throw new Error('HTTP ' + res.status);
     const json = await res.json();
     rawData = (json.dias || []).filter(d => d && d.data).sort((a,b) => a.data.localeCompare(b.data));
     document.getElementById('last-update').textContent =
-      json.atualizadoEm && json.atualizadoEm !== '—' ? 'Atualizado em ' + json.atualizadoEm : 'Sem data de atualização';
+      json.atualizadoEm && json.atualizadoEm !== '—' ? 'Atualizado em ' + json.atualizadoEm : '';
     buildApp();
     render();
   } catch(e) {
-    const msg = e.name === 'AbortError' ? 'Tempo limite excedido ao carregar dados.json' : e.message;
+    const msg = e.name === 'AbortError' ? 'Tempo limite excedido' : e.message;
     document.getElementById('app').innerHTML =
-      `<div class="error-box"><strong style="display:block;margin-bottom:6px">Não foi possível carregar os dados</strong>
-      Verifique se <code>dados.json</code> está no repositório GitHub e foi publicado corretamente.<br><br>
-      Erro: ${msg}</div>`;
+      '<div class="error-box"><strong style="display:block;margin-bottom:6px">Erro ao carregar dados</strong>Verifique se dados.json foi publicado no GitHub.<br><br>Erro: ' + msg + '</div>';
   }
 }
 
-function showLoading() {
-  document.getElementById('app').innerHTML =
-    `<div style="display:flex;align-items:center;justify-content:center;min-height:60vh;flex-direction:column;gap:12px;color:var(--text-3)">
-      <div style="width:28px;height:28px;border:2px solid var(--border-md);border-top-color:var(--accent);border-radius:50%;animation:rot .7s linear infinite"></div>
-      <span>Carregando dados…</span>
-    </div>
-    <style>@keyframes rot{to{transform:rotate(360deg)}}</style>`;
-}
-
-// ── FILTROS DE PERÍODO ────────────────────────────────────
+// ── FILTROS ────────────────────────────────────────────────
 function filtrar(periodo) {
   if (!rawData.length) return [];
   const ultimo = new Date(rawData[rawData.length-1].data + 'T00:00:00');
   let de, ate;
-  if      (periodo === '7d')     { ate = ultimo; de = new Date(ultimo); de.setDate(de.getDate()-6); }
-  else if (periodo === '30d')    { ate = ultimo; de = new Date(ultimo); de.setDate(de.getDate()-29); }
-  else if (periodo === 'mes')    { de = new Date(ultimo.getFullYear(), ultimo.getMonth(), 1); ate = ultimo; }
-  else if (periodo === 'mes-ant'){ de = new Date(ultimo.getFullYear(), ultimo.getMonth()-1, 1); ate = new Date(ultimo.getFullYear(), ultimo.getMonth(), 0); }
-  else if (periodo === 'custom' && customFrom && customTo){ de = new Date(customFrom); ate = new Date(customTo); }
+  if      (periodo==='7d')     { ate=ultimo; de=new Date(ultimo); de.setDate(de.getDate()-6); }
+  else if (periodo==='30d')    { ate=ultimo; de=new Date(ultimo); de.setDate(de.getDate()-29); }
+  else if (periodo==='mes')    { de=new Date(ultimo.getFullYear(),ultimo.getMonth(),1); ate=ultimo; }
+  else if (periodo==='mes-ant'){ de=new Date(ultimo.getFullYear(),ultimo.getMonth()-1,1); ate=new Date(ultimo.getFullYear(),ultimo.getMonth(),0); }
+  else if (periodo==='custom'&&customFrom&&customTo){ de=new Date(customFrom); ate=new Date(customTo); }
   else return rawData;
-  const dS = de.toISOString().slice(0,10), aS = ate.toISOString().slice(0,10);
-  return rawData.filter(d => d.data >= dS && d.data <= aS);
+  const dS=de.toISOString().slice(0,10), aS=ate.toISOString().slice(0,10);
+  return rawData.filter(d=>d.data>=dS&&d.data<=aS);
 }
 
 function filtrarAnterior() {
-  const atual = filtrar(periodoAtivo);
+  const atual=filtrar(periodoAtivo);
   if (!atual.length) return [];
-  const de  = new Date(atual[0].data + 'T00:00:00');
-  const ate = new Date(atual[atual.length-1].data + 'T00:00:00');
-  const diff = Math.round((ate-de)/864e5) + 1;
-  const deA = new Date(de); deA.setDate(deA.getDate()-diff);
-  const ateA = new Date(de); ateA.setDate(ateA.getDate()-1);
-  return rawData.filter(d => d.data >= deA.toISOString().slice(0,10) && d.data <= ateA.toISOString().slice(0,10));
+  const de=new Date(atual[0].data+'T00:00:00'), ate=new Date(atual[atual.length-1].data+'T00:00:00');
+  const diff=Math.round((ate-de)/864e5)+1;
+  const deA=new Date(de); deA.setDate(deA.getDate()-diff);
+  const ateA=new Date(de); ateA.setDate(ateA.getDate()-1);
+  return rawData.filter(d=>d.data>=deA.toISOString().slice(0,10)&&d.data<=ateA.toISOString().slice(0,10));
 }
 
-// ── MÉTRICAS ──────────────────────────────────────────────
-const SOMAR = ['valorUsado','impressoes','alcance','cliquesLink','cliquesTodos','resultados','addCarrinho','compras','valorCompras'];
-function somar(dias) {
-  const t = SOMAR.reduce((a,m) => { a[m] = dias.reduce((s,d) => s+(+d[m]||0), 0); return a; }, {});
-  t.ctr            = t.impressoes   ? (t.cliquesLink / t.impressoes * 100) : 0;
-  t.custoAddCarrinho = t.addCarrinho ? (t.valorUsado / t.addCarrinho) : 0;
-  t.custoCompra    = t.compras      ? (t.valorUsado / t.compras) : 0;
-  t.roas           = t.valorUsado   ? (t.valorCompras / t.valorUsado) : 0;
+// ── AGREGAR ────────────────────────────────────────────────
+const SOMAR=['valorUsado','impressoes','alcance','cliquesLink','cliquesTodos','resultados','addCarrinho','compras','valorCompras'];
+function somar(dias){
+  const t=SOMAR.reduce((a,m)=>{a[m]=dias.reduce((s,d)=>s+(+d[m]||0),0);return a;},{});
+  t.ctr             = t.impressoes    ? t.cliquesLink/t.impressoes*100 : 0;
+  t.custoAddCarrinho= t.addCarrinho   ? t.valorUsado/t.addCarrinho : 0;
+  t.custoCompra     = t.compras       ? t.valorUsado/t.compras : 0;
+  t.roas            = t.valorUsado    ? t.valorCompras/t.valorUsado : 0;
+  t.frequencia      = t.alcance       ? t.impressoes/t.alcance : 0;
+  t.cpm             = t.impressoes    ? t.valorUsado/t.impressoes*1000 : 0;
   return t;
 }
 
 function agrupar(dias, gran) {
-  if (gran === 'dia') return dias.map(d => ({ label: fmtDate(d.data), ...d, ...somar([d]) }));
-  const map = {};
-  dias.forEach(d => {
+  if (gran==='dia') return dias.map(d=>({label:fmtDate(d.data),...d,...somar([d])}));
+  const map={};
+  dias.forEach(d=>{
     let key;
-    if (gran === 'semana') {
-      const dt = new Date(d.data+'T00:00:00'), dom = new Date(dt);
-      dom.setDate(dt.getDate()-dt.getDay()); key = dom.toISOString().slice(0,10);
-    } else key = d.data.slice(0,7);
-    if (!map[key]) map[key] = [];
+    if (gran==='semana'){
+      const dt=new Date(d.data+'T00:00:00'),dom=new Date(dt);
+      dom.setDate(dt.getDate()-dt.getDay()); key=dom.toISOString().slice(0,10);
+    } else key=d.data.slice(0,7);
+    if(!map[key]) map[key]=[];
     map[key].push(d);
   });
-  return Object.entries(map).sort((a,b)=>a[0].localeCompare(b[0])).map(([k,v]) => ({
-    label: gran==='semana' ? 'Sem '+fmtDate(k) : fmtMes(k), ...somar(v)
+  return Object.entries(map).sort((a,b)=>a[0].localeCompare(b[0])).map(([k,v])=>({
+    label:gran==='semana'?'Sem '+fmtDate(k):fmtMes(k),...somar(v)
   }));
 }
 
-// ── FORMATAÇÃO ────────────────────────────────────────────
-function fmtDate(s){ const[,m,d]=s.split('-'); return d+'/'+m; }
-function fmtMes(s){ const ms=['Jan','Fev','Mar','Abr','Mai','Jun','Jul','Ago','Set','Out','Nov','Dez'],[,m]=s.split('-'); return ms[+m-1]; }
-function fmtN(n){ if(n>=1e6) return (n/1e6).toFixed(1).replace('.',',')+' M'; if(n>=1e3) return n.toLocaleString('pt-BR'); return String(Math.round(n)); }
-function fmtR(n){ return 'R$\u00a0'+Number(n).toLocaleString('pt-BR',{minimumFractionDigits:2,maximumFractionDigits:2}); }
-function fmtPct(n){ return Number(n).toFixed(2).replace('.',',')+'%'; }
-function fmtX(n){ return Number(n).toFixed(2).replace('.',',')+'x'; }
-function delta(a,b){ return b ? (a-b)/b*100 : null; }
+// ── FORMATOS ───────────────────────────────────────────────
+function fmtDate(s){const[,m,d]=s.split('-');return d+'/'+m;}
+function fmtMes(s){const ms=['Jan','Fev','Mar','Abr','Mai','Jun','Jul','Ago','Set','Out','Nov','Dez'],[,m]=s.split('-');return ms[+m-1];}
+function fmtN(n){if(n>=1e6)return(n/1e6).toFixed(1).replace('.',',')+' M';if(n>=1e3)return n.toLocaleString('pt-BR');return String(Math.round(n));}
+function fmtR(n){return 'R$\u00a0'+Number(n).toLocaleString('pt-BR',{minimumFractionDigits:2,maximumFractionDigits:2});}
+function fmtPct(n){return Number(n).toFixed(2).replace('.',',')+'\u0025';}
+function fmtX(n){return Number(n).toFixed(2).replace('.',',')+'x';}
+function delta(a,b){return b?(a-b)/b*100:null;}
 
-// ── BUILD APP ─────────────────────────────────────────────
+// ── SCORE DE SAÚDE (0-100) ─────────────────────────────────
+function calcHealth(tot) {
+  if (!tot.roas) return { score: 0, label: '—', color: 'var(--text-3)' };
+  let pts = 0;
+  // ROAS (40 pts)
+  if      (tot.roas >= METAS.roasOtimo)  pts += 40;
+  else if (tot.roas >= METAS.roasMin)    pts += 20;
+  // Custo/compra (30 pts)
+  if      (tot.custoCompra <= METAS.custoCompraMax * 0.7) pts += 30;
+  else if (tot.custoCompra <= METAS.custoCompraMax)        pts += 15;
+  // CTR (20 pts)
+  if      (tot.ctr >= METAS.ctrMin * 1.5) pts += 20;
+  else if (tot.ctr >= METAS.ctrMin)        pts += 10;
+  // Frequência (10 pts)
+  if (tot.frequencia <= METAS.freqMax) pts += 10;
+
+  const label = pts >= 80 ? 'Ótimo' : pts >= 50 ? 'Bom' : pts >= 30 ? 'Regular' : 'Atenção';
+  const color = pts >= 80 ? 'var(--green)' : pts >= 50 ? 'var(--amber)' : 'var(--red)';
+  return { score: pts, label, color };
+}
+
+// ── BUILD APP ──────────────────────────────────────────────
 function buildApp() {
   document.getElementById('app').innerHTML = `
   <div class="main">
-    <div class="compare-strip" id="compare-strip" style="display:none"></div>
-
-    <div class="kpi-grid" id="kpis"></div>
-
-    <div class="charts-grid">
+    <div class="exec-summary fade-up fade-up-1" id="exec-summary"></div>
+    <div class="alerts-grid fade-up fade-up-2" id="alerts"></div>
+    <div class="kpi-grid fade-up fade-up-3" id="kpis"></div>
+    <div class="charts-grid fade-up fade-up-4">
       <div class="card">
-        <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:8px;margin-bottom:14px">
-          <div><div class="card-title">Investimento vs Valor de compras</div><div class="card-sub">Evolução no período selecionado</div></div>
+        <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:8px;margin-bottom:8px">
+          <div><div class="card-title">Investimento vs Valor de compras</div><div class="card-sub">Evolução no período</div></div>
           <div class="gran-toggle">
             <button class="gran-btn active" data-gran="dia">Dia</button>
             <button class="gran-btn" data-gran="semana">Sem</button>
@@ -251,19 +338,43 @@ function buildApp() {
         </div>
         <div class="legend">
           <span class="leg"><span class="leg-sq" style="background:var(--accent)"></span>Valor usado</span>
-          <span class="leg"><span class="leg-sq" style="background:var(--green)"></span>Valor de compras</span>
+          <span class="leg"><span class="leg-sq" style="background:var(--green)"></span>Valor compras</span>
         </div>
-        <div style="position:relative;height:220px"><canvas id="chartMain" role="img" aria-label="Investimento e compras"></canvas></div>
+        <div style="position:relative;height:200px"><canvas id="chartInvest" role="img" aria-label="Investimento e compras"></canvas></div>
       </div>
       <div class="card">
-        <div style="margin-bottom:14px"><div class="card-title">Funil de conversão</div><div class="card-sub">Do clique à compra efetivada</div></div>
+        <div style="margin-bottom:8px"><div class="card-title">Funil de conversão</div><div class="card-sub">Do clique à compra</div></div>
         <div class="funnel" id="funnel"></div>
       </div>
     </div>
-
-    <div class="card">
+    <div class="charts-grid fade-up fade-up-5">
+      <div class="card">
+        <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:8px;margin-bottom:8px">
+          <div><div class="card-title">Evolução do ROAS</div><div class="card-sub">Com linha de meta configurável</div></div>
+        </div>
+        <div class="roas-meta-ctrl">
+          <label>Meta de ROAS:</label>
+          <input type="number" id="roas-meta-input" value="3" min="0.1" step="0.1" onchange="updateRoasMeta(this.value)">
+          <span style="font-size:11px;color:var(--text-3)">= linha vermelha no gráfico</span>
+        </div>
+        <div class="legend">
+          <span class="leg"><span class="leg-sq" style="background:var(--purple)"></span>ROAS diário</span>
+          <span class="leg"><span class="leg-sq" style="background:var(--accent);opacity:.7"></span>Meta</span>
+        </div>
+        <div style="position:relative;height:200px"><canvas id="chartRoas" role="img" aria-label="Evolução do ROAS"></canvas></div>
+      </div>
+      <div class="card">
+        <div style="margin-bottom:8px"><div class="card-title">CTR e CPM</div><div class="card-sub">Qualidade e custo de entrega</div></div>
+        <div class="legend">
+          <span class="leg"><span class="leg-sq" style="background:var(--amber)"></span>CTR (%)</span>
+          <span class="leg"><span class="leg-sq" style="background:var(--blue)"></span>CPM (R$)</span>
+        </div>
+        <div style="position:relative;height:200px"><canvas id="chartCtr" role="img" aria-label="CTR e CPM"></canvas></div>
+      </div>
+    </div>
+    <div class="card fade-up fade-up-5">
       <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px">
-        <div><div class="card-title">Detalhamento diário</div><div class="card-sub" id="tbl-sub"></div></div>
+        <div><div class="card-title">Detalhamento</div><div class="card-sub" id="tbl-sub"></div></div>
         <div class="gran-toggle">
           <button class="gran-btn active" data-gran-tbl="dia">Dia</button>
           <button class="gran-btn" data-gran-tbl="semana">Semana</button>
@@ -274,19 +385,11 @@ function buildApp() {
         <table>
           <thead><tr>
             <th>Período</th>
-            <th class="r">Valor usado</th>
-            <th class="r">Impressões</th>
-            <th class="r">Alcance</th>
-            <th class="r">Cliques (link)</th>
-            <th class="r">Cliques (todos)</th>
-            <th class="r">CTR</th>
-            <th class="r">Resultados</th>
-            <th class="r">Add carrinho</th>
-            <th class="r">Custo/add</th>
-            <th class="r">Compras</th>
-            <th class="r">Vlr compras</th>
-            <th class="r">Custo/compra</th>
-            <th class="r">ROAS</th>
+            <th class="r">Valor usado</th><th class="r">Impressões</th><th class="r">Alcance</th>
+            <th class="r">Freq.</th><th class="r">Cliques</th><th class="r">CTR</th>
+            <th class="r">CPM</th><th class="r">Resultados</th><th class="r">Add carrinho</th>
+            <th class="r">Custo/add</th><th class="r">Compras</th>
+            <th class="r">Vlr compras</th><th class="r">Custo/compra</th><th class="r">ROAS</th>
           </tr></thead>
           <tbody id="tbody"></tbody>
         </table>
@@ -294,161 +397,282 @@ function buildApp() {
     </div>
   </div>`;
 
-  document.querySelectorAll('.gran-btn[data-gran]').forEach(b => b.addEventListener('click', () => {
+  // Eventos
+  document.querySelectorAll('.gran-btn[data-gran]').forEach(b=>b.addEventListener('click',()=>{
     document.querySelectorAll('.gran-btn[data-gran]').forEach(x=>x.classList.remove('active'));
-    b.classList.add('active'); granAtiva = b.dataset.gran;
-    renderChartMain(filtrar(periodoAtivo));
+    b.classList.add('active'); granAtiva=b.dataset.gran;
+    const dias=filtrar(periodoAtivo);
+    renderChartInvest(dias); renderChartRoas(dias); renderChartCtr(dias);
   }));
-  document.querySelectorAll('.gran-btn[data-gran-tbl]').forEach(b => b.addEventListener('click', () => {
+  document.querySelectorAll('.gran-btn[data-gran-tbl]').forEach(b=>b.addEventListener('click',()=>{
     document.querySelectorAll('.gran-btn[data-gran-tbl]').forEach(x=>x.classList.remove('active'));
-    b.classList.add('active');
-    renderTabela(filtrar(periodoAtivo), b.dataset.granTbl);
+    b.classList.add('active'); granTblAtiva=b.dataset.granTbl;
+    renderTabela(filtrar(periodoAtivo),granTblAtiva);
   }));
-  document.querySelectorAll('.period-btn').forEach(b => b.addEventListener('click', () => {
+  document.querySelectorAll('.period-btn').forEach(b=>b.addEventListener('click',()=>{
     document.querySelectorAll('.period-btn').forEach(x=>x.classList.remove('active'));
-    b.classList.add('active'); periodoAtivo = b.dataset.period;
-    const cr = document.getElementById('custom-range');
-    periodoAtivo === 'custom' ? cr.classList.add('visible') : cr.classList.remove('visible');
-    if (periodoAtivo !== 'custom') render();
+    b.classList.add('active'); periodoAtivo=b.dataset.period;
+    const cr=document.getElementById('custom-range');
+    periodoAtivo==='custom'?cr.classList.add('visible'):cr.classList.remove('visible');
+    if(periodoAtivo!=='custom') render();
   }));
 }
 
-function applyCustom() {
-  customFrom = document.getElementById('date-from').value;
-  customTo   = document.getElementById('date-to').value;
-  if (customFrom && customTo) render();
+function applyCustom(){
+  customFrom=document.getElementById('date-from').value;
+  customTo=document.getElementById('date-to').value;
+  if(customFrom&&customTo) render();
 }
 
-// ── RENDER ────────────────────────────────────────────────
+function updateRoasMeta(v){
+  roasMeta=parseFloat(v)||METAS.roasOtimo;
+  renderChartRoas(filtrar(periodoAtivo));
+}
+
+// ── RENDER PRINCIPAL ───────────────────────────────────────
 function render() {
-  const dias = filtrar(periodoAtivo);
-  const ant  = filtrarAnterior();
-  const tot  = somar(dias);
-  const totA = somar(ant);
+  const dias=filtrar(periodoAtivo);
+  const ant=filtrarAnterior();
+  const tot=somar(dias);
+  const totA=somar(ant);
 
-  // compare strip
-  const strip = document.getElementById('compare-strip');
-  if (ant.length && dias.length) {
-    const d = delta(tot.valorCompras, totA.valorCompras);
-    strip.innerHTML = `<strong>Comparativo vs período anterior:</strong> Valor de compras ${d>=0?'+':''}${d.toFixed(1)}% &nbsp;|&nbsp; ROAS ${d>=0?'+':''}${delta(tot.roas,totA.roas).toFixed(1)}%`;
-    strip.style.display = 'flex';
-  } else strip.style.display = 'none';
-
-  renderKPIs(tot, totA, dias.length);
-  renderFunnel(tot, dias.length);
-  renderChartMain(dias);
-  renderTabela(dias, 'dia');
+  renderExecSummary(tot, totA, dias.length);
+  renderAlertas(tot);
+  renderKPIs(tot,totA,dias.length);
+  renderFunil(tot,dias.length);
+  renderChartInvest(dias);
+  renderChartRoas(dias);
+  renderChartCtr(dias);
+  renderTabela(dias,'dia');
   document.querySelectorAll('.gran-btn[data-gran-tbl]').forEach(b=>b.classList.remove('active'));
   document.querySelector('.gran-btn[data-gran-tbl="dia"]').classList.add('active');
+  granTblAtiva='dia';
 }
 
-// ── KPIs ──────────────────────────────────────────────────
-function renderKPIs(tot, ant, qtd) {
-  const empty = qtd === 0;
-  const kpis = [
-    { l:'Valor usado',      v:fmtR(tot.valorUsado),        d:delta(tot.valorUsado,ant.valorUsado),           cor:'var(--accent)',  inv:true },
-    { l:'Impressões',       v:fmtN(tot.impressoes),        d:delta(tot.impressoes,ant.impressoes),           cor:'var(--blue)'         },
-    { l:'Alcance',          v:fmtN(tot.alcance),           d:delta(tot.alcance,ant.alcance),                 cor:'var(--blue)'         },
-    { l:'Cliques (link)',   v:fmtN(tot.cliquesLink),       d:delta(tot.cliquesLink,ant.cliquesLink),         cor:'var(--amber)'        },
-    { l:'CTR',              v:fmtPct(tot.ctr),             d:delta(tot.ctr,ant.ctr),                         cor:'var(--amber)'        },
-    { l:'Resultados',       v:fmtN(tot.resultados),        d:delta(tot.resultados,ant.resultados),           cor:'var(--purple)'       },
-    { l:'Add carrinho',     v:fmtN(tot.addCarrinho),       d:delta(tot.addCarrinho,ant.addCarrinho),         cor:'var(--purple)'       },
-    { l:'Custo/add',        v:fmtR(tot.custoAddCarrinho),  d:delta(tot.custoAddCarrinho,ant.custoAddCarrinho),cor:'var(--purple)',inv:true },
-    { l:'Compras',          v:fmtN(tot.compras),           d:delta(tot.compras,ant.compras),                 cor:'var(--green)'        },
-    { l:'Vlr compras',      v:fmtR(tot.valorCompras),      d:delta(tot.valorCompras,ant.valorCompras),       cor:'var(--green)'        },
-    { l:'Custo/compra',     v:fmtR(tot.custoCompra),       d:delta(tot.custoCompra,ant.custoCompra),         cor:'var(--green)', inv:true },
-    { l:'ROAS',             v:fmtX(tot.roas),              d:delta(tot.roas,ant.roas),                       cor:'var(--green)'        },
+// ── RESUMO EXECUTIVO ───────────────────────────────────────
+function renderExecSummary(tot, totA, qtd) {
+  const health=calcHealth(tot);
+  const roasDelta=delta(tot.roas,totA.roas);
+  const roasSinal=roasDelta===null?'':roasDelta>=0?'+':'';
+  const roasDesc=roasDelta!==null?roasSinal+roasDelta.toFixed(1)+'% vs anterior':'';
+
+  document.getElementById('exec-summary').innerHTML = `
+    <div>
+      <div class="exec-title">Resumo executivo</div>
+      <div class="exec-metrics">
+        <div class="exec-metric">
+          <div class="exec-label">Valor investido</div>
+          <div class="exec-val" style="color:var(--accent)">${qtd?fmtR(tot.valorUsado):'—'}</div>
+          <div class="exec-sub">${qtd} dias de campanha</div>
+        </div>
+        <div class="exec-metric">
+          <div class="exec-label">Valor em compras</div>
+          <div class="exec-val" style="color:var(--green)">${qtd?fmtR(tot.valorCompras):'—'}</div>
+          <div class="exec-sub">${qtd?tot.compras+' compras realizadas':''}</div>
+        </div>
+        <div class="exec-metric">
+          <div class="exec-label">ROAS do período</div>
+          <div class="exec-val" style="color:${health.color}">${qtd?fmtX(tot.roas):'—'}</div>
+          <div class="exec-sub">${roasDesc}</div>
+        </div>
+      </div>
+    </div>
+    <div class="exec-divider"></div>
+    <div class="exec-health">
+      <div class="health-label">Score da campanha</div>
+      <div class="health-score" style="color:${health.color}">${qtd?health.score:'—'}</div>
+      <div class="health-desc">${qtd?health.label:''}</div>
+    </div>`;
+}
+
+// ── ALERTAS ────────────────────────────────────────────────
+function renderAlertas(tot) {
+  if (!tot.roas) { document.getElementById('alerts').innerHTML=''; return; }
+
+  const alertas = [];
+
+  // ROAS
+  if (tot.roas >= METAS.roasOtimo) {
+    alertas.push({cls:'alert-ok', icon:'✓', title:'ROAS dentro da meta', desc:'Campanha gerando retorno acima do esperado', val:fmtX(tot.roas)});
+  } else if (tot.roas >= METAS.roasMin) {
+    alertas.push({cls:'alert-warn', icon:'⚠', title:'ROAS abaixo do ideal', desc:'Retorno aceitável, mas abaixo da meta de '+fmtX(METAS.roasOtimo), val:fmtX(tot.roas)});
+  } else {
+    alertas.push({cls:'alert-bad', icon:'✕', title:'ROAS crítico', desc:'Campanha abaixo do mínimo aceitável de '+fmtX(METAS.roasMin), val:fmtX(tot.roas)});
+  }
+
+  // Custo por compra
+  if (tot.custoCompra <= METAS.custoCompraMax) {
+    alertas.push({cls:'alert-ok', icon:'✓', title:'Custo por compra dentro do limite', desc:'Abaixo do máximo de '+fmtR(METAS.custoCompraMax), val:fmtR(tot.custoCompra)});
+  } else {
+    alertas.push({cls:'alert-bad', icon:'✕', title:'Custo por compra elevado', desc:'Acima do limite de '+fmtR(METAS.custoCompraMax)+' — revise criativos ou públicos', val:fmtR(tot.custoCompra)});
+  }
+
+  // CTR
+  if (tot.ctr >= METAS.ctrMin) {
+    alertas.push({cls:'alert-ok', icon:'✓', title:'CTR saudável', desc:'Taxa de cliques acima do mínimo esperado', val:fmtPct(tot.ctr)});
+  } else {
+    alertas.push({cls:'alert-warn', icon:'⚠', title:'CTR abaixo do esperado', desc:'Criativos podem estar perdendo relevância — considere atualizar', val:fmtPct(tot.ctr)});
+  }
+
+  // Frequência
+  if (tot.frequencia > METAS.freqMax) {
+    alertas.push({cls:'alert-warn', icon:'⚠', title:'Frequência alta', desc:'Público vendo o anúncio muitas vezes — risco de fadiga criativa', val:tot.frequencia.toFixed(1)+'x'});
+  }
+
+  document.getElementById('alerts').innerHTML = alertas.map(a=>`
+    <div class="alert ${a.cls}">
+      <span class="alert-icon">${a.icon}</span>
+      <div class="alert-text"><strong>${a.title}</strong><span>${a.desc}</span></div>
+      <span class="alert-val">${a.val}</span>
+    </div>`).join('');
+}
+
+// ── KPIs ───────────────────────────────────────────────────
+function renderKPIs(tot,ant,qtd) {
+  const empty=qtd===0;
+  const kpis=[
+    {l:'Valor usado',    v:fmtR(tot.valorUsado),       d:delta(tot.valorUsado,ant.valorUsado),          cor:'var(--accent)',inv:true},
+    {l:'Impressões',     v:fmtN(tot.impressoes),       d:delta(tot.impressoes,ant.impressoes),          cor:'var(--blue)'},
+    {l:'Alcance',        v:fmtN(tot.alcance),          d:delta(tot.alcance,ant.alcance),                cor:'var(--blue)'},
+    {l:'Frequência',     v:fmtX(tot.frequencia),       d:delta(tot.frequencia,ant.frequencia),          cor:'var(--blue)',inv:true},
+    {l:'Cliques (link)', v:fmtN(tot.cliquesLink),      d:delta(tot.cliquesLink,ant.cliquesLink),        cor:'var(--amber)'},
+    {l:'CTR',            v:fmtPct(tot.ctr),            d:delta(tot.ctr,ant.ctr),                        cor:'var(--amber)'},
+    {l:'CPM',            v:fmtR(tot.cpm),              d:delta(tot.cpm,ant.cpm),                        cor:'var(--amber)',inv:true},
+    {l:'Resultados',     v:fmtN(tot.resultados),       d:delta(tot.resultados,ant.resultados),          cor:'var(--purple)'},
+    {l:'Add carrinho',   v:fmtN(tot.addCarrinho),      d:delta(tot.addCarrinho,ant.addCarrinho),        cor:'var(--purple)'},
+    {l:'Custo/add',      v:fmtR(tot.custoAddCarrinho), d:delta(tot.custoAddCarrinho,ant.custoAddCarrinho),cor:'var(--purple)',inv:true},
+    {l:'Compras',        v:fmtN(tot.compras),          d:delta(tot.compras,ant.compras),                cor:'var(--green)'},
+    {l:'Vlr compras',    v:fmtR(tot.valorCompras),     d:delta(tot.valorCompras,ant.valorCompras),      cor:'var(--green)'},
+    {l:'Custo/compra',   v:fmtR(tot.custoCompra),      d:delta(tot.custoCompra,ant.custoCompra),        cor:'var(--green)',inv:true},
+    {l:'ROAS',           v:fmtX(tot.roas),             d:delta(tot.roas,ant.roas),                      cor:'var(--green)'},
   ];
-  document.getElementById('kpis').innerHTML = kpis.map(k => {
-    const dv = k.d !== null ? Math.abs(k.d).toFixed(1)+'%' : null;
-    const isUp = k.inv ? k.d < 0 : k.d > 0;
-    const cls  = k.d === null ? 'nt' : isUp ? 'up' : 'dn';
-    const icon = k.d === null ? '' : isUp ? '↑ ' : '↓ ';
-    return `<div class="kpi">
-      <div class="kpi-accent" style="background:${k.cor}"></div>
+  document.getElementById('kpis').innerHTML=kpis.map(k=>{
+    const dv=k.d!==null?Math.abs(k.d).toFixed(1)+'%':null;
+    const isUp=k.inv?k.d<0:k.d>0;
+    const cls=k.d===null?'nt':isUp?'up':'dn';
+    const icon=k.d===null?'':isUp?'↑ ':'↓ ';
+    return `<div class="kpi"><div class="kpi-accent" style="background:${k.cor}"></div>
       <div class="kpi-label">${k.l}</div>
-      <div class="kpi-val">${empty ? '—' : k.v}</div>
-      ${dv && !empty ? `<div class="kpi-delta ${cls}">${icon}${dv}</div>` : ''}
+      <div class="kpi-val">${empty?'—':k.v}</div>
+      ${dv&&!empty?'<div class="kpi-delta '+cls+'">'+icon+dv+'</div>':''}
     </div>`;
   }).join('');
 }
 
-// ── FUNIL ─────────────────────────────────────────────────
-function renderFunnel(tot, qtd) {
-  const el = document.getElementById('funnel');
-  if (!qtd) { el.innerHTML = `<div class="empty-state"><div style="font-size:28px;opacity:.3">📭</div><span>Sem dados no período</span></div>`; return; }
-  const steps = [
-    { nome:'Cliques no link', val:tot.cliquesLink,  cor:'var(--amber)'  },
-    { nome:'Add ao carrinho', val:tot.addCarrinho,  cor:'var(--purple)' },
-    { nome:'Resultados',      val:tot.resultados,   cor:'var(--blue)'   },
-    { nome:'Compras',         val:tot.compras,      cor:'var(--green)'  },
+// ── FUNIL ──────────────────────────────────────────────────
+function renderFunil(tot,qtd){
+  const el=document.getElementById('funnel');
+  if(!qtd){el.innerHTML='<div class="empty-state"><span>Sem dados no período</span></div>';return;}
+  const steps=[
+    {nome:'Cliques (link)',val:tot.cliquesLink,cor:'var(--amber)'},
+    {nome:'Add ao carrinho',val:tot.addCarrinho,cor:'var(--purple)'},
+    {nome:'Resultados',val:tot.resultados,cor:'var(--blue)'},
+    {nome:'Compras',val:tot.compras,cor:'var(--green)'},
   ];
-  const max = steps[0].val || 1;
-  el.innerHTML = steps.map((s,i) => {
-    const pct  = Math.round(s.val/max*100);
-    const taxa = i===0 ? '' : Math.round(s.val/(steps[i-1].val||1)*100)+'% do anterior';
-    return `${i>0?`<div class="funnel-arrow">↓ ${taxa}</div>`:''}
-    <div class="funnel-step">
-      <div class="funnel-label"><div class="funnel-name">${s.nome}</div><div class="funnel-num">${fmtN(s.val)}</div></div>
-      <div class="funnel-track"><div class="funnel-bar" style="width:${pct}%;background:${s.cor}">${pct>18?pct+'%':''}</div></div>
-      <div class="funnel-pct">${pct}%</div>
-    </div>`;
+  const max=steps[0].val||1;
+  el.innerHTML=steps.map((s,i)=>{
+    const pct=Math.round(s.val/max*100);
+    const taxa=i===0?'':Math.round(s.val/(steps[i-1].val||1)*100)+'% do anterior';
+    return (i>0?'<div class="funnel-arrow">↓ '+taxa+'</div>':'')+
+    '<div class="funnel-step">'+
+      '<div class="funnel-label"><div class="funnel-name">'+s.nome+'</div><div class="funnel-num">'+fmtN(s.val)+'</div></div>'+
+      '<div class="funnel-track"><div class="funnel-bar" style="width:'+pct+'%;background:'+s.cor+'">'+(pct>18?pct+'%':'')+'</div></div>'+
+      '<div class="funnel-pct">'+pct+'%</div>'+
+    '</div>';
   }).join('');
 }
 
-// ── CHART ─────────────────────────────────────────────────
-function renderChartMain(dias) {
-  if (charts.main) { charts.main.destroy(); delete charts.main; }
-  const rows = agrupar(dias, granAtiva);
-  if (!rows.length) return;
-  charts.main = new Chart(document.getElementById('chartMain'), {
-    type: 'line',
-    data: { labels: rows.map(r=>r.label), datasets: [
-      { label:'Valor usado',    data:rows.map(r=>r.valorUsado||0),   borderColor:'#e63946', backgroundColor:'rgba(230,57,70,0.08)',  fill:true, tension:0.35, pointRadius:rows.length>20?0:3, borderWidth:2 },
-      { label:'Valor compras',  data:rows.map(r=>r.valorCompras||0), borderColor:'#22c55e', backgroundColor:'rgba(34,197,94,0.08)',  fill:true, tension:0.35, pointRadius:rows.length>20?0:3, borderWidth:2, borderDash:[5,3] },
+// ── CHARTS ─────────────────────────────────────────────────
+function destroyChart(id){if(charts[id]){charts[id].destroy();delete charts[id];}}
+
+function renderChartInvest(dias){
+  destroyChart('invest');
+  const rows=agrupar(dias,granAtiva);
+  if(!rows.length) return;
+  charts.invest=new Chart(document.getElementById('chartInvest'),{
+    type:'line',
+    data:{labels:rows.map(r=>r.label),datasets:[
+      {label:'Valor usado',data:rows.map(r=>r.valorUsado||0),borderColor:'#e63946',backgroundColor:'rgba(230,57,70,0.08)',fill:true,tension:0.35,pointRadius:rows.length>20?0:3,borderWidth:2},
+      {label:'Vlr compras',data:rows.map(r=>r.valorCompras||0),borderColor:'#22c55e',backgroundColor:'rgba(34,197,94,0.08)',fill:true,tension:0.35,pointRadius:rows.length>20?0:3,borderWidth:2,borderDash:[5,3]},
     ]},
-    options:{
-      responsive:true, maintainAspectRatio:false,
+    options:{responsive:true,maintainAspectRatio:false,
       interaction:{mode:'index',intersect:false},
       plugins:{legend:{display:false},tooltip:{backgroundColor:'#1c1c22',borderColor:'rgba(255,255,255,0.1)',borderWidth:1,callbacks:{label:ctx=>ctx.dataset.label+': '+fmtR(ctx.parsed.y)}}},
-      scales:{
-        x:{grid:{color:'rgba(255,255,255,0.03)'},ticks:{font:{size:10},color:'#5c5b6e',maxTicksLimit:14,maxRotation:0}},
-        y:{grid:{color:'rgba(255,255,255,0.04)'},ticks:{font:{size:10},color:'#5c5b6e',callback:v=>'R$'+(v>=1000?(v/1000).toFixed(0)+'k':v)}}
-      }
-    }
+      scales:{x:{grid:{color:'rgba(255,255,255,0.03)'},ticks:{font:{size:10},color:'#5c5b6e',maxTicksLimit:14,maxRotation:0}},
+              y:{grid:{color:'rgba(255,255,255,0.04)'},ticks:{font:{size:10},color:'#5c5b6e',callback:v=>'R$'+(v>=1000?(v/1000).toFixed(0)+'k':v)}}}}
   });
 }
 
-// ── TABELA ────────────────────────────────────────────────
-function renderTabela(dias, gran) {
-  const rows = agrupar(dias, gran);
-  const sub  = rows.length
-    ? `${rows.length} ${gran==='dia'?'dias':gran==='semana'?'semanas':'meses'} no período`
-    : 'Sem dados';
-  document.getElementById('tbl-sub').textContent = sub;
+function renderChartRoas(dias){
+  destroyChart('roas');
+  const rows=agrupar(dias,granAtiva);
+  if(!rows.length) return;
+  const roasData=rows.map(r=>r.roas||0);
+  const metaData=rows.map(()=>roasMeta);
+  charts.roas=new Chart(document.getElementById('chartRoas'),{
+    type:'line',
+    data:{labels:rows.map(r=>r.label),datasets:[
+      {label:'ROAS',data:roasData,borderColor:'#a78bfa',backgroundColor:'rgba(167,139,250,0.08)',fill:true,tension:0.35,pointRadius:rows.length>20?0:3,borderWidth:2,
+        pointBackgroundColor:roasData.map(v=>v>=roasMeta?'#22c55e':'#ef4444'),
+        pointRadius:rows.length>20?0:4},
+      {label:'Meta',data:metaData,borderColor:'rgba(230,57,70,0.6)',backgroundColor:'transparent',borderDash:[4,4],borderWidth:1.5,pointRadius:0},
+    ]},
+    options:{responsive:true,maintainAspectRatio:false,
+      interaction:{mode:'index',intersect:false},
+      plugins:{legend:{display:false},tooltip:{backgroundColor:'#1c1c22',borderColor:'rgba(255,255,255,0.1)',borderWidth:1,callbacks:{label:ctx=>ctx.dataset.label+': '+fmtX(ctx.parsed.y)}}},
+      scales:{x:{grid:{color:'rgba(255,255,255,0.03)'},ticks:{font:{size:10},color:'#5c5b6e',maxTicksLimit:14,maxRotation:0}},
+              y:{grid:{color:'rgba(255,255,255,0.04)'},ticks:{font:{size:10},color:'#5c5b6e',callback:v=>fmtX(v)},min:0}}}
+  });
+}
 
-  if (!rows.length) {
-    document.getElementById('tbody').innerHTML =
-      `<tr><td colspan="14" style="text-align:center;padding:24px;color:var(--text-3)">Nenhum dado. Publique os dados pela planilha.</td></tr>`;
+function renderChartCtr(dias){
+  destroyChart('ctr');
+  const rows=agrupar(dias,granAtiva);
+  if(!rows.length) return;
+  charts.ctr=new Chart(document.getElementById('chartCtr'),{
+    type:'bar',
+    data:{labels:rows.map(r=>r.label),datasets:[
+      {label:'CTR (%)',data:rows.map(r=>+(r.ctr||0).toFixed(2)),backgroundColor:'rgba(245,158,11,0.7)',borderRadius:3,yAxisID:'y'},
+      {label:'CPM (R$)',data:rows.map(r=>+(r.cpm||0).toFixed(2)),type:'line',borderColor:'#60a5fa',backgroundColor:'transparent',tension:0.35,pointRadius:rows.length>20?0:3,borderWidth:2,yAxisID:'y1'},
+    ]},
+    options:{responsive:true,maintainAspectRatio:false,
+      interaction:{mode:'index',intersect:false},
+      plugins:{legend:{display:false},tooltip:{backgroundColor:'#1c1c22',borderColor:'rgba(255,255,255,0.1)',borderWidth:1}},
+      scales:{
+        x:{grid:{display:false},ticks:{font:{size:10},color:'#5c5b6e',maxTicksLimit:14,maxRotation:0}},
+        y:{grid:{color:'rgba(255,255,255,0.04)'},ticks:{font:{size:10},color:'#f59e0b',callback:v=>v+'%'},position:'left'},
+        y1:{grid:{display:false},ticks:{font:{size:10},color:'#60a5fa',callback:v=>'R$'+v},position:'right'},
+      }}
+  });
+}
+
+// ── TABELA ─────────────────────────────────────────────────
+function renderTabela(dias,gran){
+  const rows=agrupar(dias,gran);
+  document.getElementById('tbl-sub').textContent=rows.length
+    ?rows.length+' '+(gran==='dia'?'dias':gran==='semana'?'semanas':'meses')+' no período'
+    :'Sem dados';
+  if(!rows.length){
+    document.getElementById('tbody').innerHTML='<tr><td colspan="15" style="text-align:center;padding:24px;color:var(--text-3)">Nenhum dado. Publique os dados pela planilha.</td></tr>';
     return;
   }
-
-  document.getElementById('tbody').innerHTML = rows.map(r => `
+  document.getElementById('tbody').innerHTML=rows.map(r=>`
     <tr>
       <td class="date-cell">${r.label}</td>
       <td class="r">${fmtR(r.valorUsado||0)}</td>
       <td class="r">${fmtN(r.impressoes||0)}</td>
       <td class="r">${fmtN(r.alcance||0)}</td>
+      <td class="r">${fmtX(r.frequencia||0)}</td>
       <td class="r">${fmtN(r.cliquesLink||0)}</td>
-      <td class="r">${fmtN(r.cliquesTodos||0)}</td>
       <td class="r">${fmtPct(r.ctr||0)}</td>
+      <td class="r">${fmtR(r.cpm||0)}</td>
       <td class="r">${fmtN(r.resultados||0)}</td>
       <td class="r">${fmtN(r.addCarrinho||0)}</td>
       <td class="r">${fmtR(r.custoAddCarrinho||0)}</td>
       <td class="r val-up">${fmtN(r.compras||0)}</td>
       <td class="r val-up">${fmtR(r.valorCompras||0)}</td>
-      <td class="r ${(r.custoCompra||0)<20?'val-up':''}">${fmtR(r.custoCompra||0)}</td>
-      <td class="r ${(r.roas||0)>=2?'val-up':''}">${fmtX(r.roas||0)}</td>
+      <td class="r ${(r.custoCompra||0)<=METAS.custoCompraMax?'val-up':'val-dn'}">${fmtR(r.custoCompra||0)}</td>
+      <td class="r ${(r.roas||0)>=METAS.roasMin?'val-up':'val-dn'}">${fmtX(r.roas||0)}</td>
     </tr>`).join('');
 }
 
