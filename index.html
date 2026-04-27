@@ -154,8 +154,9 @@ async function init(){
   }
 }
 
+function parseEvento(){const[y,m,d]=CFG.dataEvento.split('-').map(Number);return new Date(y,m-1,d);}
 function renderCountdown(){
-  const ev=new Date(CFG.dataEvento+'T00:00:00'),hj=new Date();hj.setHours(0,0,0,0);
+  const ev=parseEvento(),hj=new Date();hj.setHours(0,0,0,0);
   const dias=Math.max(0,Math.round((ev-hj)/864e5));
   const el=document.getElementById('countdown');
   if(el) el.innerHTML='<div><div class="cd-num">'+dias+'</div><div class="cd-label">dias para o AX34</div></div>';
@@ -207,7 +208,7 @@ function agrupar(dias,g){
 function calcVerba(){
   const inv=raw.reduce((s,d)=>s+(+d.valorUsado||0),0);
   const rest=CFG.verbaTotal-inv;
-  const ev=new Date(CFG.dataEvento+'T00:00:00'),hj=new Date();hj.setHours(0,0,0,0);
+  const ev=parseEvento(),hj=new Date();hj.setHours(0,0,0,0);
   const dr=Math.max(1,Math.round((ev-hj)/864e5));
   return{inv,rest,dr,media:rest/dr,pct:Math.min(100,inv/CFG.verbaTotal*100)};
 }
