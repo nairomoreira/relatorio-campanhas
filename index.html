@@ -162,25 +162,27 @@ function renderCountdown(){
   if(el) el.innerHTML='<div><div class="cd-num">'+dias+'</div><div class="cd-label">dias para o AX34</div></div>';
 }
 
+function parseData(s){var p=String(s).trim().split('-');return new Date(+p[0],+p[1]-1,+p[2]);}
+function dataStr(dt){var y=dt.getFullYear(),m=String(dt.getMonth()+1).padStart(2,'0'),d=String(dt.getDate()).padStart(2,'0');return y+'-'+m+'-'+d;}
 function filtrar(p){
   if(!raw.length) return[];
-  const ult=new Date(raw[raw.length-1].data+'T00:00:00');let de,ate;
+  const ult=parseData(raw[raw.length-1].data);let de,ate;
   if(p==='7d'){ate=ult;de=new Date(ult);de.setDate(de.getDate()-6);}
   else if(p==='30d'){ate=ult;de=new Date(ult);de.setDate(de.getDate()-29);}
   else if(p==='mes'){de=new Date(ult.getFullYear(),ult.getMonth(),1);ate=ult;}
   else if(p==='mes-ant'){de=new Date(ult.getFullYear(),ult.getMonth()-1,1);ate=new Date(ult.getFullYear(),ult.getMonth(),0);}
-  else if(p==='custom'&&customFrom&&customTo){de=new Date(customFrom);ate=new Date(customTo);}
+  else if(p==='custom'&&customFrom&&customTo){de=parseData(customFrom);ate=parseData(customTo);}
   else return raw;
-  const ds=de.toISOString().slice(0,10),as=ate.toISOString().slice(0,10);
+  const ds=dataStr(de),as=dataStr(ate);
   return raw.filter(d=>d.data>=ds&&d.data<=as);
 }
 function filtrarAnt(){
   const cur=filtrar(periodo);if(!cur.length)return[];
-  const de=new Date(cur[0].data+'T00:00:00'),ate=new Date(cur[cur.length-1].data+'T00:00:00');
+  const de=parseData(cur[0].data),ate=parseData(cur[cur.length-1].data);
   const d=Math.round((ate-de)/864e5)+1;
   const deA=new Date(de);deA.setDate(deA.getDate()-d);
   const ateA=new Date(de);ateA.setDate(ateA.getDate()-1);
-  return raw.filter(d=>d.data>=deA.toISOString().slice(0,10)&&d.data<=ateA.toISOString().slice(0,10));
+  return raw.filter(d=>d.data>=dataStr(deA)&&d.data<=dataStr(ateA));
 }
 
 const SK=['valorUsado','impressoes','alcance','cliquesLink','addCarrinho','compras','valorCompras'];
@@ -199,7 +201,7 @@ function agrupar(dias,g){
   const map={};
   dias.forEach(d=>{
     let key;
-    if(g==='semana'){const dt=new Date(d.data+'T00:00:00'),dom=new Date(dt);dom.setDate(dt.getDate()-dt.getDay());key=dom.toISOString().slice(0,10);}
+    if(g==='semana'){const dt=parseData(d.data),dom=new Date(dt);dom.setDate(dt.getDate()-dt.getDay());key=dataStr(dom);}
     else key=d.data.slice(0,7);
     if(!map[key])map[key]=[];map[key].push(d);
   });
