@@ -1,5 +1,5 @@
 {
-  "atualizadoEm": "26/04/2026 18:54",
+  "atualizadoEm": "27/04/2026 00:03",
   "dias": [
     {
       "data": "Fri Apr 17 2026 00:00:00 GMT-0300 (Horário Padrão de Brasília)",
@@ -79,8 +79,8 @@
     {
       "data": "Sat Apr 25 2026 00:00:00 GMT-0300 (Horário Padrão de Brasília)",
       "valorUsado": 23.64,
-      "impressoes": 6154,
-      "alcance": 3812,
+      "impressoes": 6155,
+      "alcance": 3813,
       "cliquesLink": 59,
       "cliquesTodos": 59,
       "resultados": 3,
@@ -108,17 +108,17 @@
     },
     {
       "data": "Sun Apr 26 2026 00:00:00 GMT-0300 (Horário Padrão de Brasília)",
-      "valorUsado": 16.47,
-      "impressoes": 5289,
-      "alcance": 3651,
-      "cliquesLink": 40,
-      "cliquesTodos": 40,
+      "valorUsado": 24.59,
+      "impressoes": 7789,
+      "alcance": 5723,
+      "cliquesLink": 62,
+      "cliquesTodos": 62,
       "resultados": 0,
-      "addCarrinho": 75,
+      "addCarrinho": 126,
       "compras": 0,
       "valorCompras": 0,
-      "ctr": 0.76,
-      "custoAddCarrinho": 0.22,
+      "ctr": 0.8,
+      "custoAddCarrinho": 0.2,
       "custoCompra": 0
     },
     {
