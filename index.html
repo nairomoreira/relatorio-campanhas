@@ -79,6 +79,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
 .hk-meta{font-size:11px;color:var(--text-3);margin-top:5px;}
 .hk-delta{margin-top:8px;font-size:11px;font-weight:500;
   display:inline-flex;align-items:center;gap:3px;padding:2px 7px;border-radius:4px;}
+.hk-spark{margin-top:8px;height:28px;width:100%;opacity:.7;}
 .up{background:var(--green-bg);color:var(--green);}
 .dn{background:var(--red-bg);color:var(--red);}
 .nt{background:rgba(255,255,255,.04);color:var(--text-3);}
@@ -128,6 +129,20 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
 .a-title{font-weight:500;color:var(--text);font-size:12px;}
 .a-desc{color:var(--text-3);font-size:10px;margin-top:1px;}
 .a-val{font-family:'DM Mono',monospace;font-size:12px;color:var(--text-2);white-space:nowrap;}
+
+/* PROJEÇÃO / INSIGHT CARDS */
+.insight-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px;margin-bottom:14px;}
+.insight{background:var(--surface2);border-radius:var(--r-sm);padding:14px 16px;border-left:3px solid;}
+.insight-label{font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.06em;color:var(--text-3);margin-bottom:6px;}
+.insight-val{font-family:'Rajdhani',sans-serif;font-size:26px;font-weight:700;line-height:1.1;}
+.insight-sub{font-size:11px;color:var(--text-3);margin-top:4px;line-height:1.4;}
+
+/* PROGRESS META */
+.meta-prog{margin-top:12px;}
+.meta-prog-labels{display:flex;justify-content:space-between;font-size:11px;color:var(--text-3);margin-bottom:5px;}
+.meta-prog-track{height:8px;background:var(--surface2);border-radius:4px;overflow:hidden;position:relative;}
+.meta-prog-bar{height:100%;border-radius:4px;transition:width .8s ease;}
+.meta-prog-mark{position:absolute;top:0;bottom:0;width:2px;background:rgba(255,255,255,.3);}
 
 /* CARRINHO GRID */
 .cart-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;}
@@ -226,6 +241,7 @@ const DADOS_URL = 'https://raw.githubusercontent.com/nairomoreira/relatorio-camp
 const CFG = {
   verbaTotal:      25000,
   dataEvento:      '2026-10-17',
+  metaCompras:     1000,
   roasMin:         2.0,
   roasOtimo:       3.0,
   custoCompraMax:  30,
@@ -344,10 +360,16 @@ function calcVerba() {
   const ev   = new Date(+p[0],+p[1]-1,+p[2]);
   const hj   = new Date(); hj.setHours(0,0,0,0);
   const dr   = Math.max(1, Math.round((ev-hj)/864e5));
-  // Média real dos últimos 7 dias
   const ult7 = raw.slice(-7);
-  const mediaReal = ult7.length ? ult7.reduce((s,d)=>s+(+d.valorUsado||0),0)/ult7.length : 0;
-  return { inv, rest, dr, mediaNec:rest/dr, mediaReal, pct:Math.min(100,inv/CFG.verbaTotal*100) };
+  const mediaReal  = ult7.length ? ult7.reduce((s,d)=>s+(+d.valorUsado||0),0)/ult7.length : 0;
+  const diasVerba  = mediaReal > 0 ? Math.round(rest/mediaReal) : null; // dias até zerar verba
+  const compTotal  = raw.reduce((s,d)=>s+(+d.compras||0),0);
+  const compUlt7   = ult7.reduce((s,d)=>s+(+d.compras||0),0);
+  const ritmoComp  = ult7.length ? compUlt7/ult7.length : 0; // compras/dia últimos 7d
+  const compNec    = dr > 0 ? (CFG.metaCompras - compTotal)/dr : 0; // compras/dia necessárias
+  const eficiencia = inv > 0 ? (compTotal/inv*100).toFixed(2) : 0; // compras por R$ 100
+  return { inv, rest, dr, mediaNec:rest/dr, mediaReal, pct:Math.min(100,inv/CFG.verbaTotal*100),
+           diasVerba, compTotal, compUlt7, ritmoComp, compNec, eficiencia };
 }
 
 // ── FORMATOS ──────────────────────────────────────────────
@@ -365,9 +387,11 @@ function buildApp() {
   <div class="main">
     <div class="hero fu fu1" id="hero"></div>
 
-    <div class="verba-card fu fu2" id="verba"></div>
+    <div class="insight-grid fu fu2" id="insights"></div>
 
-    <div class="two-col fu fu3">
+    <div class="verba-card fu fu3" id="verba"></div>
+
+    <div class="two-col fu fu4">
       <div class="card">
         <div class="card-hd">
           <div><div class="card-title">Evolução do ROAS</div>
@@ -390,7 +414,7 @@ function buildApp() {
       </div>
     </div>
 
-    <div class="card fu fu4">
+    <div class="card fu fu6">
       <div class="card-hd">
         <div><div class="card-title">Ranking de anúncios</div>
         <div class="card-sub">Ordenado por compras no período</div></div>
@@ -398,7 +422,7 @@ function buildApp() {
       <div class="ranking" id="ranking"></div>
     </div>
 
-    <div class="card fu fu5">
+    <div class="card fu fu6">
       <div class="card-hd" style="flex-wrap:wrap;gap:10px">
         <div><div class="card-title">Detalhamento</div>
         <div class="card-sub" id="tbl-sub"></div></div>
@@ -459,6 +483,7 @@ function render() {
   const v    = calcVerba();
 
   renderHero(tot, totA, dias.length);
+  renderInsights(tot, v, dias);
   renderVerba(v, dias);
   renderAlertas(tot);
   renderCart(tot, dias.length);
@@ -659,6 +684,96 @@ function renderRanking(diasFiltrados) {
 
 // ── CHARTS ────────────────────────────────────────────────
 function destroyChart(id) { if(charts[id]){ charts[id].destroy(); delete charts[id]; } }
+
+// ── SPARKLINES ────────────────────────────────────────────
+function sparkline(canvasId, data, color) {
+  const el = document.getElementById(canvasId);
+  if (!el || !data.length) return;
+  if (charts[canvasId]) { charts[canvasId].destroy(); delete charts[canvasId]; }
+  charts[canvasId] = new Chart(el, {
+    type:'line',
+    data:{ labels:data.map((_,i)=>i), datasets:[{
+      data, borderColor:color, backgroundColor:'transparent',
+      borderWidth:1.5, pointRadius:0, tension:0.4,
+    }]},
+    options:{ responsive:false, maintainAspectRatio:false,
+      plugins:{legend:{display:false},tooltip:{enabled:false}},
+      scales:{x:{display:false},y:{display:false}} }
+  });
+}
+
+// ── INSIGHTS ──────────────────────────────────────────────
+function renderInsights(tot, v, dias) {
+  const el = document.getElementById('insights');
+  if (!el) return;
+
+  const compTotal = v.compTotal;
+  const metaPct   = Math.min(100, compTotal/CFG.metaCompras*100);
+  const faltam    = Math.max(0, CFG.metaCompras - compTotal);
+
+  // Eficiência: compras por R$ 100 investidos
+  const efic     = v.inv > 0 ? (compTotal/v.inv*100) : 0;
+  const eficColor = efic >= 2 ? 'var(--green)' : efic >= 1 ? 'var(--amber)' : 'var(--red)';
+
+  // Projeção: dias até zerar verba no ritmo atual
+  const diasVerba = v.diasVerba;
+  const verbaCor  = !diasVerba ? 'var(--text-3)' :
+                    diasVerba >= v.dr ? 'var(--green)' :
+                    diasVerba >= v.dr*0.8 ? 'var(--amber)' : 'var(--red)';
+  const verbaTxt  = !diasVerba ? '—' :
+                    diasVerba >= v.dr ? 'Verba dura até o evento' :
+                    'Verba acaba em '+diasVerba+' dias';
+
+  // Ritmo de compras
+  const ritmoCor  = v.ritmoComp >= v.compNec ? 'var(--green)' :
+                    v.ritmoComp >= v.compNec*0.7 ? 'var(--amber)' : 'var(--red)';
+  const ritmoTxt  = v.compNec > 0
+    ? (v.ritmoComp >= v.compNec ? 'Ritmo suficiente para a meta' : 'Precisa de '+v.compNec.toFixed(1)+'/dia para a meta')
+    : 'Meta não configurada';
+
+  // Frequência como alerta precoce
+  const freqCor   = tot.freq <= CFG.freqMax*0.7 ? 'var(--green)' :
+                    tot.freq <= CFG.freqMax ? 'var(--amber)' : 'var(--red)';
+  const freqTxt   = tot.freq <= CFG.freqMax*0.7 ? 'Público com espaço para mais exibições' :
+                    tot.freq <= CFG.freqMax ? 'Atenção — próximo do limite de fadiga' :
+                    'Risco alto de queda no ROAS nos próximos dias';
+
+  el.innerHTML = `
+    <div class="insight" style="border-color:var(--green)">
+      <div class="insight-label">Meta de ingressos</div>
+      <div class="insight-val" style="color:var(--green)">${Math.round(compTotal)} <span style="font-size:16px;color:var(--text-3)">/ ${CFG.metaCompras}</span></div>
+      <div class="meta-prog">
+        <div class="meta-prog-labels"><span>${metaPct.toFixed(1)}% atingido</span><span>Faltam ${faltam}</span></div>
+        <div class="meta-prog-track">
+          <div class="meta-prog-bar" style="width:${metaPct}%;background:${metaPct>=100?'var(--green)':metaPct>=60?'var(--amber)':'var(--accent)'}"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="insight" style="border-color:${ritmoCor}">
+      <div class="insight-label">Ritmo de compras</div>
+      <div class="insight-val" style="color:${ritmoCor}">${v.ritmoComp.toFixed(1)}<span style="font-size:14px;color:var(--text-3)">/dia</span></div>
+      <div class="insight-sub">${ritmoTxt}</div>
+    </div>
+
+    <div class="insight" style="border-color:${eficColor}">
+      <div class="insight-label">Eficiência</div>
+      <div class="insight-val" style="color:${eficColor}">${efic.toFixed(1)}<span style="font-size:14px;color:var(--text-3)"> compras/R$100</span></div>
+      <div class="insight-sub">${efic>=2?'Ótimo aproveitamento do investimento':efic>=1?'Aproveitamento moderado':'Investimento com baixo retorno em compras'}</div>
+    </div>
+
+    <div class="insight" style="border-color:${verbaCor}">
+      <div class="insight-label">Projeção de verba</div>
+      <div class="insight-val" style="color:${verbaCor}">${diasVerba ? diasVerba+'d' : '—'}</div>
+      <div class="insight-sub">${verbaTxt} · ritmo atual ${fR(v.mediaReal)}/dia</div>
+    </div>
+
+    <div class="insight" style="border-color:${freqCor}">
+      <div class="insight-label">Sinal de fadiga criativa</div>
+      <div class="insight-val" style="color:${freqCor}">${tot.freq?tot.freq.toFixed(1)+'x':'—'}</div>
+      <div class="insight-sub">${freqTxt}</div>
+    </div>`;
+}
 
 function renderRoas(dias) {
   destroyChart('roas');
