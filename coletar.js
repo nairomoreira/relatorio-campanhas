@@ -308,6 +308,30 @@ function mergeContas(resultados) {
 }
 
 // ── MAIN ──────────────────────────────────────────────────
+// ── VERIFICAR EXPIRAÇÃO DO TOKEN ─────────────────────────
+async function verificarToken() {
+  try {
+    const url = 'https://graph.facebook.com/v19.0/me?fields=id&access_token=' + META_TOKEN;
+    const res = await fetchJSON(url);
+    if (res.error) return null;
+
+    // Debugger endpoint para ver expiração
+    const debugUrl = 'https://graph.facebook.com/v19.0/debug_token?' +
+      'input_token=' + META_TOKEN +
+      '&access_token=' + META_TOKEN;
+    const debug = await fetchJSON(debugUrl);
+    if (debug.data && debug.data.expires_at) {
+      const exp = new Date(debug.data.expires_at * 1000);
+      console.log('Token expira em:', exp.toLocaleDateString('pt-BR'));
+      return exp.toISOString();
+    }
+    return null;
+  } catch(e) {
+    console.log('Não foi possível verificar expiração do token:', e.message);
+    return null;
+  }
+}
+
 async function main() {
   if (!META_TOKEN) throw new Error('META_TOKEN não configurado');
 
@@ -346,11 +370,16 @@ async function main() {
     hour:'2-digit',minute:'2-digit',
   });
 
+  // Verifica expiração do token
+  console.log('\nVerificando token...');
+  const tokenExpira = await verificarToken();
+
   const json = JSON.stringify({
     atualizadoEm: agora,
+    tokenExpira,
     dias,
-    anuncios:    anunciosDia, // por dia (para ranking filtrado)
-    criativos,               // top criativos com imagem e métricas
+    anuncios:    anunciosDia,
+    criativos,
   }, null, 2);
 
   fs.writeFileSync(DADOS_FILE, json, 'utf8');
