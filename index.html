@@ -230,6 +230,43 @@ tr:hover td{background:var(--surface2);}
 tr.learn-row td{opacity:.7;font-style:italic;}
 
 .empty{display:flex;align-items:center;justify-content:center;min-height:90px;color:var(--text-3);font-size:13px;}
+
+/* ── ABAS ── */
+.tabs{display:flex;gap:0;border-bottom:1px solid var(--border);margin-bottom:16px;}
+.tab-btn{font-family:'DM Sans',sans-serif;font-size:13px;font-weight:500;
+  padding:10px 18px;border:none;background:transparent;color:var(--text-2);
+  cursor:pointer;border-bottom:2px solid transparent;transition:all .15s;white-space:nowrap;}
+.tab-btn:hover{color:var(--text);}
+.tab-btn.active{color:var(--accent);border-bottom-color:var(--accent);}
+.tab-panel{display:none;}.tab-panel.active{display:block;}
+
+/* ── CRIATIVOS ── */
+.criativos-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:14px;}
+.criativo-card{background:var(--surface2);border-radius:var(--r);overflow:hidden;
+  border:1px solid var(--border);transition:border-color .2s;}
+.criativo-card:hover{border-color:var(--border-md);}
+.criativo-img{width:100%;aspect-ratio:1/1;object-fit:cover;display:block;background:var(--surface3);}
+.criativo-img-wrap{position:relative;}
+.criativo-tipo{position:absolute;top:8px;right:8px;background:rgba(0,0,0,.7);
+  color:white;font-size:9px;font-weight:700;padding:2px 6px;border-radius:4px;
+  text-transform:uppercase;letter-spacing:.05em;}
+.criativo-body{padding:12px 14px;}
+.criativo-name{font-size:12px;font-weight:500;color:var(--text);
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-bottom:3px;}
+.criativo-set{font-size:10px;color:var(--text-3);margin-bottom:10px;
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.criativo-metrics{display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px;}
+.cm{background:var(--surface);border-radius:var(--r-sm);padding:7px 8px;text-align:center;}
+.cm-val{font-family:'Rajdhani',sans-serif;font-size:16px;font-weight:700;line-height:1;}
+.cm-label{font-size:9px;color:var(--text-3);text-transform:uppercase;letter-spacing:.04em;margin-top:2px;}
+.criativo-metrics-2{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-top:6px;}
+.criativo-badge{display:inline-flex;align-items:center;gap:4px;padding:3px 8px;
+  border-radius:4px;font-size:10px;font-weight:600;margin-bottom:8px;}
+
+@media(max-width:768px){
+  .criativos-grid{grid-template-columns:repeat(auto-fill,minmax(240px,1fr));}
+  .tab-btn{padding:10px 12px;font-size:12px;}
+}
 .err{background:var(--red-bg);border:1px solid rgba(239,68,68,.15);border-radius:var(--r);
   padding:20px;color:var(--red);font-size:13px;line-height:1.6;max-width:480px;margin:28px;}
 
@@ -332,7 +369,7 @@ const TIPS = {
   'ROAS diário': 'Retorno sobre investimento calculado dia a dia.',
 };
 
-let raw=[], rawAds=[], periodo='7d', gran='dia', charts={};
+let raw=[], rawAds=[], rawCriativos=[], periodo='7d', gran='dia', charts={};
 let customFrom=null, customTo=null;
 let compareMode=false, cmpFrom=null, cmpTo=null;
 let metricaAtiva='roas';
@@ -347,6 +384,7 @@ async function init() {
     const json=await res.json();
     raw=(json.dias||[]).filter(d=>d&&d.data).sort((a,b)=>a.data.localeCompare(b.data));
     rawAds=(json.anuncios||[]);
+    rawCriativos=(json.criativos||[]);
     const upd=document.getElementById('upd');
     if(upd&&json.atualizadoEm) upd.textContent='Atualizado '+json.atualizadoEm;
     buildApp(); render();
@@ -489,6 +527,11 @@ function applyCmp(){
 function buildApp(){
   document.getElementById('app').innerHTML=`
   <div class="main">
+    <div class="tabs">
+      <button class="tab-btn active" data-tab="dashboard">📊 Dashboard</button>
+      <button class="tab-btn" data-tab="criativos">🎨 Melhores criativos</button>
+    </div>
+    <div class="tab-panel active" id="tab-dashboard">
     <div class="hero fu fu1" id="hero"></div>
     <div class="insight-grid fu fu2" id="insights"></div>
     <div class="verba-card fu fu3" id="verba"></div>
@@ -551,7 +594,20 @@ function buildApp(){
         </tr></thead><tbody id="tbody"></tbody></table>
       </div>
     </div>
+    </div><!-- /tab-dashboard -->
+    <div class="tab-panel" id="tab-criativos">
+      <div id="criativos-content"></div>
+    </div>
   </div>`;
+
+  // Tab buttons
+  document.querySelectorAll('.tab-btn').forEach(b=>b.addEventListener('click',()=>{
+    document.querySelectorAll('.tab-btn').forEach(x=>x.classList.remove('active'));
+    document.querySelectorAll('.tab-panel').forEach(x=>x.classList.remove('active'));
+    b.classList.add('active');
+    document.getElementById('tab-'+b.dataset.tab).classList.add('active');
+    if(b.dataset.tab==='criativos') renderCriativos();
+  }));
 
   // Period buttons
   document.querySelectorAll('.pb').forEach(b=>b.addEventListener('click',()=>{
@@ -916,6 +972,77 @@ function renderTabela(dias,g){
       <td class="r ${(r.custoC||0)<=CFG.custoCompraMax?'vup':'vdn'}">${fR(r.custoC||0)}</td>
       <td class="r ${(r.roas||0)>=CFG.roasMin?'vup':'vdn'}">${fX(r.roas||0)}</td>
     </tr>`).join('');
+}
+
+// ── CRIATIVOS ─────────────────────────────────────────────
+function imgErr(el) {
+  el.style.display = 'none';
+  if (el.nextElementSibling) el.nextElementSibling.style.display = 'flex';
+}
+function renderCriativos() {
+  const el = document.getElementById('criativos-content');
+  if (!el) return;
+
+  if (!rawCriativos.length) {
+    el.innerHTML = '<div class="empty" style="min-height:200px;flex-direction:column;gap:8px">' +
+      '<div style="font-size:28px;opacity:.3">🎨</div>' +
+      '<div>Criativos ainda não disponíveis</div>' +
+      '<div style="font-size:11px;color:var(--text-3)">Aguarde a próxima atualização automática</div>' +
+      '</div>';
+    return;
+  }
+
+  // Ordena por ROAS por padrão
+  const ordenados = [...rawCriativos].sort((a,b) => b.roas - a.roas);
+
+  const roasMax = Math.max(...ordenados.map(c=>c.roas));
+
+  el.innerHTML = '<div style="margin-bottom:14px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px">' +
+    '<div>' +
+      '<div style="font-family:Rajdhani,sans-serif;font-size:15px;font-weight:700">Melhores criativos</div>' +
+      '<div style="font-size:11px;color:var(--text-3);margin-top:2px">Top anúncios por ROAS — imagens atualizadas a cada 6h</div>' +
+    '</div>' +
+    '<div style="font-size:11px;color:var(--text-3)">' + ordenados.length + ' criativos</div>' +
+  '</div>' +
+  '<div class="criativos-grid">' +
+  ordenados.map((c, i) => {
+    const roasColor = c.roas >= CFG.roasOtimo ? 'var(--green)' : c.roas >= CFG.roasMin ? 'var(--amber)' : 'var(--red)';
+    const badgeColor = i === 0 ? '#f59e0b' : i === 1 ? '#9ca3af' : i === 2 ? '#b45309' : 'var(--text-3)';
+    const medalha = i === 0 ? '🥇' : i === 1 ? '🥈' : i === 2 ? '🥉' : '';
+    return '<div class="criativo-card">' +
+      '<div class="criativo-img-wrap">' +
+        '<img class="criativo-img" src="' + c.imageUrl + '" alt="' + c.adName + '" ' +
+          'onerror="imgErr(this)" loading="lazy">' +
+        '<div style="display:none;width:100%;aspect-ratio:1/1;align-items:center;justify-content:center;' +
+          'background:var(--surface3);color:var(--text-3);font-size:12px;flex-direction:column;gap:6px">' +
+          '<div style="font-size:24px;opacity:.4">🖼️</div><div>Imagem expirada</div>' +
+        '</div>' +
+        '<div class="criativo-tipo">' + c.tipo + '</div>' +
+        (medalha ? '<div style="position:absolute;top:8px;left:8px;font-size:18px">' + medalha + '</div>' : '') +
+      '</div>' +
+      '<div class="criativo-body">' +
+        '<div class="criativo-badge" style="background:' + roasColor + '22;color:' + roasColor + '">' +
+          '<span>#' + (i+1) + ' por ROAS</span>' +
+        '</div>' +
+        '<div class="criativo-name" title="' + c.adName + '">' + c.adName + '</div>' +
+        '<div class="criativo-set">' + (c.adSet || c.campaign || '') + '</div>' +
+        '<div class="criativo-metrics">' +
+          '<div class="cm"><div class="cm-val" style="color:' + roasColor + '">' + fX(c.roas) + '</div><div class="cm-label">ROAS</div></div>' +
+          '<div class="cm"><div class="cm-val">' + fP(c.ctr) + '</div><div class="cm-label">CTR</div></div>' +
+          '<div class="cm"><div class="cm-val">' + fR(c.cpc) + '</div><div class="cm-label">CPC</div></div>' +
+        '</div>' +
+        '<div class="criativo-metrics-2">' +
+          '<div class="cm"><div class="cm-val">' + fN(c.alcance) + '</div><div class="cm-label">Alcance</div></div>' +
+          '<div class="cm"><div class="cm-val">' + fR(c.cpm) + '</div><div class="cm-label">CPM</div></div>' +
+          '<div class="cm"><div class="cm-val" style="color:var(--green)">' + fN(c.compras) + '</div><div class="cm-label">Compras</div></div>' +
+          '<div class="cm"><div class="cm-val">' + fR(c.custoCompra||0) + '</div><div class="cm-label">Custo/compra</div></div>' +
+          '<div class="cm"><div class="cm-val">' + fR(c.valorUsado) + '</div><div class="cm-label">Investido</div></div>' +
+          '<div class="cm"><div class="cm-val" style="color:var(--green)">' + fR(c.valorCompras) + '</div><div class="cm-label">Vlr compras</div></div>' +
+        '</div>' +
+      '</div>' +
+    '</div>';
+  }).join('') +
+  '</div>';
 }
 
 init();
