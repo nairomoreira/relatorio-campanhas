@@ -4,35 +4,23 @@
 // Salva dados.json direto no repositório
 // ============================================================
 
-const https  = require('https');
-const fs     = require('fs');
-const path   = require('path');
+const https = require('https');
+const fs    = require('fs');
+const path  = require('path');
 
-// ── CONFIGURAÇÃO ──────────────────────────────────────────
-const META_TOKEN  = process.env.META_TOKEN;
-const DADOS_FILE  = path.join(__dirname, 'dados.json');
+const META_TOKEN = process.env.META_TOKEN;
+const DADOS_FILE = path.join(__dirname, 'dados.json');
 
 const CONTAS = [
   { id: 'act_648140282631963', nome: 'AX - AFAR Produtora' },
-  // Adicione mais contas aqui conforme necessário:
   // { id: 'act_XXXXXXXXX', nome: 'Cliente 2' },
 ];
 
-// Métricas que vamos buscar
 const FIELDS = [
-  'ad_id',
-  'ad_name',
-  'adset_name',
-  'date_start',
-  'spend',
-  'impressions',
-  'reach',
-  'clicks',
-  'ctr',
-  'cpm',
-  'frequency',
-  'actions',
-  'action_values',
+  'ad_id', 'ad_name', 'adset_name', 'campaign_name',
+  'date_start', 'spend', 'impressions', 'reach',
+  'clicks', 'ctr', 'cpm', 'frequency',
+  'actions', 'action_values',
 ].join(',');
 
 // ── HELPERS ───────────────────────────────────────────────
@@ -65,65 +53,110 @@ function fetchJSON(url) {
 async function buscarInsights(contaId, dataInicio, dataFim) {
   const baseUrl = 'https://graph.facebook.com/v19.0/' + contaId + '/insights?' +
     'fields=' + encodeURIComponent(FIELDS) +
-    '&time_increment=1' +
-    '&level=ad' +
+    '&time_increment=1&level=ad' +
     '&time_range=' + encodeURIComponent(JSON.stringify({ since: dataInicio, until: dataFim })) +
-    '&limit=500' +
-    '&access_token=' + META_TOKEN;
+    '&limit=500&access_token=' + META_TOKEN;
 
-  let todos = [];
-  let url   = baseUrl;
-
+  let todos = [], url = baseUrl;
   while (url) {
     const res = await fetchJSON(url);
-    if (res.error) throw new Error('Meta API erro: ' + res.error.message + ' (code: ' + res.error.code + ')');
+    if (res.error) throw new Error('Meta API: ' + res.error.message);
     todos = todos.concat(res.data || []);
-    url   = (res.paging && res.paging.next) || null;
-    if (url) console.log('  Buscando página adicional...');
+    url = (res.paging && res.paging.next) || null;
   }
-
   return todos;
+}
+
+// ── BUSCAR CRIATIVO DE UM ANÚNCIO ─────────────────────────
+async function buscarCriativo(adId) {
+  try {
+    const url = 'https://graph.facebook.com/v19.0/' + adId +
+      '?fields=creative{id,name,thumbnail_url,image_url,video_id,object_story_spec,asset_feed_spec}' +
+      '&access_token=' + META_TOKEN;
+    const res = await fetchJSON(url);
+    if (!res.creative) return null;
+    const c = res.creative;
+
+    // Tenta pegar thumbnail — vídeo tem thumbnail_url, imagem tem image_url
+    let imageUrl = c.thumbnail_url || c.image_url || null;
+
+    // Se for vídeo e não tiver thumbnail direto, busca pelo video_id
+    if (!imageUrl && c.video_id) {
+      const vUrl = 'https://graph.facebook.com/v19.0/' + c.video_id +
+        '?fields=thumbnails{uri}&access_token=' + META_TOKEN;
+      const vRes = await fetchJSON(vUrl);
+      if (vRes.thumbnails && vRes.thumbnails.data && vRes.thumbnails.data.length) {
+        imageUrl = vRes.thumbnails.data[0].uri;
+      }
+    }
+
+    return {
+      creativeId:  c.id,
+      creativeName:c.name || '',
+      imageUrl,
+      tipo: c.video_id ? 'video' : 'imagem',
+    };
+  } catch(e) {
+    console.log('  Criativo não encontrado para ad', adId, ':', e.message);
+    return null;
+  }
 }
 
 // ── PROCESSAR ─────────────────────────────────────────────
 function processar(rawData) {
   const porDia     = {};
-  const porAnuncio = {};
+  const porAnuncio = {}; // key: adName
+  const adIds      = {}; // adName → adId (para buscar criativo)
 
   rawData.forEach(row => {
     const data = row.date_start;
     if (!data) return;
 
-    const invest  = parseFloat(row.spend)       || 0;
-    const imp     = parseInt(row.impressions)    || 0;
-    const alcance = parseInt(row.reach)          || 0;
-    const cliques = parseInt(row.clicks)         || 0;
-    const addCart = getAction(row.actions, ['add_to_cart']);
-    const compras = getAction(row.actions, ['purchase','omni_purchase']);
-    const valComp = getAction(row.action_values, ['purchase','omni_purchase']);
-    const adName  = row.ad_name   || 'Sem nome';
-    const adSet   = row.adset_name|| '';
+    const invest   = parseFloat(row.spend)    || 0;
+    const imp      = parseInt(row.impressions) || 0;
+    const alcance  = parseInt(row.reach)       || 0;
+    const cliques  = parseInt(row.clicks)      || 0;
+    const freq     = parseFloat(row.frequency) || 0;
+    const addCart  = getAction(row.actions, ['add_to_cart']);
+    const compras  = getAction(row.actions, ['purchase','omni_purchase']);
+    const valComp  = getAction(row.action_values, ['purchase','omni_purchase']);
+    const adName   = row.ad_name    || 'Sem nome';
+    const adSet    = row.adset_name || '';
+    const campaign = row.campaign_name || '';
+    const adId     = row.ad_id || '';
+
+    // Guarda ad_id por nome (para buscar criativo depois)
+    if (adId && !adIds[adName]) adIds[adName] = adId;
 
     // Agrega por dia
     if (!porDia[data]) porDia[data] = { data, impressoes:0, alcance:0, valorUsado:0, cliquesLink:0, addCarrinho:0, compras:0, valorCompras:0 };
-    porDia[data].impressoes   += imp;
-    porDia[data].alcance      += alcance;
-    porDia[data].valorUsado   += invest;
-    porDia[data].cliquesLink  += cliques;
-    porDia[data].addCarrinho  += addCart;
-    porDia[data].compras      += compras;
-    porDia[data].valorCompras += valComp;
+    const dia = porDia[data];
+    dia.impressoes   += imp;
+    dia.alcance      += alcance;
+    dia.valorUsado   += invest;
+    dia.cliquesLink  += cliques;
+    dia.addCarrinho  += addCart;
+    dia.compras      += compras;
+    dia.valorCompras += valComp;
 
-    // Agrega por anúncio + dia
-    const key = adName + '||' + data;
-    if (!porAnuncio[key]) porAnuncio[key] = { data, adName, adSet, impressoes:0, alcance:0, valorUsado:0, cliquesLink:0, addCarrinho:0, compras:0, valorCompras:0 };
-    porAnuncio[key].impressoes   += imp;
-    porAnuncio[key].alcance      += alcance;
-    porAnuncio[key].valorUsado   += invest;
-    porAnuncio[key].cliquesLink  += cliques;
-    porAnuncio[key].addCarrinho  += addCart;
-    porAnuncio[key].compras      += compras;
-    porAnuncio[key].valorCompras += valComp;
+    // Agrega por anúncio (total do período)
+    if (!porAnuncio[adName]) {
+      porAnuncio[adName] = {
+        adName, adSet, campaign,
+        impressoes:0, alcance:0, valorUsado:0, cliquesLink:0,
+        addCarrinho:0, compras:0, valorCompras:0, freq:0, _dias:0,
+      };
+    }
+    const ad = porAnuncio[adName];
+    ad.impressoes   += imp;
+    ad.alcance      += alcance;
+    ad.valorUsado   += invest;
+    ad.cliquesLink  += cliques;
+    ad.addCarrinho  += addCart;
+    ad.compras      += compras;
+    ad.valorCompras += valComp;
+    ad.freq         += freq;
+    ad._dias        += 1;
   });
 
   const dias = Object.values(porDia)
@@ -145,12 +178,14 @@ function processar(rawData) {
     }))
     .sort((a,b) => a.data.localeCompare(b.data));
 
+  // Anúncios agregados (para ranking e criativos)
   const anuncios = Object.values(porAnuncio)
     .filter(a => a.valorUsado > 0 || a.impressoes > 0)
     .map(a => ({
-      data:        a.data,
+      adId:        adIds[a.adName] || '',
       adName:      a.adName,
       adSet:       a.adSet,
+      campaign:    a.campaign,
       impressoes:  ri(a.impressoes),
       alcance:     ri(a.alcance),
       cliquesLink: ri(a.cliquesLink),
@@ -158,31 +193,103 @@ function processar(rawData) {
       compras:     ri(a.compras),
       valorUsado:  r2(a.valorUsado),
       valorCompras:r2(a.valorCompras),
+      ctr:         a.impressoes > 0 ? r2(a.cliquesLink/a.impressoes*100) : 0,
+      cpm:         a.impressoes > 0 ? r2(a.valorUsado/a.impressoes*1000) : 0,
+      cpc:         a.cliquesLink > 0 ? r2(a.valorUsado/a.cliquesLink) : 0,
+      roas:        a.valorUsado > 0 ? r2(a.valorCompras/a.valorUsado) : 0,
+      custoCompra: a.compras > 0 ? r2(a.valorUsado/a.compras) : 0,
+      freq:        a._dias > 0 ? r2(a.freq/a._dias) : 0,
     }))
-    .sort((a,b) => a.data.localeCompare(b.data) || a.adName.localeCompare(b.adName));
+    .sort((a,b) => b.compras - a.compras || b.valorCompras - a.valorCompras);
 
-  return { dias, anuncios };
+  // Também retorna dados por anúncio+dia (para o ranking filtrado por período)
+  const anunciosDia = [];
+  rawData.forEach(row => {
+    const data = row.date_start;
+    if (!data) return;
+    const invest  = parseFloat(row.spend)    || 0;
+    const imp     = parseInt(row.impressions) || 0;
+    const compras = getAction(row.actions, ['purchase','omni_purchase']);
+    const valComp = getAction(row.action_values, ['purchase','omni_purchase']);
+    anunciosDia.push({
+      data,
+      adName:      row.ad_name || 'Sem nome',
+      adSet:       row.adset_name || '',
+      impressoes:  ri(imp),
+      alcance:     ri(parseInt(row.reach)||0),
+      cliquesLink: ri(parseInt(row.clicks)||0),
+      addCarrinho: ri(getAction(row.actions,['add_to_cart'])),
+      compras:     ri(compras),
+      valorUsado:  r2(invest),
+      valorCompras:r2(valComp),
+    });
+  });
+
+  return { dias, anuncios, anunciosDia };
+}
+
+// ── BUSCAR CRIATIVOS DOS TOP ANÚNCIOS ─────────────────────
+async function buscarCriativos(anuncios) {
+  // Busca criativos apenas dos top 10 por ROAS (evita muitas chamadas)
+  const top = anuncios
+    .filter(a => a.adId && a.valorUsado > 5) // mínimo R$5 investido
+    .sort((a,b) => b.roas - a.roas)
+    .slice(0, 10);
+
+  console.log('  Buscando criativos de', top.length, 'anúncios...');
+
+  const criativos = [];
+  for (const ad of top) {
+    const criativo = await buscarCriativo(ad.adId);
+    if (criativo && criativo.imageUrl) {
+      criativos.push({
+        adId:        ad.adId,
+        adName:      ad.adName,
+        adSet:       ad.adSet,
+        campaign:    ad.campaign || '',
+        imageUrl:    criativo.imageUrl,
+        tipo:        criativo.tipo,
+        // Métricas de performance
+        roas:        ad.roas,
+        ctr:         ad.ctr,
+        cpc:         ad.cpc,
+        cpm:         ad.cpm,
+        alcance:     ad.alcance,
+        impressoes:  ad.impressoes,
+        cliquesLink: ad.cliquesLink,
+        compras:     ad.compras,
+        valorCompras:ad.valorCompras,
+        valorUsado:  ad.valorUsado,
+        custoCompra: ad.custoCompra,
+        freq:        ad.freq,
+      });
+    }
+    // Pausa pequena para não sobrecarregar a API
+    await new Promise(r => setTimeout(r, 200));
+  }
+
+  console.log('  Criativos com imagem:', criativos.length);
+  return criativos;
 }
 
 // ── MERGE DE MÚLTIPLAS CONTAS ─────────────────────────────
 function mergeContas(resultados) {
   const porDia = {};
-  const anuncios = [];
+  const anuncios = [], anunciosDia = [];
 
-  resultados.forEach(({ dias, anuncios: ads }) => {
+  resultados.forEach(({ dias, anuncios: ads, anunciosDia: adsDia }) => {
     dias.forEach(d => {
-      if (!porDia[d.data]) {
-        porDia[d.data] = { ...d };
-      } else {
+      if (!porDia[d.data]) { porDia[d.data] = { ...d }; }
+      else {
         const t = porDia[d.data];
-        t.valorUsado   = r2(t.valorUsado   + d.valorUsado);
-        t.impressoes   = ri(t.impressoes   + d.impressoes);
-        t.alcance      = ri(t.alcance      + d.alcance);
-        t.cliquesLink  = ri(t.cliquesLink  + d.cliquesLink);
+        t.valorUsado   = r2(t.valorUsado + d.valorUsado);
+        t.impressoes   = ri(t.impressoes + d.impressoes);
+        t.alcance      = ri(t.alcance + d.alcance);
+        t.cliquesLink  = ri(t.cliquesLink + d.cliquesLink);
         t.cliquesTodos = ri(t.cliquesTodos + d.cliquesTodos);
-        t.addCarrinho  = ri(t.addCarrinho  + d.addCarrinho);
-        t.compras      = ri(t.compras      + d.compras);
-        t.resultados   = ri(t.resultados   + d.resultados);
+        t.addCarrinho  = ri(t.addCarrinho + d.addCarrinho);
+        t.compras      = ri(t.compras + d.compras);
+        t.resultados   = ri(t.resultados + d.resultados);
         t.valorCompras = r2(t.valorCompras + d.valorCompras);
         t.ctr              = t.impressoes > 0 ? r2(t.cliquesLink/t.impressoes*100) : 0;
         t.custoAddCarrinho = t.addCarrinho > 0 ? r2(t.valorUsado/t.addCarrinho) : 0;
@@ -190,64 +297,69 @@ function mergeContas(resultados) {
       }
     });
     anuncios.push(...ads);
+    anunciosDia.push(...(adsDia||[]));
   });
 
   return {
     dias: Object.values(porDia).sort((a,b) => a.data.localeCompare(b.data)),
     anuncios,
+    anunciosDia,
   };
 }
 
 // ── MAIN ──────────────────────────────────────────────────
 async function main() {
-  if (!META_TOKEN) throw new Error('META_TOKEN não configurado nos secrets do GitHub');
+  if (!META_TOKEN) throw new Error('META_TOKEN não configurado');
 
-  // Período: últimos 90 dias
   const hoje   = new Date();
-  const inicio = new Date(hoje);
-  inicio.setDate(inicio.getDate() - 90);
-  const dataFim   = hoje.toISOString().slice(0,10);
-  const dataInicio= inicio.toISOString().slice(0,10);
+  const inicio = new Date(hoje); inicio.setDate(inicio.getDate() - 90);
+  const dataFim    = hoje.toISOString().slice(0,10);
+  const dataInicio = inicio.toISOString().slice(0,10);
 
   console.log('Período:', dataInicio, 'até', dataFim);
 
   const resultados = [];
-
   for (const conta of CONTAS) {
-    console.log('\nBuscando conta:', conta.nome, '(' + conta.id + ')');
+    console.log('\nBuscando conta:', conta.nome);
     try {
       const raw = await buscarInsights(conta.id, dataInicio, dataFim);
       console.log('  Linhas brutas:', raw.length);
       const resultado = processar(raw);
-      console.log('  Dias agregados:', resultado.dias.length);
-      console.log('  Anúncios:', resultado.anuncios.length);
+      console.log('  Dias:', resultado.dias.length, '| Anúncios:', resultado.anuncios.length);
       resultados.push(resultado);
     } catch(e) {
       console.error('  Erro:', e.message);
-      // Continua para a próxima conta
     }
   }
 
   if (!resultados.length) throw new Error('Nenhuma conta retornou dados.');
 
-  const { dias, anuncios } = mergeContas(resultados);
+  const { dias, anuncios, anunciosDia } = mergeContas(resultados);
 
-  // Formata timestamp no horário de Brasília
+  // Busca criativos dos top anúncios
+  console.log('\nBuscando criativos...');
+  const criativos = await buscarCriativos(anuncios);
+
   const agora = new Date().toLocaleString('pt-BR', {
-    timeZone: 'America/Sao_Paulo',
-    day:'2-digit', month:'2-digit', year:'numeric',
-    hour:'2-digit', minute:'2-digit',
+    timeZone:'America/Sao_Paulo',
+    day:'2-digit',month:'2-digit',year:'numeric',
+    hour:'2-digit',minute:'2-digit',
   });
 
-  const json = JSON.stringify({ atualizadoEm: agora, dias, anuncios }, null, 2);
+  const json = JSON.stringify({
+    atualizadoEm: agora,
+    dias,
+    anuncios:    anunciosDia, // por dia (para ranking filtrado)
+    criativos,               // top criativos com imagem e métricas
+  }, null, 2);
 
-  // Salva dados.json no repositório
   fs.writeFileSync(DADOS_FILE, json, 'utf8');
 
-  console.log('\nSalvo dados.json');
-  console.log('Total de dias:', dias.length);
-  console.log('Total de anúncios:', anuncios.length);
-  console.log('Atualizado em:', agora);
+  console.log('\n✓ dados.json salvo');
+  console.log('  Dias:', dias.length);
+  console.log('  Linhas anúncios:', anunciosDia.length);
+  console.log('  Criativos:', criativos.length);
+  console.log('  Atualizado em:', agora);
 }
 
 main().catch(err => {
