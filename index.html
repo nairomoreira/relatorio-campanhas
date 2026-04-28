@@ -231,6 +231,41 @@ tr.learn-row td{opacity:.7;font-style:italic;}
 
 .empty{display:flex;align-items:center;justify-content:center;min-height:90px;color:var(--text-3);font-size:13px;}
 
+/* ── SPARKLINE ── */
+.hk-spark{margin-top:6px;height:24px;width:100%;}
+
+/* ── TOKEN ALERTA ── */
+.token-alert{background:rgba(239,68,68,0.08);border:1px solid rgba(239,68,68,0.2);
+  border-radius:var(--r-sm);padding:8px 14px;display:flex;align-items:center;gap:10px;font-size:12px;}
+.token-warn{background:rgba(245,158,11,0.08);border:1px solid rgba(245,158,11,0.2);
+  border-radius:var(--r-sm);padding:8px 14px;display:flex;align-items:center;gap:10px;font-size:12px;}
+
+/* ── MELHOR DIA ── */
+.best-day-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;}
+.bd-item{background:var(--surface2);border-radius:var(--r-sm);padding:8px 4px;
+  text-align:center;position:relative;overflow:hidden;transition:background .15s;}
+.bd-item.best{background:rgba(34,197,94,0.12);border:1px solid rgba(34,197,94,0.2);}
+.bd-item.worst{background:rgba(239,68,68,0.08);}
+.bd-label{font-size:10px;font-weight:600;color:var(--text-3);text-transform:uppercase;letter-spacing:.04em;margin-bottom:4px;}
+.bd-roas{font-family:'Rajdhani',sans-serif;font-size:16px;font-weight:700;line-height:1;}
+.bd-sub{font-size:9px;color:var(--text-3);margin-top:2px;}
+.bd-bar{position:absolute;bottom:0;left:0;right:0;height:3px;border-radius:0 0 var(--r-sm) var(--r-sm);}
+
+/* ── CAMPANHAS ── */
+.camp-grid{display:flex;flex-direction:column;gap:6px;}
+.camp-item{display:flex;align-items:center;gap:12px;padding:10px 12px;
+  background:var(--surface2);border-radius:var(--r-sm);}
+.camp-name{flex:1;min-width:0;}
+.camp-n{font-size:12px;font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.camp-s{font-size:10px;color:var(--text-3);margin-top:1px;}
+.camp-bar-wrap{width:80px;}
+.camp-bar-track{height:4px;background:var(--surface);border-radius:2px;overflow:hidden;margin-top:4px;}
+.camp-bar-fill{height:100%;border-radius:2px;background:linear-gradient(90deg,var(--accent),var(--accent2));}
+.camp-metrics{display:flex;gap:12px;flex-shrink:0;}
+.camp-m{text-align:right;min-width:44px;}
+.camp-m-val{font-family:'DM Mono',monospace;font-size:11px;font-weight:500;}
+.camp-m-label{font-size:9px;color:var(--text-3);text-transform:uppercase;letter-spacing:.04em;margin-top:1px;}
+
 /* ── ABAS ── */
 .tabs{display:flex;gap:0;border-bottom:1px solid var(--border);margin-bottom:16px;}
 .tab-btn{font-family:'DM Sans',sans-serif;font-size:13px;font-weight:500;
@@ -369,7 +404,7 @@ const TIPS = {
   'ROAS diário': 'Retorno sobre investimento calculado dia a dia.',
 };
 
-let raw=[], rawAds=[], rawCriativos=[], periodo='7d', gran='dia', charts={};
+let raw=[], rawAds=[], rawCriativos=[], tokenExpira=null, periodo='7d', gran='dia', charts={};
 let customFrom=null, customTo=null;
 let compareMode=false, cmpFrom=null, cmpTo=null;
 let metricaAtiva='roas';
@@ -385,6 +420,7 @@ async function init() {
     raw=(json.dias||[]).filter(d=>d&&d.data).sort((a,b)=>a.data.localeCompare(b.data));
     rawAds=(json.anuncios||[]);
     rawCriativos=(json.criativos||[]);
+    tokenExpira=json.tokenExpira||null;
     const upd=document.getElementById('upd');
     if(upd&&json.atualizadoEm) upd.textContent='Atualizado '+json.atualizadoEm;
     buildApp(); render();
@@ -532,10 +568,27 @@ function buildApp(){
       <button class="tab-btn" data-tab="criativos">🎨 Melhores criativos</button>
     </div>
     <div class="tab-panel active" id="tab-dashboard">
+    <div id="token-alert"></div>
     <div class="hero fu fu1" id="hero"></div>
     <div class="insight-grid fu fu2" id="insights"></div>
     <div class="verba-card fu fu3" id="verba"></div>
     <div id="aprendizado-wrap" class="fu fu3"></div>
+    <div class="two-col fu fu4" style="margin-top:0">
+      <div class="card">
+        <div class="card-hd">
+          <div><div class="card-title">Melhor dia para anunciar</div>
+          <div class="card-sub">ROAS médio por dia da semana — histórico completo</div></div>
+        </div>
+        <div class="best-day-grid" id="best-day"></div>
+      </div>
+      <div class="card">
+        <div class="card-hd">
+          <div><div class="card-title">Performance por campanha</div>
+          <div class="card-sub">Ordenado por valor de compras</div></div>
+        </div>
+        <div class="camp-grid" id="camp-grid"></div>
+      </div>
+    </div>
     <div class="two-col fu fu4">
       <div class="card">
         <div class="card-hd">
@@ -650,6 +703,7 @@ function render(){
   const v=calcVerba();
   const ap=detectarAprendizado(dias);
 
+  renderTokenAlerta();
   renderHero(tot,totA,dias.length,ant.length);
   renderInsights(tot,v,dias);
   renderVerba(v,dias);
@@ -657,6 +711,8 @@ function render(){
   renderAlertas(tot);
   renderCart(tot,dias.length);
   renderMetricChart(dias,ant);
+  renderBestDay();
+  renderCampanhas(dias);
   renderRanking(dias);
   renderTabela(dias,'dia');
   document.querySelectorAll('.gb[data-gt]').forEach(b=>b.classList.remove('active'));
@@ -972,6 +1028,117 @@ function renderTabela(dias,g){
       <td class="r ${(r.custoC||0)<=CFG.custoCompraMax?'vup':'vdn'}">${fR(r.custoC||0)}</td>
       <td class="r ${(r.roas||0)>=CFG.roasMin?'vup':'vdn'}">${fX(r.roas||0)}</td>
     </tr>`).join('');
+}
+
+
+// ── TOKEN ALERTA ──────────────────────────────────────────
+function renderTokenAlerta() {
+  const el = document.getElementById('token-alert');
+  if (!el || !tokenExpira) return;
+  const exp = new Date(tokenExpira);
+  const hj  = new Date();
+  const dias = Math.round((exp - hj) / 864e5);
+  if (dias > 15) { el.innerHTML = ''; return; }
+  const cls = dias <= 5 ? 'token-alert' : 'token-warn';
+  const icon = dias <= 5 ? '🔴' : '⚠️';
+  el.innerHTML = '<div class="' + cls + '">' +
+    '<span style="font-size:16px">' + icon + '</span>' +
+    '<div><strong style="color:' + (dias<=5?'var(--red)':'var(--amber)') + '">Token do Meta expira em ' + dias + ' dias</strong>' +
+    '<div style="font-size:11px;color:var(--text-3);margin-top:2px">' +
+    'Acesse developers.facebook.com → Graph API Explorer → gere um novo token e atualize o secret META_TOKEN no GitHub.' +
+    '</div></div></div>';
+}
+
+// ── MELHOR DIA DA SEMANA ──────────────────────────────────
+function renderBestDay() {
+  const el = document.getElementById('best-day');
+  if (!el || !raw.length) return;
+
+  const dias = ['Dom','Seg','Ter','Qua','Qui','Sex','Sáb'];
+  const porDia = {0:[],1:[],2:[],3:[],4:[],5:[],6:[]};
+
+  raw.forEach(d => {
+    const p = d.data.split('-');
+    const dt = new Date(+p[0], +p[1]-1, +p[2]);
+    const dow = dt.getDay();
+    const roas = d.valorUsado > 0 ? d.valorCompras/d.valorUsado : 0;
+    if (roas > 0) porDia[dow].push(roas);
+  });
+
+  const medias = dias.map((_, i) => {
+    const arr = porDia[i];
+    return arr.length ? arr.reduce((s,v)=>s+v,0)/arr.length : 0;
+  });
+
+  const maxRoas = Math.max(...medias.filter(v=>v>0));
+  const minRoas = Math.min(...medias.filter(v=>v>0));
+  const bestIdx = medias.indexOf(maxRoas);
+  const worstIdx = medias.indexOf(minRoas);
+
+  el.innerHTML = dias.map((d,i) => {
+    const v = medias[i];
+    const pct = maxRoas > 0 ? Math.round(v/maxRoas*100) : 0;
+    const isBest = i === bestIdx && v > 0;
+    const isWorst = i === worstIdx && v > 0;
+    const cor = isBest ? 'var(--green)' : isWorst ? 'var(--red)' : 'var(--text-2)';
+    const cls = isBest ? 'bd-item best' : isWorst ? 'bd-item worst' : 'bd-item';
+    return '<div class="' + cls + '">' +
+      '<div class="bd-bar" style="background:' + cor + ';opacity:.6"></div>' +
+      '<div class="bd-label">' + d + '</div>' +
+      '<div class="bd-roas" style="color:' + cor + '">' + (v>0?fX(v):'—') + '</div>' +
+      '<div class="bd-sub">' + (pct>0?pct+'% do máx':'sem dados') + '</div>' +
+    '</div>';
+  }).join('');
+}
+
+// ── CAMPANHAS ─────────────────────────────────────────────
+function renderCampanhas(diasFiltrados) {
+  const el = document.getElementById('camp-grid');
+  if (!el) return;
+
+  if (!rawAds.length) { el.innerHTML = '<div class="empty">Sem dados de campanhas</div>'; return; }
+
+  const de  = diasFiltrados.length ? diasFiltrados[0].data : null;
+  const ate = diasFiltrados.length ? diasFiltrados[diasFiltrados.length-1].data : null;
+  const af  = de ? rawAds.filter(a => a.data >= de && a.data <= ate) : rawAds;
+
+  const map = {};
+  af.forEach(a => {
+    // Usa adSet como agrupador de campanha (mais granular que campaign_name)
+    const k = a.adSet || a.adName || 'Sem campanha';
+    if (!map[k]) map[k] = { nome:k, valorUsado:0, compras:0, valorCompras:0, impressoes:0, cliques:0 };
+    map[k].valorUsado   += +a.valorUsado||0;
+    map[k].compras      += +a.compras||0;
+    map[k].valorCompras += +a.valorCompras||0;
+    map[k].impressoes   += +a.impressoes||0;
+    map[k].cliques      += +a.cliquesLink||0;
+  });
+
+  const camps = Object.values(map)
+    .map(c => ({...c,
+      roas: c.valorUsado > 0 ? r2(c.valorCompras/c.valorUsado) : 0,
+      custoC: c.compras > 0 ? r2(c.valorUsado/c.compras) : 0,
+    }))
+    .sort((a,b) => b.valorCompras - a.valorCompras);
+
+  if (!camps.length) { el.innerHTML = '<div class="empty">Sem dados no período</div>'; return; }
+
+  const mx = camps[0].valorCompras || 1;
+  el.innerHTML = camps.map(c => {
+    const pct = Math.round(c.valorCompras/mx*100);
+    const roasColor = c.roas >= CFG.roasOtimo ? 'var(--green)' : c.roas >= CFG.roasMin ? 'var(--amber)' : 'var(--red)';
+    return '<div class="camp-item">' +
+      '<div class="camp-name">' +
+        '<div class="camp-n" title="' + c.nome + '">' + c.nome + '</div>' +
+        '<div class="camp-bar-track"><div class="camp-bar-fill" style="width:' + pct + '%"></div></div>' +
+      '</div>' +
+      '<div class="camp-metrics">' +
+        '<div class="camp-m"><div class="camp-m-val" style="color:var(--green)">' + fR(c.valorCompras) + '</div><div class="camp-m-label">Compras</div></div>' +
+        '<div class="camp-m"><div class="camp-m-val" style="color:' + roasColor + '">' + fX(c.roas) + '</div><div class="camp-m-label">ROAS</div></div>' +
+        '<div class="camp-m"><div class="camp-m-val">' + fR(c.valorUsado) + '</div><div class="camp-m-label">Investido</div></div>' +
+      '</div>' +
+    '</div>';
+  }).join('');
 }
 
 // ── CRIATIVOS ─────────────────────────────────────────────
