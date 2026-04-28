@@ -1,0 +1,924 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>Animextreme — Meta Ads</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Rajdhani:wght@600;700&family=DM+Sans:wght@400;500&family=DM+Mono:wght@400&display=swap');
+:root{
+  --bg:#0a0a0c;--surface:#111114;--surface2:#18181d;--surface3:#222228;
+  --border:rgba(255,255,255,0.06);--border-md:rgba(255,255,255,0.11);
+  --text:#ededf0;--text-2:#8a8a9a;--text-3:#4a4a5a;
+  --accent:#e63946;--accent2:#ff6b35;
+  --green:#22c55e;--green-bg:rgba(34,197,94,0.08);
+  --red:#ef4444;--red-bg:rgba(239,68,68,0.08);
+  --amber:#f59e0b;--amber-bg:rgba(245,158,11,0.08);
+  --purple:#a78bfa;--purple-bg:rgba(167,139,250,0.08);
+  --blue:#60a5fa;
+  --r:12px;--r-sm:8px;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;}
+@keyframes rot{to{transform:rotate(360deg)}}
+@keyframes fadeUp{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
+.fu{animation:fadeUp .4s ease both;}
+.fu1{animation-delay:.00s}.fu2{animation-delay:.06s}.fu3{animation-delay:.12s}
+.fu4{animation-delay:.18s}.fu5{animation-delay:.24s}.fu6{animation-delay:.30s}
+
+/* ── HEADER ── */
+.hdr{padding:14px 28px;display:flex;align-items:center;justify-content:space-between;
+  border-bottom:1px solid var(--border);background:var(--surface);
+  position:sticky;top:0;z-index:30;gap:12px;flex-wrap:wrap;}
+.hdr-left{display:flex;align-items:center;gap:12px;}
+.ax-pill{background:linear-gradient(135deg,var(--accent),var(--accent2));
+  font-family:'Rajdhani',sans-serif;font-size:12px;font-weight:700;
+  letter-spacing:.1em;color:white;padding:4px 10px;border-radius:6px;}
+.hdr-name{font-family:'Rajdhani',sans-serif;font-size:17px;font-weight:700;}
+.hdr-sub{font-size:11px;color:var(--text-3);margin-top:1px;}
+.hdr-right{display:flex;align-items:center;gap:12px;flex-wrap:wrap;}
+.countdown{display:flex;align-items:center;gap:8px;
+  background:rgba(230,57,70,0.1);border:1px solid rgba(230,57,70,0.2);
+  border-radius:var(--r-sm);padding:5px 12px;}
+.cd-num{font-family:'Rajdhani',sans-serif;font-size:20px;font-weight:700;color:var(--accent);line-height:1;}
+.cd-label{font-size:10px;color:var(--text-3);text-transform:uppercase;letter-spacing:.05em;}
+.upd{font-size:11px;color:var(--text-3);font-family:'DM Mono',monospace;}
+
+/* ── COMPARE MODE TOGGLE ── */
+.cmp-toggle{display:flex;align-items:center;gap:6px;font-size:11px;color:var(--text-2);cursor:pointer;user-select:none;}
+.cmp-toggle input[type=checkbox]{appearance:none;width:32px;height:18px;
+  background:var(--surface3);border-radius:9px;position:relative;cursor:pointer;transition:background .2s;}
+.cmp-toggle input[type=checkbox]:checked{background:var(--accent);}
+.cmp-toggle input[type=checkbox]::after{content:'';position:absolute;width:14px;height:14px;
+  background:white;border-radius:50%;top:2px;left:2px;transition:left .2s;}
+.cmp-toggle input[type=checkbox]:checked::after{left:16px;}
+
+/* ── PERIOD BAR ── */
+.period-wrap{background:var(--surface);border-bottom:1px solid var(--border);}
+.period{padding:0 28px;display:flex;align-items:center;flex-wrap:wrap;}
+.pb{font-family:'DM Sans',sans-serif;font-size:12px;font-weight:500;
+  padding:12px 14px;border:none;background:transparent;color:var(--text-2);
+  cursor:pointer;border-bottom:2px solid transparent;transition:all .15s;white-space:nowrap;}
+.pb:hover{color:var(--text);}
+.pb.active{color:var(--accent);border-bottom-color:var(--accent);}
+.cr{display:none;align-items:center;gap:8px;margin-left:auto;padding:8px 0;}
+.cr.on{display:flex;}
+.cr input{font-family:'DM Mono',monospace;font-size:11px;padding:5px 10px;
+  border:1px solid var(--border-md);border-radius:6px;background:var(--surface2);color:var(--text);}
+.cr-btn{font-size:11px;font-weight:600;padding:5px 12px;background:var(--accent);
+  color:white;border:none;border-radius:6px;cursor:pointer;}
+
+/* Compare period row */
+.cmp-period{display:none;padding:8px 28px;border-top:1px solid var(--border);
+  align-items:center;gap:10px;font-size:12px;color:var(--text-2);flex-wrap:wrap;}
+.cmp-period.on{display:flex;}
+.cmp-period input{font-family:'DM Mono',monospace;font-size:11px;padding:5px 10px;
+  border:1px solid var(--border-md);border-radius:6px;background:var(--surface2);color:var(--text);}
+.cmp-period label{font-size:11px;color:var(--text-3);}
+
+/* ── MAIN ── */
+.main{padding:18px 28px 56px;display:flex;flex-direction:column;gap:14px;max-width:1440px;margin:0 auto;}
+
+/* ── HERO KPIs ── */
+.hero{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;
+  background:var(--border);border-radius:var(--r);overflow:hidden;}
+.hk{background:var(--surface);padding:18px 20px 14px;position:relative;transition:background .15s;}
+.hk:hover{background:var(--surface2);}
+.hk-stripe{position:absolute;top:0;left:0;right:0;height:3px;}
+.hk-top{display:flex;align-items:flex-start;justify-content:space-between;gap:6px;margin-bottom:7px;}
+.hk-label-wrap{display:flex;align-items:center;gap:4px;}
+.hk-label{font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.08em;color:var(--text-3);}
+.hk-badge{font-size:10px;font-weight:600;padding:2px 7px;border-radius:4px;white-space:nowrap;flex-shrink:0;}
+.bok{background:var(--green-bg);color:var(--green);}
+.bwk{background:var(--amber-bg);color:var(--amber);}
+.bbd{background:var(--red-bg);color:var(--red);}
+.bnt{background:rgba(255,255,255,.04);color:var(--text-3);}
+.hk-val{font-family:'Rajdhani',sans-serif;font-size:32px;font-weight:700;letter-spacing:-.01em;line-height:1.1;}
+.hk-meta{font-size:11px;color:var(--text-3);margin-top:4px;}
+.hk-delta{margin-top:7px;font-size:11px;font-weight:500;
+  display:inline-flex;align-items:center;gap:3px;padding:2px 7px;border-radius:4px;}
+.hk-cmp{margin-top:4px;font-size:11px;color:var(--text-3);font-family:'DM Mono',monospace;}
+.up{background:var(--green-bg);color:var(--green);}
+.dn{background:var(--red-bg);color:var(--red);}
+.nt{background:rgba(255,255,255,.04);color:var(--text-3);}
+
+/* ── TOOLTIP ── */
+.tip{position:relative;display:inline-flex;align-items:center;}
+.tip-icon{width:13px;height:13px;border-radius:50%;background:var(--surface3);
+  color:var(--text-3);font-size:8px;font-weight:700;display:inline-flex;
+  align-items:center;justify-content:center;cursor:help;flex-shrink:0;line-height:1;}
+.tip-box{position:absolute;bottom:calc(100% + 6px);left:50%;transform:translateX(-50%);
+  background:#1e1e28;border:1px solid var(--border-md);border-radius:var(--r-sm);
+  padding:8px 10px;font-size:11px;color:var(--text-2);line-height:1.5;
+  white-space:nowrap;z-index:100;pointer-events:none;opacity:0;transition:opacity .15s;
+  font-weight:400;text-transform:none;letter-spacing:0;font-family:'DM Sans',sans-serif;}
+.tip:hover .tip-box{opacity:1;}
+
+/* ── APRENDIZADO ── */
+.aprendizado-strip{background:rgba(245,158,11,0.06);border:1px solid rgba(245,158,11,0.2);
+  border-radius:var(--r-sm);padding:10px 14px;display:flex;align-items:center;gap:10px;font-size:12px;}
+.ap-icon{font-size:16px;flex-shrink:0;}
+.ap-body{flex:1;}
+.ap-title{font-weight:600;color:var(--amber);}
+.ap-desc{color:var(--text-3);font-size:11px;margin-top:2px;}
+
+/* ── VERBA ── */
+.verba-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:16px 20px;}
+.verba-top{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:12px;gap:12px;flex-wrap:wrap;}
+.verba-title{font-family:'Rajdhani',sans-serif;font-size:14px;font-weight:700;letter-spacing:.02em;}
+.verba-nums{display:flex;gap:20px;flex-wrap:wrap;}
+.vn-item{text-align:right;}
+.vn-label{font-size:10px;color:var(--text-3);text-transform:uppercase;letter-spacing:.05em;margin-bottom:2px;}
+.vn-val{font-family:'Rajdhani',sans-serif;font-size:17px;font-weight:700;line-height:1;}
+.prog-labels{display:flex;justify-content:space-between;font-size:11px;color:var(--text-3);margin-bottom:5px;}
+.prog-track{height:5px;background:var(--surface2);border-radius:3px;overflow:hidden;margin-bottom:12px;}
+.prog-bar{height:100%;border-radius:3px;background:linear-gradient(90deg,var(--accent),var(--accent2));transition:width .8s ease;}
+
+/* ── CARDS ── */
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:16px 18px;}
+.card-hd{display:flex;align-items:flex-start;justify-content:space-between;gap:10px;margin-bottom:12px;}
+.card-title{font-family:'Rajdhani',sans-serif;font-size:14px;font-weight:700;letter-spacing:.02em;}
+.card-sub{font-size:11px;color:var(--text-3);margin-top:2px;}
+
+/* ── METRIC SELECTOR ── */
+.metric-sel{display:flex;gap:4px;flex-wrap:wrap;}
+.ms-btn{font-family:'DM Sans',sans-serif;font-size:10px;font-weight:600;
+  padding:3px 9px;border-radius:4px;border:1px solid var(--border-md);
+  background:transparent;color:var(--text-3);cursor:pointer;transition:all .12s;
+  text-transform:uppercase;letter-spacing:.04em;}
+.ms-btn.active{color:white;border-color:transparent;}
+.ms-roas{background:#7c3aed;}
+.ms-custo{background:#dc2626;}
+.ms-ctr{background:#d97706;}
+.ms-cpm{background:#0891b2;}
+.ms-invest{background:#e63946;}
+
+/* ── GRAN ── */
+.gran{display:flex;gap:3px;flex-shrink:0;}
+.gb{font-family:'DM Sans',sans-serif;font-size:10px;font-weight:600;
+  padding:3px 8px;border-radius:4px;border:1px solid var(--border-md);
+  background:transparent;color:var(--text-3);cursor:pointer;transition:all .12s;
+  text-transform:uppercase;letter-spacing:.04em;}
+.gb.active{background:var(--accent);color:white;border-color:var(--accent);}
+
+.leg{display:flex;gap:12px;margin-bottom:10px;flex-wrap:wrap;}
+.li{display:flex;align-items:center;gap:5px;font-size:11px;color:var(--text-2);}
+.ls{width:8px;height:8px;border-radius:2px;}
+
+/* ── ALERTAS ── */
+.alerts{display:flex;flex-direction:column;gap:5px;margin-bottom:10px;}
+.alert{display:flex;align-items:center;gap:10px;padding:8px 12px;
+  border-radius:var(--r-sm);font-size:12px;border-left:2px solid;}
+.aok{border-color:var(--green);background:rgba(34,197,94,.05);}
+.awk{border-color:var(--amber);background:rgba(245,158,11,.05);}
+.abd{border-color:var(--red);background:rgba(239,68,68,.05);}
+.a-dot{width:6px;height:6px;border-radius:50%;flex-shrink:0;}
+.aok .a-dot{background:var(--green);}.awk .a-dot{background:var(--amber);}.abd .a-dot{background:var(--red);}
+.a-body{flex:1;}.a-title{font-weight:500;color:var(--text);font-size:12px;}
+.a-desc{color:var(--text-3);font-size:10px;margin-top:1px;}
+.a-val{font-family:'DM Mono',monospace;font-size:12px;color:var(--text-2);white-space:nowrap;}
+
+/* ── INSIGHTS ── */
+.insight-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;}
+.insight{background:var(--surface2);border-radius:var(--r-sm);padding:12px 14px;border-left:3px solid;}
+.insight-label{font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.06em;color:var(--text-3);margin-bottom:5px;}
+.insight-val{font-family:'Rajdhani',sans-serif;font-size:24px;font-weight:700;line-height:1.1;}
+.insight-sub{font-size:10px;color:var(--text-3);margin-top:3px;line-height:1.4;}
+.meta-prog{margin-top:10px;}
+.meta-prog-labels{display:flex;justify-content:space-between;font-size:10px;color:var(--text-3);margin-bottom:4px;}
+.meta-prog-track{height:6px;background:var(--surface);border-radius:3px;overflow:hidden;}
+.meta-prog-bar{height:100%;border-radius:3px;transition:width .8s ease;}
+
+/* ── CARRINHO ── */
+.cart-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;}
+.cart-item{background:var(--surface2);border-radius:var(--r-sm);padding:11px 13px;}
+.ci-label{font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.06em;color:var(--text-3);margin-bottom:4px;}
+.ci-val{font-family:'Rajdhani',sans-serif;font-size:20px;font-weight:700;line-height:1.1;}
+.ci-sub{font-size:10px;color:var(--text-3);margin-top:2px;}
+
+/* ── RANKING ── */
+.ranking{display:flex;flex-direction:column;gap:6px;}
+.rk-item{display:flex;align-items:center;gap:12px;padding:11px 13px;
+  background:var(--surface2);border-radius:var(--r-sm);transition:background .15s;}
+.rk-item:hover{background:var(--surface3);}
+.rk-pos{font-family:'Rajdhani',sans-serif;font-size:17px;font-weight:700;color:var(--text-3);min-width:18px;text-align:center;}
+.gold{color:#f59e0b;}.silver{color:#9ca3af;}.bronze{color:#b45309;}
+.rk-info{flex:1;min-width:0;}
+.rk-name{font-size:12px;font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.rk-set{font-size:10px;color:var(--text-3);margin-top:1px;}
+.rk-bar-track{height:3px;background:var(--surface);border-radius:2px;overflow:hidden;margin-top:4px;}
+.rk-bar-fill{height:100%;border-radius:2px;background:linear-gradient(90deg,var(--accent),var(--accent2));}
+.rk-metrics{display:flex;gap:14px;flex-shrink:0;}
+.rk-m{text-align:right;min-width:50px;}
+.rk-m-val{font-family:'DM Mono',monospace;font-size:11px;font-weight:500;}
+.rk-m-label{font-size:9px;color:var(--text-3);text-transform:uppercase;letter-spacing:.04em;margin-top:1px;}
+
+/* ── TABLE ── */
+.tbl-wrap{overflow-x:auto;}
+table{width:100%;border-collapse:collapse;font-size:12px;}
+th{font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.05em;
+  color:var(--text-3);padding:7px 10px;border-bottom:1px solid var(--border);text-align:left;white-space:nowrap;}
+th.r{text-align:right;}
+td{padding:8px 10px;border-bottom:1px solid var(--border);color:var(--text);vertical-align:middle;}
+td.r{text-align:right;font-family:'DM Mono',monospace;font-size:11px;}
+tr:last-child td{border-bottom:none;}
+tr:hover td{background:var(--surface2);}
+.dc{font-family:'DM Mono',monospace;font-size:11px;color:var(--text-2);}
+.vup{color:var(--green);}.vdn{color:var(--red);}
+tr.learn-row td{opacity:.7;font-style:italic;}
+
+.empty{display:flex;align-items:center;justify-content:center;min-height:90px;color:var(--text-3);font-size:13px;}
+.err{background:var(--red-bg);border:1px solid rgba(239,68,68,.15);border-radius:var(--r);
+  padding:20px;color:var(--red);font-size:13px;line-height:1.6;max-width:480px;margin:28px;}
+
+/* ── MOBILE ── */
+@media(max-width:768px){
+  .hdr,.period,.cmp-period,.main{padding-left:14px;padding-right:14px;}
+  .hero{grid-template-columns:repeat(2,1fr);}
+  .two-col{grid-template-columns:1fr;}
+  .insight-grid{grid-template-columns:repeat(2,1fr);}
+  .countdown{display:none;}
+  .hdr-sub{display:none;}
+  .rk-metrics{display:none;}
+  .verba-nums{gap:10px;}
+  .verba-nums .vn-item:nth-child(n+3){display:none;}
+  .metric-sel{gap:3px;}
+  .ms-btn{padding:3px 7px;font-size:9px;}
+  /* Mobile hero simplificado */
+  .hk-meta{display:none;}
+  .hk-val{font-size:26px;}
+  /* Mobile tabela scroll hint */
+  .tbl-wrap{-webkit-overflow-scrolling:touch;}
+}
+@media(max-width:480px){
+  .hero{grid-template-columns:1fr 1fr;}
+  .insight-grid{grid-template-columns:1fr 1fr;}
+  .cart-grid{grid-template-columns:1fr 1fr;}
+}
+</style>
+</head>
+<body>
+
+<header class="hdr">
+  <div class="hdr-left">
+    <div class="ax-pill">AX34</div>
+    <div>
+      <div class="hdr-name">Animextreme</div>
+      <div class="hdr-sub">Meta Ads — Resultados de campanha</div>
+    </div>
+  </div>
+  <div class="hdr-right">
+    <label class="cmp-toggle">
+      <input type="checkbox" id="cmp-check" onchange="toggleCompare(this.checked)">
+      <span>Comparar períodos</span>
+    </label>
+    <div class="countdown" id="countdown"></div>
+    <span class="upd" id="upd">—</span>
+  </div>
+</header>
+
+<div class="period-wrap">
+  <nav class="period">
+    <button class="pb active" data-p="7d">Últimos 7 dias</button>
+    <button class="pb" data-p="30d">Últimos 30 dias</button>
+    <button class="pb" data-p="mes">Mês atual</button>
+    <button class="pb" data-p="mes-ant">Mês anterior</button>
+    <button class="pb" data-p="custom">Personalizado</button>
+    <div class="cr" id="cr">
+      <input type="date" id="df">
+      <span style="color:var(--text-3);font-size:11px">até</span>
+      <input type="date" id="dt">
+      <button class="cr-btn" onclick="applyCustom()">Aplicar</button>
+    </div>
+  </nav>
+  <div class="cmp-period" id="cmp-period">
+    <label>Comparar com:</label>
+    <input type="date" id="cmp-df">
+    <span style="color:var(--text-3);font-size:11px">até</span>
+    <input type="date" id="cmp-dt">
+    <button class="cr-btn" onclick="applyCmp()">Aplicar</button>
+    <span id="cmp-label" style="font-size:11px;color:var(--text-3);margin-left:4px;"></span>
+  </div>
+</div>
+
+<div id="app">
+  <div style="display:flex;align-items:center;justify-content:center;min-height:60vh;flex-direction:column;gap:12px;color:var(--text-3)">
+    <div style="width:28px;height:28px;border:2px solid rgba(255,255,255,.08);border-top-color:var(--accent);border-radius:50%;animation:rot .7s linear infinite"></div>
+    <span style="font-size:13px">Carregando dados…</span>
+  </div>
+</div>
+
+<script>
+const DADOS_URL = 'https://raw.githubusercontent.com/nairomoreira/relatorio-campanhas/main/dados.json';
+const CFG = {
+  verbaTotal:25000, dataEvento:'2026-10-17', metaCompras:1000,
+  roasMin:2.0, roasOtimo:3.0, custoCompraMax:30, custoCompraOtimo:20,
+  ctrMin:1.0, freqMax:4.0,
+  // Dias de aprendizado — campanha nova < 7 dias considera em aprendizado
+  diasAprendizado: 7,
+};
+
+// Tooltips explicativos
+const TIPS = {
+  'Custo por compra': 'Quanto você pagou em média por cada ingresso vendido via Meta Ads.',
+  'ROAS': 'Para cada R$1 investido, quantos reais foram gerados em vendas. ROAS 3x = R$3 de retorno por R$1.',
+  'Valor investido': 'Total gasto em anúncios no período selecionado.',
+  'Valor em compras': 'Receita total gerada pelos anúncios no período.',
+  'CTR': 'Taxa de cliques — % de pessoas que viram o anúncio e clicaram.',
+  'CPM': 'Custo por mil impressões — quanto custa mostrar o anúncio 1000 vezes.',
+  'Frequência': 'Quantas vezes em média a mesma pessoa viu o anúncio. Acima de 4x indica fadiga.',
+  'ROAS diário': 'Retorno sobre investimento calculado dia a dia.',
+};
+
+let raw=[], rawAds=[], periodo='7d', gran='dia', charts={};
+let customFrom=null, customTo=null;
+let compareMode=false, cmpFrom=null, cmpTo=null;
+let metricaAtiva='roas';
+
+// ── BOOT ──────────────────────────────────────────────────
+async function init() {
+  renderCountdown();
+  try {
+    const ctrl=new AbortController(); setTimeout(()=>ctrl.abort(),12000);
+    const res=await fetch(DADOS_URL+'?t='+Date.now(),{signal:ctrl.signal});
+    if(!res.ok) throw new Error('HTTP '+res.status);
+    const json=await res.json();
+    raw=(json.dias||[]).filter(d=>d&&d.data).sort((a,b)=>a.data.localeCompare(b.data));
+    rawAds=(json.anuncios||[]);
+    const upd=document.getElementById('upd');
+    if(upd&&json.atualizadoEm) upd.textContent='Atualizado '+json.atualizadoEm;
+    buildApp(); render();
+  } catch(e) {
+    document.getElementById('app').innerHTML=
+      '<div class="err"><strong style="display:block;margin-bottom:6px">Erro ao carregar dados</strong>'+
+      (e.name==='AbortError'?'Tempo limite excedido.':e.message)+'</div>';
+  }
+}
+
+// ── DATA UTILS ────────────────────────────────────────────
+function parseData(s){const p=String(s).split('-');return new Date(+p[0],+p[1]-1,+p[2]);}
+function dataStr(dt){return dt.getFullYear()+'-'+String(dt.getMonth()+1).padStart(2,'0')+'-'+String(dt.getDate()).padStart(2,'0');}
+
+function renderCountdown(){
+  const p=CFG.dataEvento.split('-');
+  const ev=new Date(+p[0],+p[1]-1,+p[2]),hj=new Date();hj.setHours(0,0,0,0);
+  const dias=Math.max(0,Math.round((ev-hj)/864e5));
+  const el=document.getElementById('countdown');
+  if(el) el.innerHTML='<div><div class="cd-num">'+dias+'</div><div class="cd-label">dias para o AX34</div></div>';
+}
+
+// ── FILTROS ───────────────────────────────────────────────
+function filtrar(p){
+  if(!raw.length) return[];
+  const ult=parseData(raw[raw.length-1].data);let de,ate;
+  if(p==='7d'){ate=ult;de=new Date(ult);de.setDate(de.getDate()-6);}
+  else if(p==='30d'){ate=ult;de=new Date(ult);de.setDate(de.getDate()-29);}
+  else if(p==='mes'){de=new Date(ult.getFullYear(),ult.getMonth(),1);ate=ult;}
+  else if(p==='mes-ant'){de=new Date(ult.getFullYear(),ult.getMonth()-1,1);ate=new Date(ult.getFullYear(),ult.getMonth(),0);}
+  else if(p==='custom'&&customFrom&&customTo){de=parseData(customFrom);ate=parseData(customTo);}
+  else return raw;
+  const ds=dataStr(de),as=dataStr(ate);
+  return raw.filter(d=>d.data>=ds&&d.data<=as);
+}
+function filtrarAnt(){
+  const cur=filtrar(periodo);if(!cur.length)return[];
+  const de=parseData(cur[0].data),ate=parseData(cur[cur.length-1].data);
+  const d=Math.round((ate-de)/864e5)+1;
+  const deA=new Date(de);deA.setDate(deA.getDate()-d);
+  const ateA=new Date(de);ateA.setDate(ateA.getDate()-1);
+  return raw.filter(d=>d.data>=dataStr(deA)&&d.data<=dataStr(ateA));
+}
+function filtrarCmp(){
+  if(!cmpFrom||!cmpTo) return[];
+  return raw.filter(d=>d.data>=cmpFrom&&d.data<=cmpTo);
+}
+
+// ── AGREGAR ───────────────────────────────────────────────
+const SK=['valorUsado','impressoes','alcance','cliquesLink','addCarrinho','compras','valorCompras'];
+function somar(dias){
+  const t=SK.reduce((a,m)=>{a[m]=dias.reduce((s,d)=>s+(+d[m]||0),0);return a;},{});
+  t.ctr=t.impressoes?t.cliquesLink/t.impressoes*100:0;
+  t.roas=t.valorUsado?t.valorCompras/t.valorUsado:0;
+  t.custoC=t.compras?t.valorUsado/t.compras:0;
+  t.custoA=t.addCarrinho?t.valorUsado/t.addCarrinho:0;
+  t.freq=t.alcance?t.impressoes/t.alcance:0;
+  t.cpm=t.impressoes?t.valorUsado/t.impressoes*1000:0;
+  t.txConv=t.addCarrinho?t.compras/t.addCarrinho*100:0;
+  return t;
+}
+function agrupar(dias,g){
+  if(g==='dia') return dias.map(d=>({label:fd(d.data),...d,...somar([d])}));
+  const map={};
+  dias.forEach(d=>{
+    let key;
+    if(g==='semana'){const dt=parseData(d.data),dom=new Date(dt);dom.setDate(dt.getDate()-dt.getDay());key=dataStr(dom);}
+    else key=d.data.slice(0,7);
+    if(!map[key])map[key]=[];map[key].push(d);
+  });
+  return Object.entries(map).sort((a,b)=>a[0].localeCompare(b[0]))
+    .map(([k,v])=>({label:g==='semana'?'Sem '+fd(k):fm(k),...somar(v)}));
+}
+function calcVerba(){
+  const inv=raw.reduce((s,d)=>s+(+d.valorUsado||0),0);
+  const rest=CFG.verbaTotal-inv;
+  const p=CFG.dataEvento.split('-');
+  const ev=new Date(+p[0],+p[1]-1,+p[2]),hj=new Date();hj.setHours(0,0,0,0);
+  const dr=Math.max(1,Math.round((ev-hj)/864e5));
+  const ult7=raw.slice(-7);
+  const mediaReal=ult7.length?ult7.reduce((s,d)=>s+(+d.valorUsado||0),0)/ult7.length:0;
+  const diasVerba=mediaReal>0?Math.round(rest/mediaReal):null;
+  const compTotal=raw.reduce((s,d)=>s+(+d.compras||0),0);
+  const compUlt7=ult7.reduce((s,d)=>s+(+d.compras||0),0);
+  const ritmoComp=ult7.length?compUlt7/ult7.length:0;
+  const compNec=dr>0?(CFG.metaCompras-compTotal)/dr:0;
+  const eficiencia=inv>0?compTotal/inv*100:0;
+  return{inv,rest,dr,mediaNec:rest/dr,mediaReal,pct:Math.min(100,inv/CFG.verbaTotal*100),
+         diasVerba,compTotal,ritmoComp,compNec,eficiencia};
+}
+
+// ── APRENDIZADO ───────────────────────────────────────────
+function detectarAprendizado(dias){
+  if(dias.length===0) return null;
+  // Verifica se há alta variância no ROAS nos primeiros dias (sinal de aprendizado)
+  const primeiros=dias.slice(0,Math.min(CFG.diasAprendizado,dias.length));
+  const roasList=primeiros.map(d=>(+d.valorUsado>0?(+d.valorCompras||0)/(+d.valorUsado):0));
+  const roasMedio=roasList.reduce((s,v)=>s+v,0)/roasList.length;
+  const emAprendizado=roasMedio<CFG.roasMin&&primeiros.length<CFG.diasAprendizado;
+  // Detecta campanhas com < 7 dias totais
+  const totalDias=dias.length;
+  if(totalDias<CFG.diasAprendizado){
+    return{dias:totalDias,meta:CFG.diasAprendizado,roasMedio};
+  }
+  return null;
+}
+
+// ── FORMATOS ──────────────────────────────────────────────
+function fd(s){const[,m,d]=s.split('-');return d+'/'+m;}
+function fm(s){const ms=['Jan','Fev','Mar','Abr','Mai','Jun','Jul','Ago','Set','Out','Nov','Dez'],[,m]=s.split('-');return ms[+m-1];}
+function fN(n){if(n>=1e6)return(n/1e6).toFixed(1).replace('.',',')+' M';if(n>=1e3)return n.toLocaleString('pt-BR');return String(Math.round(n));}
+function fR(n){return 'R$\u00a0'+Number(n).toLocaleString('pt-BR',{minimumFractionDigits:2,maximumFractionDigits:2});}
+function fP(n){return Number(n).toFixed(2).replace('.',',')+'\u0025';}
+function fX(n){return Number(n).toFixed(2).replace('.',',')+'x';}
+function dlt(a,b){return b?(a-b)/b*100:null;}
+
+function tip(label){
+  const txt=TIPS[label]||'';
+  if(!txt) return '';
+  return '<span class="tip"><span class="tip-icon">?</span><span class="tip-box">'+txt+'</span></span>';
+}
+
+// ── COMPARE TOGGLE ────────────────────────────────────────
+function toggleCompare(on){
+  compareMode=on;
+  document.getElementById('cmp-period').classList.toggle('on',on);
+  if(!on){cmpFrom=null;cmpTo=null;}
+  render();
+}
+function applyCmp(){
+  cmpFrom=document.getElementById('cmp-df').value;
+  cmpTo=document.getElementById('cmp-dt').value;
+  if(cmpFrom&&cmpTo){
+    document.getElementById('cmp-label').textContent=fd(cmpFrom)+' – '+fd(cmpTo);
+    render();
+  }
+}
+
+// ── BUILD APP ─────────────────────────────────────────────
+function buildApp(){
+  document.getElementById('app').innerHTML=`
+  <div class="main">
+    <div class="hero fu fu1" id="hero"></div>
+    <div class="insight-grid fu fu2" id="insights"></div>
+    <div class="verba-card fu fu3" id="verba"></div>
+    <div id="aprendizado-wrap" class="fu fu3"></div>
+    <div class="two-col fu fu4">
+      <div class="card">
+        <div class="card-hd">
+          <div>
+            <div class="card-title">Evolução de métricas</div>
+            <div class="card-sub">Selecione a métrica para visualizar</div>
+          </div>
+          <div class="gran">
+            <button class="gb active" data-g="dia">Dia</button>
+            <button class="gb" data-g="semana">Sem</button>
+            <button class="gb" data-g="mes">Mês</button>
+          </div>
+        </div>
+        <div class="metric-sel" style="margin-bottom:10px">
+          <button class="ms-btn active ms-roas" data-m="roas">ROAS</button>
+          <button class="ms-btn ms-custo" data-m="custo">Custo/compra</button>
+          <button class="ms-btn ms-ctr" data-m="ctr">CTR</button>
+          <button class="ms-btn ms-cpm" data-m="cpm">CPM</button>
+          <button class="ms-btn ms-invest" data-m="invest">Investimento</button>
+        </div>
+        <div class="alerts" id="alerts"></div>
+        <div style="position:relative;height:210px"><canvas id="cMetric" role="img" aria-label="Evolução de métricas"></canvas></div>
+      </div>
+      <div class="card">
+        <div class="card-hd">
+          <div><div class="card-title">Carrinho &amp; Compras</div>
+          <div class="card-sub">Métricas de conversão no período</div></div>
+        </div>
+        <div class="cart-grid" id="cart"></div>
+      </div>
+    </div>
+    <div class="card fu fu5">
+      <div class="card-hd">
+        <div><div class="card-title">Ranking de anúncios</div>
+        <div class="card-sub">Ordenado por compras no período</div></div>
+      </div>
+      <div class="ranking" id="ranking"></div>
+    </div>
+    <div class="card fu fu6">
+      <div class="card-hd" style="flex-wrap:wrap;gap:8px">
+        <div><div class="card-title">Detalhamento</div>
+        <div class="card-sub" id="tbl-sub"></div></div>
+        <div class="gran">
+          <button class="gb active" data-gt="dia">Dia</button>
+          <button class="gb" data-gt="semana">Semana</button>
+          <button class="gb" data-gt="mes">Mês</button>
+        </div>
+      </div>
+      <div class="tbl-wrap">
+        <table><thead><tr>
+          <th>Período</th><th class="r">Valor usado</th><th class="r">Impressões</th>
+          <th class="r">Alcance</th><th class="r">Freq.</th><th class="r">Cliques</th>
+          <th class="r">CTR</th><th class="r">CPM</th><th class="r">Add carrinho</th>
+          <th class="r">Custo/add</th><th class="r">Compras</th>
+          <th class="r">Vlr compras</th><th class="r">Custo/compra</th><th class="r">ROAS</th>
+        </tr></thead><tbody id="tbody"></tbody></table>
+      </div>
+    </div>
+  </div>`;
+
+  // Period buttons
+  document.querySelectorAll('.pb').forEach(b=>b.addEventListener('click',()=>{
+    document.querySelectorAll('.pb').forEach(x=>x.classList.remove('active'));
+    b.classList.add('active');periodo=b.dataset.p;
+    document.getElementById('cr').classList.toggle('on',periodo==='custom');
+    if(periodo!=='custom')render();
+  }));
+  // Gran chart
+  document.querySelectorAll('.gb[data-g]').forEach(b=>b.addEventListener('click',()=>{
+    document.querySelectorAll('.gb[data-g]').forEach(x=>x.classList.remove('active'));
+    b.classList.add('active');gran=b.dataset.g;
+    renderMetricChart(filtrar(periodo),filtrarCmp());
+    renderVerba(calcVerba(),filtrar(periodo));
+  }));
+  // Gran table
+  document.querySelectorAll('.gb[data-gt]').forEach(b=>b.addEventListener('click',()=>{
+    document.querySelectorAll('.gb[data-gt]').forEach(x=>x.classList.remove('active'));
+    b.classList.add('active');renderTabela(filtrar(periodo),b.dataset.gt);
+  }));
+  // Metric selector
+  document.querySelectorAll('.ms-btn').forEach(b=>b.addEventListener('click',()=>{
+    document.querySelectorAll('.ms-btn').forEach(x=>x.classList.remove('active'));
+    b.classList.add('active');metricaAtiva=b.dataset.m;
+    renderMetricChart(filtrar(periodo),filtrarCmp());
+  }));
+}
+
+function applyCustom(){
+  customFrom=document.getElementById('df').value;
+  customTo=document.getElementById('dt').value;
+  if(customFrom&&customTo)render();
+}
+
+// ── RENDER PRINCIPAL ──────────────────────────────────────
+function render(){
+  const dias=filtrar(periodo);
+  const ant=compareMode?filtrarCmp():filtrarAnt();
+  const tot=somar(dias),totA=somar(ant);
+  const v=calcVerba();
+  const ap=detectarAprendizado(dias);
+
+  renderHero(tot,totA,dias.length,ant.length);
+  renderInsights(tot,v,dias);
+  renderVerba(v,dias);
+  renderAprendizado(ap,dias);
+  renderAlertas(tot);
+  renderCart(tot,dias.length);
+  renderMetricChart(dias,ant);
+  renderRanking(dias);
+  renderTabela(dias,'dia');
+  document.querySelectorAll('.gb[data-gt]').forEach(b=>b.classList.remove('active'));
+  const d=document.querySelector('.gb[data-gt="dia"]');if(d)d.classList.add('active');
+}
+
+// ── HERO ──────────────────────────────────────────────────
+function renderHero(tot,ant,qtd,qtdAnt){
+  const e=!qtd;
+  const cmpLabel=compareMode&&qtdAnt?'vs período comparado':'vs período anterior';
+  function badge(c1,c2,l1,l2,l3){return e?['bnt','—']:c1?['bok',l1]:c2?['bwk',l2]:['bbd',l3];}
+  function dl(d,inv,label){
+    if(d===null||e)return'';
+    const u=inv?d<0:d>0;
+    const html='<div class="hk-delta '+(u?'up':'dn')+'">'+(u?'↑ ':'↓ ')+Math.abs(d).toFixed(1)+'%</div>';
+    return html+'<div class="hk-cmp">'+cmpLabel+'</div>';
+  }
+  const[ccC,ccT]=badge(tot.custoC<=CFG.custoCompraOtimo,tot.custoC<=CFG.custoCompraMax,'Ótimo','Aceitável','Acima do limite');
+  const[ctC,ctT]=badge(tot.ctr>=CFG.ctrMin*1.5,tot.ctr>=CFG.ctrMin,'Ótimo','Aceitável','Abaixo');
+  const[rcC,rcT]=badge(tot.roas>=CFG.roasOtimo,tot.roas>=CFG.roasMin,'Acima da meta','Aceitável','Crítico');
+  const rc=e?'var(--text-2)':tot.roas>=CFG.roasOtimo?'var(--green)':tot.roas>=CFG.roasMin?'var(--amber)':'var(--red)';
+  const stripes=['var(--accent)','var(--green)','var(--blue)','var(--purple)'];
+  const items=[
+    {l:'Custo por compra',v:e?'—':fR(tot.custoC),b:ccC,bt:ccT,meta:'Meta: até '+fR(CFG.custoCompraMax),d:dl(dlt(tot.custoC,ant.custoC),true),col:'var(--text)'},
+    {l:'ROAS',v:e?'—':fX(tot.roas),b:rcC,bt:rcT,meta:'Meta: '+fX(CFG.roasOtimo),d:dl(dlt(tot.roas,ant.roas),false),col:rc},
+    {l:'Valor investido',v:e?'—':fR(tot.valorUsado),b:'bnt',bt:e?'—':fN(tot.compras)+' compras',meta:fN(tot.impressoes)+' impressões',d:dl(dlt(tot.valorUsado,ant.valorUsado),true),col:'var(--accent)'},
+    {l:'Valor em compras',v:e?'—':fR(tot.valorCompras),b:'bnt',bt:e?'—':'ROAS '+fX(tot.roas),meta:fN(tot.compras)+' compras geradas',d:dl(dlt(tot.valorCompras,ant.valorCompras),false),col:'var(--green)'},
+  ];
+  document.getElementById('hero').innerHTML=items.map((k,i)=>`
+    <div class="hk">
+      <div class="hk-stripe" style="background:${stripes[i]}"></div>
+      <div class="hk-top">
+        <div class="hk-label-wrap">
+          <span class="hk-label">${k.l}</span>${tip(k.l)}
+        </div>
+        <div class="hk-badge ${k.b}">${k.bt}</div>
+      </div>
+      <div class="hk-val" style="color:${k.col}">${k.v}</div>
+      <div class="hk-meta">${k.meta}</div>
+      ${k.d}
+    </div>`).join('');
+}
+
+// ── APRENDIZADO ───────────────────────────────────────────
+function renderAprendizado(ap,dias){
+  const el=document.getElementById('aprendizado-wrap');
+  if(!ap||!el){if(el)el.innerHTML='';return;}
+  el.innerHTML=`
+    <div class="aprendizado-strip">
+      <span class="ap-icon">⚡</span>
+      <div class="ap-body">
+        <div class="ap-title">Campanha em fase de aprendizado</div>
+        <div class="ap-desc">
+          ${ap.dias} de ${ap.meta} dias de dados coletados.
+          O algoritmo do Meta ainda está otimizando — o ROAS tende a melhorar após essa fase.
+          Evite alterações significativas nos anúncios durante esse período.
+        </div>
+      </div>
+    </div>`;
+}
+
+// ── INSIGHTS ──────────────────────────────────────────────
+function renderInsights(tot,v,dias){
+  const el=document.getElementById('insights');if(!el)return;
+  const metaPct=Math.min(100,v.compTotal/CFG.metaCompras*100);
+  const faltam=Math.max(0,CFG.metaCompras-v.compTotal);
+  const eficColor=v.eficiencia>=2?'var(--green)':v.eficiencia>=1?'var(--amber)':'var(--red)';
+  const verbaCor=!v.diasVerba?'var(--text-3)':v.diasVerba>=v.dr?'var(--green)':v.diasVerba>=v.dr*0.8?'var(--amber)':'var(--red)';
+  const ritmoCor=v.ritmoComp>=v.compNec?'var(--green)':v.ritmoComp>=v.compNec*0.7?'var(--amber)':'var(--red)';
+  const freqCor=tot.freq<=CFG.freqMax*0.7?'var(--green)':tot.freq<=CFG.freqMax?'var(--amber)':'var(--red)';
+  el.innerHTML=`
+    <div class="insight" style="border-color:var(--green)">
+      <div class="insight-label">Meta de ingressos</div>
+      <div class="insight-val" style="color:var(--green)">${Math.round(v.compTotal)}<span style="font-size:14px;color:var(--text-3)"> / ${CFG.metaCompras}</span></div>
+      <div class="meta-prog">
+        <div class="meta-prog-labels"><span>${metaPct.toFixed(1)}% atingido</span><span>Faltam ${faltam}</span></div>
+        <div class="meta-prog-track">
+          <div class="meta-prog-bar" style="width:${metaPct}%;background:${metaPct>=100?'var(--green)':metaPct>=60?'var(--amber)':'var(--accent)'}"></div>
+        </div>
+      </div>
+    </div>
+    <div class="insight" style="border-color:${ritmoCor}">
+      <div class="insight-label">Ritmo de compras</div>
+      <div class="insight-val" style="color:${ritmoCor}">${v.ritmoComp.toFixed(1)}<span style="font-size:13px;color:var(--text-3)">/dia</span></div>
+      <div class="insight-sub">${v.compNec>0?(v.ritmoComp>=v.compNec?'Ritmo suficiente':'Precisa de '+v.compNec.toFixed(1)+'/dia'):'—'}</div>
+    </div>
+    <div class="insight" style="border-color:${eficColor}">
+      <div class="insight-label">Eficiência</div>
+      <div class="insight-val" style="color:${eficColor}">${v.eficiencia.toFixed(1)}<span style="font-size:12px;color:var(--text-3)"> /R$100</span></div>
+      <div class="insight-sub">${v.eficiencia>=2?'Ótimo aproveitamento':v.eficiencia>=1?'Aproveitamento moderado':'Baixo retorno em compras'}</div>
+    </div>
+    <div class="insight" style="border-color:${verbaCor}">
+      <div class="insight-label">Projeção de verba</div>
+      <div class="insight-val" style="color:${verbaCor}">${v.diasVerba?v.diasVerba+'d':'—'}</div>
+      <div class="insight-sub">${v.diasVerba?v.diasVerba>=v.dr?'Verba dura até o evento':'Verba acaba antes':'Sem dados suficientes'}</div>
+    </div>
+    <div class="insight" style="border-color:${freqCor}">
+      <div class="insight-label">Sinal de fadiga${tip('Frequência')}</div>
+      <div class="insight-val" style="color:${freqCor}">${tot.freq?tot.freq.toFixed(1)+'x':'—'}</div>
+      <div class="insight-sub">${tot.freq<=CFG.freqMax*0.7?'Público com espaço':tot.freq<=CFG.freqMax?'Próximo do limite':'Risco de queda no ROAS'}</div>
+    </div>`;
+}
+
+// ── VERBA ─────────────────────────────────────────────────
+function renderVerba(v,dias){
+  const rc=v.mediaReal<=v.mediaNec*0.8?'var(--amber)':v.mediaReal<=v.mediaNec*1.2?'var(--green)':'var(--red)';
+  const rl=v.mediaReal<=v.mediaNec*0.8?'Abaixo do ritmo':v.mediaReal<=v.mediaNec*1.2?'No ritmo':'Acima do ritmo';
+  document.getElementById('verba').innerHTML=`
+    <div class="verba-top">
+      <div>
+        <div class="verba-title">Gestão de verba — R$ ${CFG.verbaTotal.toLocaleString('pt-BR')} total</div>
+        <div style="font-size:11px;color:var(--text-3);margin-top:2px">${v.dr} dias até o evento · ${v.pct.toFixed(1)}% utilizado</div>
+      </div>
+      <div class="verba-nums">
+        <div class="vn-item"><div class="vn-label">Investido</div><div class="vn-val" style="color:var(--accent)">${fR(v.inv)}</div></div>
+        <div class="vn-item"><div class="vn-label">Restante</div><div class="vn-val" style="color:var(--green)">${fR(v.rest)}</div></div>
+        <div class="vn-item"><div class="vn-label">Necessário/dia</div><div class="vn-val">${fR(v.mediaNec)}</div></div>
+        <div class="vn-item"><div class="vn-label">Real/dia (7d)</div><div class="vn-val" style="color:${rc}">${fR(v.mediaReal)} <span style="font-size:10px;font-family:'DM Sans'">${rl}</span></div></div>
+      </div>
+    </div>
+    <div class="prog-labels"><span>Verba utilizada</span><span>${fR(v.inv)} de ${fR(CFG.verbaTotal)}</span></div>
+    <div class="prog-track"><div class="prog-bar" style="width:${v.pct}%"></div></div>
+    <div class="leg">
+      <span class="li"><span class="ls" style="background:var(--accent)"></span>Gasto diário</span>
+      <span class="li"><span class="ls" style="background:rgba(255,255,255,.25);border:1px dashed rgba(255,255,255,.25)"></span>Média necessária</span>
+    </div>
+    <div style="position:relative;height:130px"><canvas id="cVerba" role="img" aria-label="Ritmo de gasto diário"></canvas></div>`;
+  renderChartVerba(dias,v);
+}
+
+// ── ALERTAS ───────────────────────────────────────────────
+function renderAlertas(tot){
+  const el=document.getElementById('alerts');if(!el)return;
+  if(!tot.roas){el.innerHTML='';return;}
+  const list=[];
+  if(tot.roas>=CFG.roasOtimo) list.push({c:'aok',t:'ROAS acima da meta',d:'Retorno acima de '+fX(CFG.roasOtimo),v:fX(tot.roas)});
+  else if(tot.roas>=CFG.roasMin) list.push({c:'awk',t:'ROAS abaixo do ideal',d:'Meta é '+fX(CFG.roasOtimo)+' — revisar criativos',v:fX(tot.roas)});
+  else list.push({c:'abd',t:'ROAS crítico',d:'Abaixo do mínimo de '+fX(CFG.roasMin),v:fX(tot.roas)});
+  if(tot.custoC>CFG.custoCompraMax) list.push({c:'abd',t:'Custo por compra elevado',d:'Acima do limite de '+fR(CFG.custoCompraMax),v:fR(tot.custoC)});
+  if(tot.ctr<CFG.ctrMin) list.push({c:'awk',t:'CTR abaixo do esperado',d:'Considere atualizar criativos',v:fP(tot.ctr)});
+  if(tot.freq>CFG.freqMax) list.push({c:'awk',t:'Frequência elevada',d:'Risco de fadiga — '+tot.freq.toFixed(1)+'x',v:''});
+  el.innerHTML=list.map(a=>
+    `<div class="alert ${a.c}"><div class="a-dot"></div>
+    <div class="a-body"><div class="a-title">${a.t}</div><div class="a-desc">${a.d}</div></div>
+    ${a.v?'<div class="a-val">'+a.v+'</div>':''}</div>`).join('');
+}
+
+// ── CARRINHO ──────────────────────────────────────────────
+function renderCart(tot,qtd){
+  const el=document.getElementById('cart');if(!el)return;
+  if(!qtd){el.innerHTML='<div class="empty">Sem dados no período</div>';return;}
+  const txConv=tot.addCarrinho>0?Math.round(tot.compras/tot.addCarrinho*100):0;
+  const txColor=txConv>=20?'var(--green)':txConv>=10?'var(--amber)':'var(--red)';
+  const items=[
+    {l:'Add ao carrinho',v:fN(tot.addCarrinho),s:'eventos',c:'var(--purple)'},
+    {l:'Valor de compras',v:fR(tot.valorCompras),s:'receita gerada',c:'var(--green)'},
+    {l:'Compras efetivadas',v:fN(tot.compras),s:'transações',c:'var(--green)'},
+    {l:'Tx. add→compra',v:txConv+'%',s:'de adds que compraram',c:txColor},
+    {l:'Custo por add',v:tot.addCarrinho>0?fR(tot.custoA):'—',s:'por adição',c:'var(--text-2)'},
+    {l:'Custo por compra',v:tot.compras>0?fR(tot.custoC):'—',s:'por transação',c:tot.custoC<=CFG.custoCompraOtimo?'var(--green)':tot.custoC<=CFG.custoCompraMax?'var(--amber)':'var(--red)'},
+  ];
+  el.innerHTML=items.map(k=>
+    `<div class="cart-item">
+      <div class="ci-label">${k.l}</div>
+      <div class="ci-val" style="color:${k.c}">${k.v}</div>
+      <div class="ci-sub">${k.s}</div>
+    </div>`).join('');
+}
+
+// ── RANKING ───────────────────────────────────────────────
+function renderRanking(diasFiltrados){
+  const el=document.getElementById('ranking');if(!el)return;
+  if(!rawAds.length){el.innerHTML='<div class="empty">Dados de anúncios não disponíveis</div>';return;}
+  const de=diasFiltrados.length?diasFiltrados[0].data:null;
+  const ate=diasFiltrados.length?diasFiltrados[diasFiltrados.length-1].data:null;
+  const af=de?rawAds.filter(a=>a.data>=de&&a.data<=ate):rawAds;
+  const map={};
+  af.forEach(a=>{
+    const k=a.adName||'Sem nome';
+    if(!map[k])map[k]={adName:k,adSet:a.adSet||'',valorUsado:0,compras:0,valorCompras:0,cliques:0,impressoes:0,addCarrinho:0};
+    map[k].valorUsado+=+a.valorUsado||0;map[k].compras+=+a.compras||0;
+    map[k].valorCompras+=+a.valorCompras||0;map[k].cliques+=+a.cliquesLink||0;
+    map[k].impressoes+=+a.impressoes||0;map[k].addCarrinho+=+a.addCarrinho||0;
+  });
+  const ads=Object.values(map)
+    .map(a=>({...a,roas:a.valorUsado?a.valorCompras/a.valorUsado:0,custoC:a.compras?a.valorUsado/a.compras:0}))
+    .sort((a,b)=>b.compras-a.compras||b.valorCompras-a.valorCompras);
+  if(!ads.length){el.innerHTML='<div class="empty">Sem dados de anúncios no período</div>';return;}
+  const mx=ads[0].compras||1;
+  const pc=['gold','silver','bronze'];
+  el.innerHTML=ads.map((a,i)=>`
+    <div class="rk-item">
+      <div class="rk-pos ${pc[i]||''}">${i+1}</div>
+      <div class="rk-info">
+        <div class="rk-name" title="${a.adName}">${a.adName}</div>
+        <div class="rk-set">${a.adSet}</div>
+        <div class="rk-bar-track"><div class="rk-bar-fill" style="width:${Math.round(a.compras/mx*100)}%"></div></div>
+      </div>
+      <div class="rk-metrics">
+        <div class="rk-m"><div class="rk-m-val" style="color:var(--green)">${fN(a.compras)}</div><div class="rk-m-label">Compras</div></div>
+        <div class="rk-m"><div class="rk-m-val">${a.custoC>0?fR(a.custoC):'—'}</div><div class="rk-m-label">Custo/compra</div></div>
+        <div class="rk-m"><div class="rk-m-val" style="color:${a.roas>=CFG.roasOtimo?'var(--green)':a.roas>=CFG.roasMin?'var(--amber)':'var(--red)'}">${a.roas>0?fX(a.roas):'—'}</div><div class="rk-m-label">ROAS</div></div>
+        <div class="rk-m"><div class="rk-m-val">${fR(a.valorUsado)}</div><div class="rk-m-label">Investido</div></div>
+      </div>
+    </div>`).join('');
+}
+
+// ── METRIC CHART ──────────────────────────────────────────
+const METRIC_CFG={
+  roas:  {label:'ROAS',fmt:fX,color:'#a78bfa',meta:CFG.roasOtimo,metaLabel:'Meta '+fX(CFG.roasOtimo),inv:false},
+  custo: {label:'Custo/compra',fmt:fR,color:'#ef4444',meta:CFG.custoCompraMax,metaLabel:'Limite '+fR(CFG.custoCompraMax),inv:true},
+  ctr:   {label:'CTR',fmt:fP,color:'#f59e0b',meta:CFG.ctrMin,metaLabel:'Mín '+fP(CFG.ctrMin),inv:false},
+  cpm:   {label:'CPM',fmt:fR,color:'#0891b2',meta:null,inv:true},
+  invest:{label:'Investimento',fmt:fR,color:'#e63946',meta:null,inv:false},
+};
+
+function getMetricVal(row,m){
+  if(m==='roas') return row.roas||0;
+  if(m==='custo') return row.custoC||0;
+  if(m==='ctr') return row.ctr||0;
+  if(m==='cpm') return row.cpm||0;
+  if(m==='invest') return row.valorUsado||0;
+  return 0;
+}
+
+function renderMetricChart(dias,antDias){
+  if(charts.metric){charts.metric.destroy();delete charts.metric;}
+  const rows=agrupar(dias,gran);
+  if(!rows.length)return;
+  const mc=METRIC_CFG[metricaAtiva];
+  const vals=rows.map(r=>+(getMetricVal(r,metricaAtiva).toFixed(2)));
+  const datasets=[{
+    label:mc.label,data:vals,
+    borderColor:mc.color,backgroundColor:mc.color.replace(')',',0.08)').replace('rgb','rgba').replace('#',mc.color+'22'),
+    fill:true,tension:0.4,borderWidth:2,
+    pointRadius:rows.length>20?0:4,
+    pointBackgroundColor:mc.meta?vals.map(v=>mc.inv?v<=mc.meta?'#22c55e':'#ef4444':v>=mc.meta?'#22c55e':'#ef4444'):mc.color,
+    pointBorderColor:'transparent',
+  }];
+
+  // Linha de meta
+  if(mc.meta){
+    datasets.push({label:mc.metaLabel,data:rows.map(()=>mc.meta),
+      borderColor:'rgba(255,255,255,0.2)',backgroundColor:'transparent',
+      borderDash:[5,4],borderWidth:1.5,pointRadius:0});
+  }
+
+  // Período de comparação
+  if(compareMode&&antDias&&antDias.length){
+    const rowsCmp=agrupar(antDias,gran);
+    const valsCmp=rowsCmp.map(r=>+(getMetricVal(r,metricaAtiva).toFixed(2)));
+    datasets.push({label:mc.label+' (comparação)',data:valsCmp,
+      borderColor:mc.color+'99',backgroundColor:'transparent',
+      borderDash:[3,3],borderWidth:1.5,
+      pointRadius:rowsCmp.length>20?0:3,pointBorderColor:'transparent'});
+  }
+
+  charts.metric=new Chart(document.getElementById('cMetric'),{
+    type:'line',data:{labels:rows.map(r=>r.label),datasets},
+    options:{responsive:true,maintainAspectRatio:false,
+      interaction:{mode:'index',intersect:false},
+      plugins:{legend:{display:compareMode,labels:{color:'#8a8a9a',font:{size:10}}},
+        tooltip:{backgroundColor:'#18181d',borderColor:'rgba(255,255,255,0.08)',borderWidth:1,padding:10,
+          callbacks:{label:ctx=>ctx.dataset.label+': '+mc.fmt(ctx.parsed.y)}}},
+      scales:{
+        x:{grid:{color:'rgba(255,255,255,0.02)'},ticks:{font:{size:10},color:'#4a4a5a',maxTicksLimit:14,maxRotation:0}},
+        y:{grid:{color:'rgba(255,255,255,0.03)'},ticks:{font:{size:10},color:'#4a4a5a',callback:v=>mc.fmt(v)},min:0}
+      }}
+  });
+}
+
+function renderChartVerba(dias,v){
+  if(charts.verba){charts.verba.destroy();delete charts.verba;}
+  const el=document.getElementById('cVerba');if(!el||!dias.length)return;
+  const gastos=dias.map(d=>({label:fd(d.data),val:+(+d.valorUsado||0).toFixed(2)}));
+  charts.verba=new Chart(el,{
+    type:'bar',
+    data:{labels:gastos.map(d=>d.label),datasets:[
+      {label:'Gasto diário',data:gastos.map(d=>d.val),
+        backgroundColor:gastos.map(d=>d.val>v.mediaNec*1.2?'rgba(239,68,68,0.7)':d.val<v.mediaNec*0.8?'rgba(245,158,11,0.7)':'rgba(34,197,94,0.7)'),
+        borderRadius:3,borderSkipped:false,order:2},
+      {label:'Média necessária',data:gastos.map(()=>+v.mediaNec.toFixed(2)),
+        type:'line',borderColor:'rgba(255,255,255,0.25)',backgroundColor:'transparent',
+        borderDash:[4,4],borderWidth:1.5,pointRadius:0,order:1},
+    ]},
+    options:{responsive:true,maintainAspectRatio:false,
+      interaction:{mode:'index',intersect:false},
+      plugins:{legend:{display:false},
+        tooltip:{backgroundColor:'#18181d',borderColor:'rgba(255,255,255,0.08)',borderWidth:1,padding:8,
+          callbacks:{label:ctx=>ctx.dataset.label+': '+fR(ctx.parsed.y)}}},
+      scales:{
+        x:{grid:{display:false},ticks:{font:{size:10},color:'#4a4a5a',maxTicksLimit:14,maxRotation:0}},
+        y:{grid:{color:'rgba(255,255,255,0.03)'},ticks:{font:{size:10},color:'#4a4a5a',callback:v=>'R$'+(v>=1000?(v/1000).toFixed(0)+'k':v)}}
+      }}
+  });
+}
+
+// ── TABELA ────────────────────────────────────────────────
+function renderTabela(dias,g){
+  const rows=agrupar(dias,g);
+  const sub=document.getElementById('tbl-sub');
+  if(sub)sub.textContent=rows.length?rows.length+' '+(g==='dia'?'dias':g==='semana'?'semanas':'meses')+' no período':'Sem dados';
+  if(!rows.length){document.getElementById('tbody').innerHTML='<tr><td colspan="14" style="text-align:center;padding:24px;color:var(--text-3)">Sem dados no período</td></tr>';return;}
+  document.getElementById('tbody').innerHTML=rows.map(r=>`
+    <tr>
+      <td class="dc">${r.label}</td>
+      <td class="r">${fR(r.valorUsado||0)}</td><td class="r">${fN(r.impressoes||0)}</td>
+      <td class="r">${fN(r.alcance||0)}</td><td class="r">${fX(r.freq||0)}</td>
+      <td class="r">${fN(r.cliquesLink||0)}</td><td class="r">${fP(r.ctr||0)}</td>
+      <td class="r">${fR(r.cpm||0)}</td><td class="r">${fN(r.addCarrinho||0)}</td>
+      <td class="r">${fR(r.custoA||0)}</td>
+      <td class="r vup">${fN(r.compras||0)}</td><td class="r vup">${fR(r.valorCompras||0)}</td>
+      <td class="r ${(r.custoC||0)<=CFG.custoCompraMax?'vup':'vdn'}">${fR(r.custoC||0)}</td>
+      <td class="r ${(r.roas||0)>=CFG.roasMin?'vup':'vdn'}">${fX(r.roas||0)}</td>
+    </tr>`).join('');
+}
+
+init();
+</script>
+</body>
+</html>
