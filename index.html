@@ -103,22 +103,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
 .dn{background:var(--red-bg);color:var(--red);}
 .nt{background:rgba(255,255,255,.04);color:var(--text-3);}
 
-/* ── TOOLTIP ── */
-.tip{position:relative;display:inline-flex;align-items:center;vertical-align:middle;}
-.tip-icon{width:14px;height:14px;border-radius:50%;background:var(--surface3);
-  border:1px solid var(--border-md);
-  color:var(--text-3);font-size:8px;font-weight:700;display:inline-flex;
-  align-items:center;justify-content:center;cursor:help;flex-shrink:0;line-height:1;
-  margin-left:4px;transition:background .15s;}
-.tip-icon:hover{background:var(--surface2);color:var(--text-2);}
-.tip-box{position:fixed;
-  background:#1e1e28;border:1px solid var(--border-md);border-radius:var(--r-sm);
-  padding:8px 12px;font-size:11px;color:var(--text-2);line-height:1.6;
-  max-width:240px;white-space:normal;z-index:999;pointer-events:none;
-  opacity:0;transition:opacity .15s;
-  font-weight:400;text-transform:none;letter-spacing:0;font-family:'DM Sans',sans-serif;
-  box-shadow:0 8px 24px rgba(0,0,0,.4);}
-.tip:hover .tip-box{opacity:1;}
+
 
 /* ── APRENDIZADO ── */
 .aprendizado-strip{background:rgba(245,158,11,0.06);border:1px solid rgba(245,158,11,0.2);
@@ -397,17 +382,7 @@ const CFG = {
   diasAprendizado: 7,
 };
 
-// Tooltips explicativos
-const TIPS = {
-  'Custo por compra': 'Quanto você pagou em média por cada ingresso vendido via Meta Ads.',
-  'ROAS': 'Para cada R$1 investido, quantos reais foram gerados em vendas. ROAS 3x = R$3 de retorno por R$1.',
-  'Valor investido': 'Total gasto em anúncios no período selecionado.',
-  'Valor em compras': 'Receita total gerada pelos anúncios no período.',
-  'CTR': 'Taxa de cliques — % de pessoas que viram o anúncio e clicaram.',
-  'CPM': 'Custo por mil impressões — quanto custa mostrar o anúncio 1000 vezes.',
-  'Frequência': 'Quantas vezes em média a mesma pessoa viu o anúncio. Acima de 4x indica fadiga.',
-  'ROAS diário': 'Retorno sobre investimento calculado dia a dia.',
-};
+
 
 let raw=[], rawAds=[], rawCriativos=[], tokenExpira=null, periodo='7d', gran='dia', charts={};
 let customFrom=null, customTo=null;
@@ -542,48 +517,7 @@ function fP(n){return Number(n).toFixed(2).replace('.',',')+'\u0025';}
 function fX(n){return Number(n).toFixed(2).replace('.',',')+'x';}
 function dlt(a,b){return b?(a-b)/b*100:null;}
 
-function tip(label){
-  const txt=TIPS[label]||'';
-  if(!txt) return '';
-  return '<span class="tip" data-tip="'+txt.replace(/"/g,"&quot;")+'">' +
-    '<span class="tip-icon">?</span>' +
-    '</span>';
-}
 
-// Inicializa tooltips com posicionamento inteligente via JS
-function initTooltips(){
-  document.querySelectorAll('.tip').forEach(el=>{
-    const txt=el.dataset.tip;
-    if(!txt)return;
-    // Cria box dinâmico
-    let box=el.querySelector('.tip-box');
-    if(!box){
-      box=document.createElement('span');
-      box.className='tip-box';
-      box.textContent=txt;
-      el.appendChild(box);
-    }
-    el.addEventListener('mouseenter',e=>{
-      const r=el.getBoundingClientRect();
-      box.style.opacity='0';
-      box.style.display='block';
-      // Posiciona acima do ícone
-      const boxW=Math.min(240,box.offsetWidth||200);
-      let left=r.left+r.width/2-boxW/2;
-      let top=r.top-box.offsetHeight-8+window.scrollY;
-      // Garante que não sai da tela
-      if(left<8)left=8;
-      if(left+boxW>window.innerWidth-8)left=window.innerWidth-boxW-8;
-      if(top<window.scrollY+8)top=r.bottom+8+window.scrollY;
-      box.style.left=left+'px';
-      box.style.top=top+'px';
-      box.style.opacity='1';
-    });
-    el.addEventListener('mouseleave',()=>{
-      box.style.opacity='0';
-    });
-  });
-}
 
 // ── COMPARE TOGGLE ────────────────────────────────────────
 function toggleCompare(on){
@@ -759,8 +693,6 @@ function render(){
   renderTabela(dias,'dia');
   document.querySelectorAll('.gb[data-gt]').forEach(b=>b.classList.remove('active'));
   const d=document.querySelector('.gb[data-gt="dia"]');if(d)d.classList.add('active');
-  // Inicializa tooltips após render
-  setTimeout(initTooltips, 50);
 }
 
 // ── HERO ──────────────────────────────────────────────────
@@ -790,7 +722,7 @@ function renderHero(tot,ant,qtd,qtdAnt){
       <div class="hk-stripe" style="background:${stripes[i]}"></div>
       <div class="hk-top">
         <div class="hk-label-wrap">
-          <span class="hk-label">${k.l}</span>${tip(k.l)}
+          <span class="hk-label">${k.l}</span>
         </div>
         <div class="hk-badge ${k.b}">${k.bt}</div>
       </div>
@@ -854,7 +786,7 @@ function renderInsights(tot,v,dias){
       <div class="insight-sub">${!v.diasVerba?'Sem dados de gasto':v.diasVerba>=v.dr?'Verba cobre os '+v.dr+' dias restantes no ritmo atual':'No ritmo atual a verba acaba '+Math.abs(v.dr-v.diasVerba)+' dias antes do evento'}</div>
     </div>
     <div class="insight" style="border-color:${freqCor}">
-      <div class="insight-label">Sinal de fadiga${tip('Frequência')}</div>
+      <div class="insight-label">Sinal de fadiga</div>
       <div class="insight-val" style="color:${freqCor}">${tot.freq?tot.freq.toFixed(1)+'x':'—'}</div>
       <div class="insight-sub">${tot.freq<=CFG.freqMax*0.7?'Público com espaço':tot.freq<=CFG.freqMax?'Próximo do limite':'Risco de queda no ROAS'}</div>
     </div>`;
