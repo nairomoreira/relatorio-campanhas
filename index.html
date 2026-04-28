@@ -509,6 +509,7 @@ function detectarAprendizado(dias){
 }
 
 // ── FORMATOS ──────────────────────────────────────────────
+function r2(n){return Math.round((+n||0)*100)/100;}
 function fd(s){const[,m,d]=s.split('-');return d+'/'+m;}
 function fm(s){const ms=['Jan','Fev','Mar','Abr','Mai','Jun','Jul','Ago','Set','Out','Nov','Dez'],[,m]=s.split('-');return ms[+m-1];}
 function fN(n){if(n>=1e6)return(n/1e6).toFixed(1).replace('.',',')+' M';if(n>=1e3)return n.toLocaleString('pt-BR');return String(Math.round(n));}
