@@ -630,7 +630,7 @@ function buildApp(){
       <div class="card-hd">
         <div>
           <div class="card-title">Crescimento de seguidores</div>
-          <div class="card-sub">Facebook &amp; Instagram — últimos 90 dias</div>
+          <div class="card-sub">Facebook &amp; Instagram — últimos 30 dias</div>
         </div>
         <div class="gran">
           <button class="gb active" data-gs="facebook">Facebook</button>
@@ -853,21 +853,13 @@ function renderInsights(tot,v,dias){
         </div>
       </div>
     </div>
-    <div class="insight" style="border-color:${ritmoCor}">
-      <div class="insight-label">Ritmo de compras</div>
-      <div class="insight-val" style="color:${ritmoCor}">${v.ritmoComp.toFixed(1)}<span style="font-size:13px;color:var(--text-3)">/dia</span></div>
-      <div class="insight-sub">${v.compNec>0?(v.ritmoComp>=v.compNec?'Ritmo suficiente':'Precisa de '+v.compNec.toFixed(1)+'/dia'):'—'}</div>
-    </div>
+
     <div class="insight" style="border-color:${eficColor}">
       <div class="insight-label">Custo médio por ingresso</div>
       <div class="insight-val" style="color:${eficColor}">${v.inv>0&&v.compTotal>0?fR(v.inv/v.compTotal):'—'}</div>
       <div class="insight-sub">${v.compTotal>0?'Baseado em '+Math.round(v.compTotal)+' compras desde o início':'Sem compras registradas'}</div>
     </div>
-    <div class="insight" style="border-color:${verbaCor}">
-      <div class="insight-label">Situação da verba</div>
-      <div class="insight-val" style="color:${verbaCor};font-size:18px;line-height:1.3">${!v.diasVerba?'—':v.diasVerba>=v.dr?'✓ Suficiente':'✗ Atenção'}</div>
-      <div class="insight-sub">${!v.diasVerba?'Sem dados de gasto':v.diasVerba>=v.dr?'Verba cobre os '+v.dr+' dias restantes no ritmo atual':'No ritmo atual a verba acaba '+Math.abs(v.dr-v.diasVerba)+' dias antes do evento'}</div>
-    </div>
+
     <div class="insight" style="border-color:${freqCor}">
       <div class="insight-label">Sinal de fadiga</div>
       <div class="insight-val" style="color:${freqCor}">${tot.freq?tot.freq.toFixed(1)+'x':'—'}</div>
@@ -1115,85 +1107,111 @@ function renderTokenAlerta() {
 // ── SEGUIDORES ───────────────────────────────────────────
 function renderSeguidores(rede) {
   const card = document.getElementById('seg-card');
-  const statsEl = document.getElementById('seg-stats');
-  const insightVal = document.getElementById('seg-val');
-  const insightSub = document.getElementById('seg-sub');
 
   if (!rawSeguidores.length) {
     if (card) card.style.display = 'none';
-    if (insightVal) insightVal.textContent = '—';
-    if (insightSub) insightSub.textContent = 'Dados de seguidores indisponíveis';
     return;
   }
 
-  const dados = rawSeguidores.filter(s => s.rede === rede);
+  const dados = rawSeguidores
+    .filter(s => s.rede === rede && s.data)
+    .sort((a,b) => a.data.localeCompare(b.data));
+
   if (!dados.length) {
     if (card) card.style.display = 'none';
     return;
   }
 
   if (card) card.style.display = 'block';
-  dados.sort((a,b) => a.data.localeCompare(b.data));
 
-  const ultimo     = dados[dados.length-1];
-  const primeiro   = dados[0];
-  const totalAtual = ultimo.total || 0;
-  const crescimento= totalAtual - (primeiro.total || 0);
-  const cresc7     = dados.slice(-7).reduce((s,d) => s+(+d.novos||0), 0);
-  const media7     = dados.length >= 7 ? cresc7/7 : cresc7/dados.length;
-
-  // (insight removido do grid — dados aparecem no card de seguidores)
+  const totalAtual = dados[dados.length-1].total || 0;
+  const totalInicio = dados[0].total || 0;
+  const crescimento30 = totalAtual - totalInicio;
+  const novosUlt7 = dados.slice(-7).reduce((s,d) => s+(+d.novos||0), 0);
+  const media7 = novosUlt7 / Math.min(7, dados.length);
 
   // Stats
-  if (statsEl) statsEl.innerHTML =
-    '<div class="seg-stat"><div class="seg-stat-label">Total atual</div>' +
-      '<div class="seg-stat-val" style="color:var(--blue)">' + fN(totalAtual) + '</div></div>' +
-    '<div class="seg-stat"><div class="seg-stat-label">Crescimento 90d</div>' +
-      '<div class="seg-stat-val" style="color:' + (crescimento>=0?'var(--green)':'var(--red)') + '">' +
-      (crescimento>=0?'+':'') + fN(crescimento) + '</div></div>' +
-    '<div class="seg-stat"><div class="seg-stat-label">Média/dia (7d)</div>' +
-      '<div class="seg-stat-val">+' + media7.toFixed(1) + '</div></div>';
+  const statsEl = document.getElementById('seg-stats');
+  if (statsEl) {
+    const corCresc = crescimento30 >= 0 ? 'var(--green)' : 'var(--red)';
+    statsEl.innerHTML =
+      '<div class="seg-stat"><div class="seg-stat-label">Total atual</div>' +
+        '<div class="seg-stat-val" style="color:var(--blue)">' + fN(totalAtual) + '</div></div>' +
+      '<div class="seg-stat"><div class="seg-stat-label">Crescimento 30d</div>' +
+        '<div class="seg-stat-val" style="color:' + corCresc + '">' + (crescimento30>=0?'+':'') + fN(crescimento30) + '</div></div>' +
+      '<div class="seg-stat"><div class="seg-stat-label">Média/dia (7d)</div>' +
+        '<div class="seg-stat-val">+' + media7.toFixed(1) + '</div></div>';
+  }
 
-  // Gráfico
+  // Gráfico diário — novos seguidores por dia (barras) + total acumulado (linha)
   if (charts.seg) { charts.seg.destroy(); delete charts.seg; }
   const el = document.getElementById('cSeg');
   if (!el) return;
 
-  // Agrega por semana para não poluir
-  const porSem = {};
-  dados.forEach(d => {
-    const p = d.data.split('-');
-    const dt = new Date(+p[0],+p[1]-1,+p[2]);
-    const dom = new Date(dt); dom.setDate(dt.getDate()-dt.getDay());
-    const key = dataStr(dom);
-    if (!porSem[key]) porSem[key] = { label: fd(key), total: 0, novos: 0, count: 0 };
-    porSem[key].total = +d.total||0; // pega o último total da semana
-    porSem[key].novos += +d.novos||0;
-    porSem[key].count++;
-  });
-  const semanas = Object.values(porSem).sort((a,b)=>a.label.localeCompare(b.label));
+  // Usa dados diários direto — sem agregar por semana para não distorcer
+  const labels = dados.map(d => fd(d.data));
+  const novos  = dados.map(d => Math.max(0, +d.novos||0));
+  const totais  = dados.map(d => +d.total||0);
 
   charts.seg = new Chart(el, {
     type: 'bar',
     data: {
-      labels: semanas.map(s=>s.label),
+      labels,
       datasets: [
-        { label:'Novos seguidores', data:semanas.map(s=>s.novos),
-          backgroundColor:'rgba(96,165,250,0.6)', borderRadius:3, borderSkipped:false, order:2 },
-        { label:'Total', data:semanas.map(s=>s.total),
-          type:'line', borderColor:'#60a5fa', backgroundColor:'transparent',
-          tension:0.4, pointRadius:2, borderWidth:2, yAxisID:'y1', order:1 },
+        {
+          label: 'Novos seguidores/dia',
+          data: novos,
+          backgroundColor: 'rgba(96,165,250,0.5)',
+          borderColor: 'rgba(96,165,250,0.8)',
+          borderWidth: 1,
+          borderRadius: 2,
+          order: 2,
+          yAxisID: 'y',
+        },
+        {
+          label: 'Total acumulado',
+          data: totais,
+          type: 'line',
+          borderColor: '#60a5fa',
+          backgroundColor: 'transparent',
+          tension: 0.3,
+          pointRadius: 0,
+          borderWidth: 2,
+          order: 1,
+          yAxisID: 'y1',
+        },
       ]
     },
-    options:{
-      responsive:true, maintainAspectRatio:false,
-      interaction:{mode:'index',intersect:false},
-      plugins:{legend:{display:true,labels:{color:'#8a8a9a',font:{size:10}}},
-        tooltip:{backgroundColor:'#18181d',borderColor:'rgba(255,255,255,0.08)',borderWidth:1,padding:8}},
-      scales:{
-        x:{grid:{display:false},ticks:{font:{size:10},color:'#4a4a5a',maxRotation:0}},
-        y:{grid:{color:'rgba(255,255,255,0.03)'},ticks:{font:{size:10},color:'#4a4a5a'},title:{display:true,text:'Novos/semana',color:'#4a4a5a',font:{size:9}}},
-        y1:{position:'right',grid:{display:false},ticks:{font:{size:10},color:'#60a5fa'},title:{display:true,text:'Total',color:'#60a5fa',font:{size:9}}},
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      interaction: { mode: 'index', intersect: false },
+      plugins: {
+        legend: { display: true, labels: { color: '#8a8a9a', font: { size: 10 }, boxWidth: 10 } },
+        tooltip: {
+          backgroundColor: '#18181d', borderColor: 'rgba(255,255,255,0.08)',
+          borderWidth: 1, padding: 8,
+          callbacks: {
+            label: ctx => ctx.dataset.label + ': ' + fN(ctx.parsed.y),
+          }
+        }
+      },
+      scales: {
+        x: {
+          grid: { display: false },
+          ticks: { font: { size: 9 }, color: '#4a4a5a', maxTicksLimit: 10, maxRotation: 0 }
+        },
+        y: {
+          position: 'left',
+          grid: { color: 'rgba(255,255,255,0.03)' },
+          ticks: { font: { size: 9 }, color: '#4a4a5a' },
+          title: { display: true, text: 'Novos/dia', color: '#4a4a5a', font: { size: 9 } },
+        },
+        y1: {
+          position: 'right',
+          grid: { display: false },
+          ticks: { font: { size: 9 }, color: '#60a5fa', callback: v => fN(v) },
+          title: { display: true, text: 'Total', color: '#60a5fa', font: { size: 9 } },
+        },
       }
     }
   });
