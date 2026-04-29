@@ -221,6 +221,29 @@ tr.learn-row td{opacity:.7;font-style:italic;}
 
 .empty{display:flex;align-items:center;justify-content:center;min-height:90px;color:var(--text-3);font-size:13px;}
 
+/* ── LOGIN ── */
+.login-screen{position:fixed;inset:0;background:var(--bg);z-index:999;
+  display:flex;align-items:center;justify-content:center;padding:20px;}
+.login-card{background:var(--surface);border:1px solid var(--border);
+  border-radius:var(--r);padding:40px 36px;width:100%;max-width:380px;text-align:center;}
+.login-logo{display:inline-flex;background:linear-gradient(135deg,var(--accent),var(--accent2));
+  font-family:'Rajdhani',sans-serif;font-size:14px;font-weight:700;letter-spacing:.1em;
+  color:white;padding:6px 14px;border-radius:8px;margin-bottom:20px;}
+.login-title{font-family:'Rajdhani',sans-serif;font-size:22px;font-weight:700;margin-bottom:4px;}
+.login-sub{font-size:12px;color:var(--text-3);margin-bottom:28px;}
+.login-field{width:100%;background:var(--surface2);border:1px solid var(--border-md);
+  border-radius:var(--r-sm);padding:11px 14px;font-family:'DM Sans',sans-serif;
+  font-size:14px;color:var(--text);outline:none;transition:border-color .15s;
+  margin-bottom:10px;text-align:left;}
+.login-field:focus{border-color:var(--accent);}
+.login-field::placeholder{color:var(--text-3);}
+.login-btn{width:100%;background:linear-gradient(135deg,var(--accent),var(--accent2));
+  color:white;border:none;border-radius:var(--r-sm);padding:12px;
+  font-family:'Rajdhani',sans-serif;font-size:16px;font-weight:700;letter-spacing:.04em;
+  cursor:pointer;transition:opacity .15s;margin-top:4px;}
+.login-btn:hover{opacity:.9;}
+.login-err{color:var(--red);font-size:12px;margin-top:8px;min-height:18px;}
+
 /* ── SEGUIDORES ── */
 .seg-chart-wrap{margin-top:12px;}
 .seg-stats{display:flex;gap:12px;margin-bottom:10px;flex-wrap:wrap;}
@@ -330,6 +353,20 @@ tr.learn-row td{opacity:.7;font-style:italic;}
 </head>
 <body>
 
+<!-- TELA DE LOGIN -->
+<div class="login-screen" id="login-screen">
+  <div class="login-card">
+    <div class="login-logo">AX34</div>
+    <div class="login-title">Animextreme</div>
+    <div class="login-sub">Dashboard de campanhas — Meta Ads</div>
+    <input class="login-field" type="text" id="login-user" placeholder="Usuário" autocomplete="username">
+    <input class="login-field" type="password" id="login-pass" placeholder="Senha" autocomplete="current-password"
+      onkeydown="if(event.key==='Enter')fazerLogin()">
+    <button class="login-btn" onclick="fazerLogin()">Entrar</button>
+    <div class="login-err" id="login-err"></div>
+  </div>
+</div>
+
 <header class="hdr">
   <div class="hdr-left">
     <div class="ax-pill">AX34</div>
@@ -381,6 +418,37 @@ tr.learn-row td{opacity:.7;font-style:italic;}
 
 <script>
 const DADOS_URL = 'https://raw.githubusercontent.com/nairomoreira/relatorio-campanhas/main/dados.json';
+
+// ── LOGIN CONFIG ──────────────────────────────────────────
+// Troque usuário e senha antes de publicar
+const AUTH = {
+  usuario: 'animextreme',
+  senha:   'ax34@2026',
+};
+
+function fazerLogin() {
+  const u = document.getElementById('login-user').value.trim();
+  const p = document.getElementById('login-pass').value;
+  const err = document.getElementById('login-err');
+  if (u === AUTH.usuario && p === AUTH.senha) {
+    document.getElementById('login-screen').style.display = 'none';
+    sessionStorage.setItem('ax-auth', '1');
+    if (!raw.length) init();
+  } else {
+    err.textContent = 'Usuário ou senha incorretos.';
+    document.getElementById('login-pass').value = '';
+    document.getElementById('login-pass').focus();
+  }
+}
+
+function verificarLogin() {
+  if (sessionStorage.getItem('ax-auth') === '1') {
+    document.getElementById('login-screen').style.display = 'none';
+    return true;
+  }
+  // Não carrega dados até fazer login
+  return false;
+}
 const CFG = {
   verbaTotal:25000, dataEvento:'2026-10-17', metaCompras:1000,
   roasMin:2.0, roasOtimo:3.0, custoCompraMax:30, custoCompraOtimo:20,
@@ -398,6 +466,8 @@ let metricaAtiva='roas';
 
 // ── BOOT ──────────────────────────────────────────────────
 async function init() {
+  // Verifica login — se não estiver autenticado, aguarda
+  if (!verificarLogin()) return;
   renderCountdown();
   try {
     const ctrl=new AbortController(); setTimeout(()=>ctrl.abort(),12000);
@@ -1203,7 +1273,11 @@ function renderCriativos() {
   '</div>';
 }
 
-init();
+// Verifica se já está logado ao carregar a página
+if (sessionStorage.getItem('ax-auth') === '1') {
+  document.getElementById('login-screen').style.display = 'none';
+  init();
+}
 </script>
 </body>
 </html>
