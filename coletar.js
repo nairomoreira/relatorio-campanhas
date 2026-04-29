@@ -333,20 +333,44 @@ async function buscarSeguidores() {
     try {
       if (page.rede === 'facebook' && page.pageId) {
         console.log('  Buscando seguidores Facebook:', page.nome);
-        // Busca total de seguidores atual
         const pageUrl = 'https://graph.facebook.com/v19.0/' + page.pageId +
           '?fields=followers_count,fan_count&access_token=' + META_TOKEN;
         const pageRes = await fetchJSON(pageUrl);
         const totalAtual = pageRes.followers_count || pageRes.fan_count || 0;
+        console.log('  Total atual:', totalAtual);
 
-        // Busca histórico de novos fans por dia
-        const insightUrl = 'https://graph.facebook.com/v19.0/' + page.pageId + '/insights?' +
-          'metric=page_fan_adds_by_paid_non_paid_unique' +
-          '&period=day' +
-          '&since=' + since + '&until=' + until +
-          '&access_token=' + META_TOKEN;
-        const insightRes = await fetchJSON(insightUrl);
-        const dados = insightRes.data && insightRes.data[0] ? insightRes.data[0].values || [] : [];
+        // Tenta endpoint de lifetime_total_likes (disponível sem permissão especial)
+        let dados = [];
+        const metricas = [
+          'page_fan_adds',
+          'page_fan_adds_unique',
+          'page_follows',
+          'page_daily_follows',
+          'page_daily_follows_unique',
+        ];
+        for (const metrica of metricas) {
+          const insightUrl = 'https://graph.facebook.com/v19.0/' + page.pageId + '/insights/' + metrica + '/day?' +
+            'since=' + since + '&until=' + until +
+            '&access_token=' + META_TOKEN;
+          const insightRes = await fetchJSON(insightUrl);
+          console.log('  Testando', metrica, ':', insightRes.error ? insightRes.error.message : (insightRes.data ? insightRes.data.length + ' itens' : 'sem dados'));
+          if (!insightRes.error && insightRes.data && insightRes.data.length > 0 && insightRes.data[0].values && insightRes.data[0].values.length > 0) {
+            dados = insightRes.data[0].values;
+            console.log('  Usando métrica Facebook:', metrica, '| Dias:', dados.length);
+            break;
+          }
+        }
+
+        // Se não conseguiu histórico, cria entrada só com total atual
+        if (!dados.length) {
+          console.log('  Sem histórico diário — usando só total atual');
+          resultado.push({
+            data: hoje.toISOString().slice(0,10),
+            novos: 0,
+            total: totalAtual,
+            rede: 'facebook',
+          });
+        }
 
         // Reconstrói total retroativamente
         let total = totalAtual;
@@ -367,20 +391,38 @@ async function buscarSeguidores() {
 
       if (page.rede === 'instagram' && page.igUserId) {
         console.log('  Buscando seguidores Instagram:', page.nome);
-        // Busca total atual
         const igUrl = 'https://graph.facebook.com/v19.0/' + page.igUserId +
-          '?fields=followers_count&access_token=' + META_TOKEN;
+          '?fields=followers_count,biography&access_token=' + META_TOKEN;
         const igRes = await fetchJSON(igUrl);
         const totalAtual = igRes.followers_count || 0;
+        console.log('  Total atual Instagram:', totalAtual);
 
-        // Busca histórico via insights
-        const igInsightUrl = 'https://graph.facebook.com/v19.0/' + page.igUserId + '/insights?' +
-          'metric=follower_count' +
-          '&period=day' +
-          '&since=' + since + '&until=' + until +
-          '&access_token=' + META_TOKEN;
-        const igInsightRes = await fetchJSON(igInsightUrl);
-        const dados = igInsightRes.data && igInsightRes.data[0] ? igInsightRes.data[0].values || [] : [];
+        let dados = [];
+        const igMetricas = ['follower_count','follows_and_unfollows','online_followers'];
+        for (const metrica of igMetricas) {
+          const igInsightUrl = 'https://graph.facebook.com/v19.0/' + page.igUserId + '/insights?' +
+            'metric=' + metrica +
+            '&period=day' +
+            '&since=' + since + '&until=' + until +
+            '&access_token=' + META_TOKEN;
+          const igInsightRes = await fetchJSON(igInsightUrl);
+          console.log('  Testando IG', metrica, ':', igInsightRes.error ? igInsightRes.error.message : (igInsightRes.data ? igInsightRes.data.length + ' itens' : 'sem dados'));
+          if (!igInsightRes.error && igInsightRes.data && igInsightRes.data.length > 0 && igInsightRes.data[0].values && igInsightRes.data[0].values.length > 0) {
+            dados = igInsightRes.data[0].values;
+            console.log('  Usando métrica Instagram:', metrica, '| Dias:', dados.length);
+            break;
+          }
+        }
+
+        if (!dados.length) {
+          console.log('  Sem histórico diário Instagram — usando só total atual');
+          resultado.push({
+            data: hoje.toISOString().slice(0,10),
+            novos: 0,
+            total: totalAtual,
+            rede: 'instagram',
+          });
+        }
 
         let total = totalAtual;
         const diasRevertidos = [];
