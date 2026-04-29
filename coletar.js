@@ -394,21 +394,24 @@ async function buscarSeguidores() {
           });
         }
 
-        // Reconstrói total retroativamente
-        let total = totalAtual;
-        const diasRevertidos = [];
-        for (let i = dados.length - 1; i >= 0; i--) {
-          const d = dados[i];
-          diasRevertidos.unshift({
-            data:  d.end_time ? d.end_time.slice(0,10) : '',
-            novos: +d.value || 0,
-            total: total,
-            rede:  'facebook',
-          });
-          total -= (+d.value || 0);
-        }
-        resultado.push(...diasRevertidos.filter(d => d.data));
-        console.log('  Facebook:', diasRevertidos.length, 'dias coletados, total atual:', totalAtual);
+        // Usa valores diários diretamente sem reconstrução retroativa
+        // total acumulado é calculado incrementalmente a partir do início
+        const diasFb = dados.map(d => ({
+          data:  d.end_time ? d.end_time.slice(0,10) : '',
+          novos: +d.value || 0,
+          total: 0, // preenchido abaixo
+          rede:  'facebook',
+        })).filter(d => d.data);
+
+        // Reconstrói total de forma crescente (mais preciso)
+        let baseTotal = totalAtual - diasFb.reduce((s,d) => s + d.novos, 0);
+        diasFb.forEach(d => {
+          baseTotal += d.novos;
+          d.total = Math.max(0, baseTotal);
+        });
+
+        resultado.push(...diasFb);
+        console.log('  Facebook:', diasFb.length, 'dias coletados, total atual:', totalAtual);
       }
 
       if (page.rede === 'instagram' && page.igUserId) {
@@ -454,20 +457,21 @@ async function buscarSeguidores() {
           });
         }
 
-        let total = totalAtual;
-        const diasRevertidos = [];
-        for (let i = dados.length - 1; i >= 0; i--) {
-          const d = dados[i];
-          diasRevertidos.unshift({
-            data:  d.end_time ? d.end_time.slice(0,10) : '',
-            novos: +d.value || 0,
-            total: total,
-            rede:  'instagram',
-          });
-          total -= (+d.value || 0);
-        }
-        resultado.push(...diasRevertidos.filter(d => d.data));
-        console.log('  Instagram:', diasRevertidos.length, 'dias coletados, total atual:', totalAtual);
+        const diasIg = dados.map(d => ({
+          data:  d.end_time ? d.end_time.slice(0,10) : '',
+          novos: +d.value || 0,
+          total: 0,
+          rede:  'instagram',
+        })).filter(d => d.data);
+
+        let baseTotalIg = totalAtual - diasIg.reduce((s,d) => s + d.novos, 0);
+        diasIg.forEach(d => {
+          baseTotalIg += d.novos;
+          d.total = Math.max(0, baseTotalIg);
+        });
+
+        resultado.push(...diasIg);
+        console.log('  Instagram:', diasIg.length, 'dias coletados, total atual:', totalAtual);
       }
     } catch(e) {
       console.error('  Erro ao buscar seguidores de', page.nome, ':', e.message);
