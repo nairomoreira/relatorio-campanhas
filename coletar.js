@@ -325,7 +325,8 @@ async function buscarSeguidores() {
 
   const resultado = [];
   const hoje = new Date();
-  const inicio = new Date(hoje); inicio.setDate(inicio.getDate() - 90);
+  // Instagram aceita máximo 30 dias
+  const inicio = new Date(hoje); inicio.setDate(inicio.getDate() - 30);
   const since = Math.floor(inicio.getTime()/1000);
   const until = Math.floor(hoje.getTime()/1000);
 
@@ -334,10 +335,11 @@ async function buscarSeguidores() {
       if (page.rede === 'facebook' && page.pageId) {
         console.log('  Buscando seguidores Facebook:', page.nome);
 
-        // Busca Page Access Token (necessário para Page Insights)
+        // Tenta obter Page Access Token via /me/accounts
         let pageToken = META_TOKEN;
         try {
-          const tokenUrl = 'https://graph.facebook.com/v19.0/me/accounts?access_token=' + META_TOKEN;
+          // Tenta com paginação para encontrar a página
+          const tokenUrl = 'https://graph.facebook.com/v19.0/me/accounts?limit=100&access_token=' + META_TOKEN;
           const tokenRes = await fetchJSON(tokenUrl);
           if (tokenRes.data) {
             const pg = tokenRes.data.find(p => p.id === page.pageId);
@@ -345,7 +347,16 @@ async function buscarSeguidores() {
               pageToken = pg.access_token;
               console.log('  Page Access Token obtido com sucesso');
             } else {
-              console.log('  Página não encontrada em /me/accounts — usando User Token');
+              // Tenta buscar token diretamente pelo pageId
+              const directUrl = 'https://graph.facebook.com/v19.0/' + page.pageId + '?fields=access_token&access_token=' + META_TOKEN;
+              const directRes = await fetchJSON(directUrl);
+              if (directRes.access_token) {
+                pageToken = directRes.access_token;
+                console.log('  Page Access Token obtido via pageId direto');
+              } else {
+                console.log('  Usando User Token (página pode não estar vinculada ao usuário do token)');
+                console.log('  Páginas disponíveis:', tokenRes.data.map(p => p.name + '(' + p.id + ')').join(', '));
+              }
             }
           }
         } catch(e) {
