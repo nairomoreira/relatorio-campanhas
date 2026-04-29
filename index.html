@@ -221,6 +221,13 @@ tr.learn-row td{opacity:.7;font-style:italic;}
 
 .empty{display:flex;align-items:center;justify-content:center;min-height:90px;color:var(--text-3);font-size:13px;}
 
+/* ── SEGUIDORES ── */
+.seg-chart-wrap{margin-top:12px;}
+.seg-stats{display:flex;gap:12px;margin-bottom:10px;flex-wrap:wrap;}
+.seg-stat{background:var(--surface2);border-radius:var(--r-sm);padding:10px 14px;flex:1;min-width:80px;}
+.seg-stat-label{font-size:10px;color:var(--text-3);text-transform:uppercase;letter-spacing:.05em;margin-bottom:4px;}
+.seg-stat-val{font-family:'Rajdhani',sans-serif;font-size:20px;font-weight:700;}
+
 /* ── SPARKLINE ── */
 .hk-spark{margin-top:6px;height:24px;width:100%;}
 
@@ -384,7 +391,7 @@ const CFG = {
 
 
 
-let raw=[], rawAds=[], rawCriativos=[], tokenExpira=null, periodo='7d', gran='dia', charts={};
+let raw=[], rawAds=[], rawCriativos=[], rawSeguidores=[], tokenExpira=null, periodo='7d', gran='dia', charts={};
 let customFrom=null, customTo=null;
 let compareMode=false, cmpFrom=null, cmpTo=null;
 let metricaAtiva='roas';
@@ -400,6 +407,7 @@ async function init() {
     raw=(json.dias||[]).filter(d=>d&&d.data).sort((a,b)=>a.data.localeCompare(b.data));
     rawAds=(json.anuncios||[]);
     rawCriativos=(json.criativos||[]);
+    rawSeguidores=(json.seguidores||[]);
     tokenExpira=json.tokenExpira||null;
     const upd=document.getElementById('upd');
     if(upd&&json.atualizadoEm) upd.textContent='Atualizado '+json.atualizadoEm;
@@ -548,24 +556,22 @@ function buildApp(){
     <div id="token-alert"></div>
     <div class="hero fu fu1" id="hero"></div>
     <div class="insight-grid fu fu2" id="insights"></div>
+    <div class="card fu fu3" id="seg-card" style="display:none">
+      <div class="card-hd">
+        <div>
+          <div class="card-title">Crescimento de seguidores</div>
+          <div class="card-sub">Facebook &amp; Instagram — últimos 90 dias</div>
+        </div>
+        <div class="gran">
+          <button class="gb active" data-gs="facebook">Facebook</button>
+          <button class="gb" data-gs="instagram">Instagram</button>
+        </div>
+      </div>
+      <div class="seg-stats" id="seg-stats"></div>
+      <div style="position:relative;height:180px"><canvas id="cSeg" role="img" aria-label="Crescimento de seguidores"></canvas></div>
+    </div>
     <div class="verba-card fu fu3" id="verba"></div>
     <div id="aprendizado-wrap" class="fu fu3"></div>
-    <div class="two-col fu fu4" style="margin-top:0">
-      <div class="card">
-        <div class="card-hd">
-          <div><div class="card-title">Melhor dia para anunciar</div>
-          <div class="card-sub">ROAS médio por dia da semana — histórico completo</div></div>
-        </div>
-        <div class="best-day-grid" id="best-day"></div>
-      </div>
-      <div class="card">
-        <div class="card-hd">
-          <div><div class="card-title">Performance por campanha</div>
-          <div class="card-sub">Ordenado por valor de compras</div></div>
-        </div>
-        <div class="camp-grid" id="camp-grid"></div>
-      </div>
-    </div>
     <div class="two-col fu fu4">
       <div class="card">
         <div class="card-hd">
@@ -639,6 +645,13 @@ function buildApp(){
     if(b.dataset.tab==='criativos') renderCriativos();
   }));
 
+  // Seguidores network toggle
+  document.querySelectorAll('.gb[data-gs]').forEach(b=>b.addEventListener('click',()=>{
+    document.querySelectorAll('.gb[data-gs]').forEach(x=>x.classList.remove('active'));
+    b.classList.add('active');
+    renderSeguidores(b.dataset.gs);
+  }));
+
   // Period buttons
   document.querySelectorAll('.pb').forEach(b=>b.addEventListener('click',()=>{
     document.querySelectorAll('.pb').forEach(x=>x.classList.remove('active'));
@@ -685,11 +698,10 @@ function render(){
   renderInsights(tot,v,dias);
   renderVerba(v,dias);
   renderAprendizado(ap,dias);
+  renderSeguidores('facebook');
   renderAlertas(tot);
   renderCart(tot,dias.length);
   renderMetricChart(dias,ant);
-  renderBestDay();
-  renderCampanhas(dias);
   renderRanking(dias);
   renderTabela(dias,'dia');
   document.querySelectorAll('.gb[data-gt]').forEach(b=>b.classList.remove('active'));
@@ -1026,96 +1038,98 @@ function renderTokenAlerta() {
     '</div></div></div>';
 }
 
-// ── MELHOR DIA DA SEMANA ──────────────────────────────────
-function renderBestDay() {
-  const el = document.getElementById('best-day');
-  if (!el || !raw.length) return;
 
-  const dias = ['Dom','Seg','Ter','Qua','Qui','Sex','Sáb'];
-  const porDia = {0:[],1:[],2:[],3:[],4:[],5:[],6:[]};
 
-  raw.forEach(d => {
-    const p = d.data.split('-');
-    const dt = new Date(+p[0], +p[1]-1, +p[2]);
-    const dow = dt.getDay();
-    const roas = d.valorUsado > 0 ? d.valorCompras/d.valorUsado : 0;
-    if (roas > 0) porDia[dow].push(roas);
-  });
+// ── SEGUIDORES ───────────────────────────────────────────
+function renderSeguidores(rede) {
+  const card = document.getElementById('seg-card');
+  const statsEl = document.getElementById('seg-stats');
+  const insightVal = document.getElementById('seg-val');
+  const insightSub = document.getElementById('seg-sub');
 
-  const medias = dias.map((_, i) => {
-    const arr = porDia[i];
-    return arr.length ? arr.reduce((s,v)=>s+v,0)/arr.length : 0;
-  });
+  if (!rawSeguidores.length) {
+    if (card) card.style.display = 'none';
+    if (insightVal) insightVal.textContent = '—';
+    if (insightSub) insightSub.textContent = 'Dados de seguidores indisponíveis';
+    return;
+  }
 
-  const maxRoas = Math.max(...medias.filter(v=>v>0));
-  const minRoas = Math.min(...medias.filter(v=>v>0));
-  const bestIdx = medias.indexOf(maxRoas);
-  const worstIdx = medias.indexOf(minRoas);
+  const dados = rawSeguidores.filter(s => s.rede === rede);
+  if (!dados.length) {
+    if (card) card.style.display = 'none';
+    return;
+  }
 
-  el.innerHTML = dias.map((d,i) => {
-    const v = medias[i];
-    const pct = maxRoas > 0 ? Math.round(v/maxRoas*100) : 0;
-    const isBest = i === bestIdx && v > 0;
-    const isWorst = i === worstIdx && v > 0;
-    const cor = isBest ? 'var(--green)' : isWorst ? 'var(--red)' : 'var(--text-2)';
-    const cls = isBest ? 'bd-item best' : isWorst ? 'bd-item worst' : 'bd-item';
-    return '<div class="' + cls + '">' +
-      '<div class="bd-bar" style="background:' + cor + ';opacity:.6"></div>' +
-      '<div class="bd-label">' + d + '</div>' +
-      '<div class="bd-roas" style="color:' + cor + '">' + (v>0?fX(v):'—') + '</div>' +
-      '<div class="bd-sub">' + (pct>0?pct+'% do máx':'sem dados') + '</div>' +
-    '</div>';
-  }).join('');
-}
+  if (card) card.style.display = 'block';
+  dados.sort((a,b) => a.data.localeCompare(b.data));
 
-// ── CAMPANHAS ─────────────────────────────────────────────
-function renderCampanhas(diasFiltrados) {
-  const el = document.getElementById('camp-grid');
+  const ultimo     = dados[dados.length-1];
+  const primeiro   = dados[0];
+  const totalAtual = ultimo.total || 0;
+  const crescimento= totalAtual - (primeiro.total || 0);
+  const cresc7     = dados.slice(-7).reduce((s,d) => s+(+d.novos||0), 0);
+  const media7     = dados.length >= 7 ? cresc7/7 : cresc7/dados.length;
+
+  // Atualiza insight card
+  if (insightVal) insightVal.textContent = fN(totalAtual);
+  if (insightSub) {
+    const sinal = crescimento >= 0 ? '+' : '';
+    insightSub.textContent = sinal + fN(crescimento) + ' nos últimos 90d · ' + rede;
+  }
+
+  // Stats
+  if (statsEl) statsEl.innerHTML =
+    '<div class="seg-stat"><div class="seg-stat-label">Total atual</div>' +
+      '<div class="seg-stat-val" style="color:var(--blue)">' + fN(totalAtual) + '</div></div>' +
+    '<div class="seg-stat"><div class="seg-stat-label">Crescimento 90d</div>' +
+      '<div class="seg-stat-val" style="color:' + (crescimento>=0?'var(--green)':'var(--red)') + '">' +
+      (crescimento>=0?'+':'') + fN(crescimento) + '</div></div>' +
+    '<div class="seg-stat"><div class="seg-stat-label">Média/dia (7d)</div>' +
+      '<div class="seg-stat-val">+' + media7.toFixed(1) + '</div></div>';
+
+  // Gráfico
+  if (charts.seg) { charts.seg.destroy(); delete charts.seg; }
+  const el = document.getElementById('cSeg');
   if (!el) return;
 
-  if (!rawAds.length) { el.innerHTML = '<div class="empty">Sem dados de campanhas</div>'; return; }
-
-  const de  = diasFiltrados.length ? diasFiltrados[0].data : null;
-  const ate = diasFiltrados.length ? diasFiltrados[diasFiltrados.length-1].data : null;
-  const af  = de ? rawAds.filter(a => a.data >= de && a.data <= ate) : rawAds;
-
-  const map = {};
-  af.forEach(a => {
-    // Usa adSet como agrupador de campanha (mais granular que campaign_name)
-    const k = a.adSet || a.adName || 'Sem campanha';
-    if (!map[k]) map[k] = { nome:k, valorUsado:0, compras:0, valorCompras:0, impressoes:0, cliques:0 };
-    map[k].valorUsado   += +a.valorUsado||0;
-    map[k].compras      += +a.compras||0;
-    map[k].valorCompras += +a.valorCompras||0;
-    map[k].impressoes   += +a.impressoes||0;
-    map[k].cliques      += +a.cliquesLink||0;
+  // Agrega por semana para não poluir
+  const porSem = {};
+  dados.forEach(d => {
+    const p = d.data.split('-');
+    const dt = new Date(+p[0],+p[1]-1,+p[2]);
+    const dom = new Date(dt); dom.setDate(dt.getDate()-dt.getDay());
+    const key = dataStr(dom);
+    if (!porSem[key]) porSem[key] = { label: fd(key), total: 0, novos: 0, count: 0 };
+    porSem[key].total = +d.total||0; // pega o último total da semana
+    porSem[key].novos += +d.novos||0;
+    porSem[key].count++;
   });
+  const semanas = Object.values(porSem).sort((a,b)=>a.label.localeCompare(b.label));
 
-  const camps = Object.values(map)
-    .map(c => ({...c,
-      roas: c.valorUsado > 0 ? r2(c.valorCompras/c.valorUsado) : 0,
-      custoC: c.compras > 0 ? r2(c.valorUsado/c.compras) : 0,
-    }))
-    .sort((a,b) => b.valorCompras - a.valorCompras);
-
-  if (!camps.length) { el.innerHTML = '<div class="empty">Sem dados no período</div>'; return; }
-
-  const mx = camps[0].valorCompras || 1;
-  el.innerHTML = camps.map(c => {
-    const pct = Math.round(c.valorCompras/mx*100);
-    const roasColor = c.roas >= CFG.roasOtimo ? 'var(--green)' : c.roas >= CFG.roasMin ? 'var(--amber)' : 'var(--red)';
-    return '<div class="camp-item">' +
-      '<div class="camp-name">' +
-        '<div class="camp-n" title="' + c.nome + '">' + c.nome + '</div>' +
-        '<div class="camp-bar-track"><div class="camp-bar-fill" style="width:' + pct + '%"></div></div>' +
-      '</div>' +
-      '<div class="camp-metrics">' +
-        '<div class="camp-m"><div class="camp-m-val" style="color:var(--green)">' + fR(c.valorCompras) + '</div><div class="camp-m-label">Compras</div></div>' +
-        '<div class="camp-m"><div class="camp-m-val" style="color:' + roasColor + '">' + fX(c.roas) + '</div><div class="camp-m-label">ROAS</div></div>' +
-        '<div class="camp-m"><div class="camp-m-val">' + fR(c.valorUsado) + '</div><div class="camp-m-label">Investido</div></div>' +
-      '</div>' +
-    '</div>';
-  }).join('');
+  charts.seg = new Chart(el, {
+    type: 'bar',
+    data: {
+      labels: semanas.map(s=>s.label),
+      datasets: [
+        { label:'Novos seguidores', data:semanas.map(s=>s.novos),
+          backgroundColor:'rgba(96,165,250,0.6)', borderRadius:3, borderSkipped:false, order:2 },
+        { label:'Total', data:semanas.map(s=>s.total),
+          type:'line', borderColor:'#60a5fa', backgroundColor:'transparent',
+          tension:0.4, pointRadius:2, borderWidth:2, yAxisID:'y1', order:1 },
+      ]
+    },
+    options:{
+      responsive:true, maintainAspectRatio:false,
+      interaction:{mode:'index',intersect:false},
+      plugins:{legend:{display:true,labels:{color:'#8a8a9a',font:{size:10}}},
+        tooltip:{backgroundColor:'#18181d',borderColor:'rgba(255,255,255,0.08)',borderWidth:1,padding:8}},
+      scales:{
+        x:{grid:{display:false},ticks:{font:{size:10},color:'#4a4a5a',maxRotation:0}},
+        y:{grid:{color:'rgba(255,255,255,0.03)'},ticks:{font:{size:10},color:'#4a4a5a'},title:{display:true,text:'Novos/semana',color:'#4a4a5a',font:{size:9}}},
+        y1:{position:'right',grid:{display:false},ticks:{font:{size:10},color:'#60a5fa'},title:{display:true,text:'Total',color:'#60a5fa',font:{size:9}}},
+      }
+    }
+  });
 }
 
 // ── CRIATIVOS ─────────────────────────────────────────────
