@@ -171,11 +171,11 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
 .a-val{font-family:'DM Mono',monospace;font-size:12px;color:var(--text-2);white-space:nowrap;}
 
 /* ── INSIGHTS ── */
-.insight-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;}
-.insight{background:var(--surface2);border-radius:var(--r-sm);padding:12px 14px;border-left:3px solid;}
-.insight-label{font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.06em;color:var(--text-3);margin-bottom:5px;}
-.insight-val{font-family:'Rajdhani',sans-serif;font-size:24px;font-weight:700;line-height:1.1;}
-.insight-sub{font-size:10px;color:var(--text-3);margin-top:3px;line-height:1.4;}
+.insight-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;}
+.insight{background:var(--surface2);border-radius:var(--r);padding:20px 22px;border-left:3px solid;}
+.insight-label{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.06em;color:var(--text-3);margin-bottom:8px;}
+.insight-val{font-family:'Rajdhani',sans-serif;font-size:32px;font-weight:700;line-height:1.1;}
+.insight-sub{font-size:12px;color:var(--text-3);margin-top:6px;line-height:1.4;}
 .meta-prog{margin-top:10px;}
 .meta-prog-labels{display:flex;justify-content:space-between;font-size:10px;color:var(--text-3);margin-bottom:4px;}
 .meta-prog-track{height:6px;background:var(--surface);border-radius:3px;overflow:hidden;}
@@ -330,7 +330,7 @@ tr.learn-row td{opacity:.7;font-style:italic;}
   .hdr,.period,.cmp-period,.main{padding-left:14px;padding-right:14px;}
   .hero{grid-template-columns:repeat(2,1fr);}
   .two-col{grid-template-columns:1fr;}
-  .insight-grid{grid-template-columns:repeat(2,1fr);}
+  .insight-grid{grid-template-columns:1fr 1fr;}
   .countdown{display:none;}
   .hdr-sub{display:none;}
   .rk-metrics{display:none;}
@@ -630,11 +630,11 @@ function buildApp(){
       <div class="card-hd">
         <div>
           <div class="card-title">Crescimento de seguidores</div>
-          <div class="card-sub">Facebook &amp; Instagram — últimos 30 dias</div>
+          <div class="card-sub">Instagram &amp; Facebook — últimos 30 dias</div>
         </div>
         <div class="gran">
-          <button class="gb active" data-gs="facebook">Facebook</button>
-          <button class="gb" data-gs="instagram">Instagram</button>
+          <button class="gb active" data-gs="instagram">Instagram</button>
+          <button class="gb" data-gs="facebook">Facebook</button>
         </div>
       </div>
       <div class="seg-stats" id="seg-stats"></div>
@@ -768,7 +768,7 @@ function render(){
   renderInsights(tot,v,dias);
   renderVerba(v,dias);
   renderAprendizado(ap,dias);
-  renderSeguidores('facebook');
+  renderSeguidores('instagram');
   renderAlertas(tot);
   renderCart(tot,dias.length);
   renderMetricChart(dias,ant);
