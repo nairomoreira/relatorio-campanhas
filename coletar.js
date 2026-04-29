@@ -21,8 +21,7 @@ const CONTAS = [
 // Instagram: use a Graph API — /me/accounts para listar páginas vinculadas
 const PAGES = [
   { pageId: '159927667398335', nome: 'Animextreme', rede: 'facebook' },
-  // Instagram — adicionar depois:
-  // { igUserId: 'XXXXXXXXX', nome: 'Animextreme', rede: 'instagram' },
+  { igUserId: '17841402325619868', nome: 'Animextreme', rede: 'instagram' },
 ];
 
 const FIELDS = [
