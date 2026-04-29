@@ -1094,8 +1094,10 @@ function renderTabela(dias,g){
 function renderTokenAlerta() {
   const el = document.getElementById('token-alert');
   if (!el || !tokenExpira) return;
-  const exp = new Date(tokenExpira);
-  const hj  = new Date();
+  // Parse robusto da data ISO
+  const p = String(tokenExpira).slice(0,10).split('-');
+  const exp = new Date(+p[0], +p[1]-1, +p[2]);
+  const hj  = new Date(); hj.setHours(0,0,0,0);
   const dias = Math.round((exp - hj) / 864e5);
   if (dias > 15) { el.innerHTML = ''; return; }
   const cls = dias <= 5 ? 'token-alert' : 'token-warn';
@@ -1140,12 +1142,7 @@ function renderSeguidores(rede) {
   const cresc7     = dados.slice(-7).reduce((s,d) => s+(+d.novos||0), 0);
   const media7     = dados.length >= 7 ? cresc7/7 : cresc7/dados.length;
 
-  // Atualiza insight card
-  if (insightVal) insightVal.textContent = fN(totalAtual);
-  if (insightSub) {
-    const sinal = crescimento >= 0 ? '+' : '';
-    insightSub.textContent = sinal + fN(crescimento) + ' nos últimos 90d · ' + rede;
-  }
+  // (insight removido do grid — dados aparecem no card de seguidores)
 
   // Stats
   if (statsEl) statsEl.innerHTML =
