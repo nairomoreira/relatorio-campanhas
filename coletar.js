@@ -16,6 +16,15 @@ const CONTAS = [
   // { id: 'act_XXXXXXXXX', nome: 'Cliente 2' },
 ];
 
+// Page IDs para buscar seguidores (Facebook e Instagram)
+// Facebook: acesse facebook.com/[suapagina]/about e veja o Page ID
+// Instagram: use a Graph API — /me/accounts para listar páginas vinculadas
+const PAGES = [
+  { pageId: '159927667398335', nome: 'Animextreme', rede: 'facebook' },
+  // Instagram — adicionar depois:
+  // { igUserId: 'XXXXXXXXX', nome: 'Animextreme', rede: 'instagram' },
+];
+
 const FIELDS = [
   'ad_id', 'ad_name', 'adset_name', 'campaign_name',
   'date_start', 'spend', 'impressions', 'reach',
@@ -308,6 +317,95 @@ function mergeContas(resultados) {
 }
 
 // ── MAIN ──────────────────────────────────────────────────
+// ── BUSCAR SEGUIDORES ────────────────────────────────────
+async function buscarSeguidores() {
+  if (!PAGES.length) {
+    console.log('Nenhuma página configurada em PAGES — seguidores não serão coletados.');
+    return [];
+  }
+
+  const resultado = [];
+  const hoje = new Date();
+  const inicio = new Date(hoje); inicio.setDate(inicio.getDate() - 90);
+  const since = Math.floor(inicio.getTime()/1000);
+  const until = Math.floor(hoje.getTime()/1000);
+
+  for (const page of PAGES) {
+    try {
+      if (page.rede === 'facebook' && page.pageId) {
+        console.log('  Buscando seguidores Facebook:', page.nome);
+        // Busca total de seguidores atual
+        const pageUrl = 'https://graph.facebook.com/v19.0/' + page.pageId +
+          '?fields=followers_count,fan_count&access_token=' + META_TOKEN;
+        const pageRes = await fetchJSON(pageUrl);
+        const totalAtual = pageRes.followers_count || pageRes.fan_count || 0;
+
+        // Busca histórico de novos fans por dia
+        const insightUrl = 'https://graph.facebook.com/v19.0/' + page.pageId + '/insights?' +
+          'metric=page_fan_adds_by_paid_non_paid_unique' +
+          '&period=day' +
+          '&since=' + since + '&until=' + until +
+          '&access_token=' + META_TOKEN;
+        const insightRes = await fetchJSON(insightUrl);
+        const dados = insightRes.data && insightRes.data[0] ? insightRes.data[0].values || [] : [];
+
+        // Reconstrói total retroativamente
+        let total = totalAtual;
+        const diasRevertidos = [];
+        for (let i = dados.length - 1; i >= 0; i--) {
+          const d = dados[i];
+          diasRevertidos.unshift({
+            data:  d.end_time ? d.end_time.slice(0,10) : '',
+            novos: +d.value || 0,
+            total: total,
+            rede:  'facebook',
+          });
+          total -= (+d.value || 0);
+        }
+        resultado.push(...diasRevertidos.filter(d => d.data));
+        console.log('  Facebook:', diasRevertidos.length, 'dias coletados, total atual:', totalAtual);
+      }
+
+      if (page.rede === 'instagram' && page.igUserId) {
+        console.log('  Buscando seguidores Instagram:', page.nome);
+        // Busca total atual
+        const igUrl = 'https://graph.facebook.com/v19.0/' + page.igUserId +
+          '?fields=followers_count&access_token=' + META_TOKEN;
+        const igRes = await fetchJSON(igUrl);
+        const totalAtual = igRes.followers_count || 0;
+
+        // Busca histórico via insights
+        const igInsightUrl = 'https://graph.facebook.com/v19.0/' + page.igUserId + '/insights?' +
+          'metric=follower_count' +
+          '&period=day' +
+          '&since=' + since + '&until=' + until +
+          '&access_token=' + META_TOKEN;
+        const igInsightRes = await fetchJSON(igInsightUrl);
+        const dados = igInsightRes.data && igInsightRes.data[0] ? igInsightRes.data[0].values || [] : [];
+
+        let total = totalAtual;
+        const diasRevertidos = [];
+        for (let i = dados.length - 1; i >= 0; i--) {
+          const d = dados[i];
+          diasRevertidos.unshift({
+            data:  d.end_time ? d.end_time.slice(0,10) : '',
+            novos: +d.value || 0,
+            total: total,
+            rede:  'instagram',
+          });
+          total -= (+d.value || 0);
+        }
+        resultado.push(...diasRevertidos.filter(d => d.data));
+        console.log('  Instagram:', diasRevertidos.length, 'dias coletados, total atual:', totalAtual);
+      }
+    } catch(e) {
+      console.error('  Erro ao buscar seguidores de', page.nome, ':', e.message);
+    }
+  }
+
+  return resultado;
+}
+
 // ── VERIFICAR EXPIRAÇÃO DO TOKEN ─────────────────────────
 async function verificarToken() {
   try {
@@ -364,6 +462,11 @@ async function main() {
   console.log('\nBuscando criativos...');
   const criativos = await buscarCriativos(anuncios);
 
+  // Busca seguidores das páginas
+  console.log('\nBuscando seguidores...');
+  const seguidores = await buscarSeguidores();
+  console.log('  Total registros seguidores:', seguidores.length);
+
   const agora = new Date().toLocaleString('pt-BR', {
     timeZone:'America/Sao_Paulo',
     day:'2-digit',month:'2-digit',year:'numeric',
@@ -380,6 +483,7 @@ async function main() {
     dias,
     anuncios:    anunciosDia,
     criativos,
+    seguidores,
   }, null, 2);
 
   fs.writeFileSync(DADOS_FILE, json, 'utf8');
