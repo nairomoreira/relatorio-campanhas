@@ -559,7 +559,7 @@ async function main() {
       const raw = await buscarInsights(conta.id, dataInicio, dataFim);
       console.log('  Linhas brutas:', raw.length);
       const resultado = processar(raw);
-      console.log('  Dias:', r.dias.length, '| Anúncios:', r.anuncios.length, '| Tráfego:', (r.diasTrafego||[]).length, '| Conversão:', (r.diasConversao||[]).length);
+      console.log('  Dias:', resultado.dias.length, '| Anúncios:', resultado.anuncios.length, '| Tráfego:', (resultado.diasTrafego||[]).length, '| Conversão:', (resultado.diasConversao||[]).length);
       resultados.push(resultado);
     } catch(e) {
       console.error('  Erro:', e.message);
