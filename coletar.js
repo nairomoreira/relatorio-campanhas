@@ -44,13 +44,28 @@ function getAction(arr, types) {
   return 0;
 }
 
-function fetchJSON(url) {
+function fetchJSON(url, retries) {
+  retries = retries === undefined ? 3 : retries;
   return new Promise((resolve, reject) => {
     https.get(url, res => {
       let data = '';
       res.on('data', c => data += c);
       res.on('end', () => {
-        try { resolve(JSON.parse(data)); }
+        try {
+          const json = JSON.parse(data);
+          // Rate limit — espera e tenta novamente
+          if (json.error && (json.error.code === 4 || json.error.code === 17 || json.error.code === 32 || json.error.code === 613)) {
+            if (retries > 0) {
+              const wait = (4 - retries) * 30000; // 30s, 60s, 90s
+              console.log('  Rate limit atingido — aguardando ' + (wait/1000) + 's antes de tentar novamente...');
+              setTimeout(() => fetchJSON(url, retries - 1).then(resolve).catch(reject), wait);
+            } else {
+              reject(new Error('Rate limit após 3 tentativas: ' + json.error.message));
+            }
+            return;
+          }
+          resolve(json);
+        }
         catch(e) { reject(new Error('Parse error: ' + data.slice(0,300))); }
       });
     }).on('error', reject);
@@ -75,38 +90,37 @@ async function buscarInsights(contaId, dataInicio, dataFim) {
   return todos;
 }
 
-// ── BUSCAR CRIATIVO DE UM ANÚNCIO ─────────────────────────
-async function buscarCriativo(adId) {
+// ── BUSCAR CRIATIVOS EM BATCH ────────────────────────────
+async function buscarCriativoBatch(adIds) {
+  if (!adIds.length) return {};
   try {
-    const url = 'https://graph.facebook.com/v19.0/' + adId +
-      '?fields=creative{id,name,thumbnail_url,image_url,video_id,object_story_spec,asset_feed_spec}' +
+    // Busca todos os anúncios de uma vez usando batch request
+    const ids = adIds.join(',');
+    const url = 'https://graph.facebook.com/v19.0/?ids=' + ids +
+      '&fields=creative{id,name,thumbnail_url,image_url,video_id}' +
       '&access_token=' + META_TOKEN;
     const res = await fetchJSON(url);
-    if (!res.creative) return null;
-    const c = res.creative;
-
-    // Tenta pegar thumbnail — vídeo tem thumbnail_url, imagem tem image_url
-    let imageUrl = c.thumbnail_url || c.image_url || null;
-
-    // Se for vídeo e não tiver thumbnail direto, busca pelo video_id
-    if (!imageUrl && c.video_id) {
-      const vUrl = 'https://graph.facebook.com/v19.0/' + c.video_id +
-        '?fields=thumbnails{uri}&access_token=' + META_TOKEN;
-      const vRes = await fetchJSON(vUrl);
-      if (vRes.thumbnails && vRes.thumbnails.data && vRes.thumbnails.data.length) {
-        imageUrl = vRes.thumbnails.data[0].uri;
-      }
+    if (res.error) {
+      console.log('  Erro no batch de criativos:', res.error.message);
+      return {};
     }
-
-    return {
-      creativeId:  c.id,
-      creativeName:c.name || '',
-      imageUrl,
-      tipo: c.video_id ? 'video' : 'imagem',
-    };
+    const resultado = {};
+    for (const adId of adIds) {
+      const ad = res[adId];
+      if (!ad || !ad.creative) continue;
+      const c = ad.creative;
+      let imageUrl = c.thumbnail_url || c.image_url || null;
+      resultado[adId] = {
+        creativeId:   c.id,
+        creativeName: c.name || '',
+        imageUrl,
+        tipo: c.video_id ? 'video' : 'imagem',
+      };
+    }
+    return resultado;
   } catch(e) {
-    console.log('  Criativo não encontrado para ad', adId, ':', e.message);
-    return null;
+    console.log('  Erro no batch de criativos:', e.message);
+    return {};
   }
 }
 
@@ -267,19 +281,23 @@ function processar(rawData) {
   return { dias, diasTrafego, diasConversao, anuncios, anunciosDia };
 }
 
-// ── BUSCAR CRIATIVOS DOS TOP ANÚNCIOS ─────────────────────
+// ── BUSCAR CRIATIVOS DOS TOP ANÚNCIOS (BATCH) ───────────
 async function buscarCriativos(anuncios) {
-  // Busca criativos apenas dos top 10 por ROAS (evita muitas chamadas)
   const top = anuncios
-    .filter(a => a.adId && a.valorUsado > 5) // mínimo R$5 investido
+    .filter(a => a.adId && a.valorUsado > 5)
     .sort((a,b) => b.roas - a.roas)
     .slice(0, 10);
 
-  console.log('  Buscando criativos de', top.length, 'anúncios...');
+  if (!top.length) return [];
+  console.log('  Buscando criativos de', top.length, 'anúncios (1 chamada batch)...');
+
+  // Uma única chamada para todos os anúncios
+  const adIds = top.map(a => a.adId);
+  const criativosMap = await buscarCriativoBatch(adIds);
 
   const criativos = [];
   for (const ad of top) {
-    const criativo = await buscarCriativo(ad.adId);
+    const criativo = criativosMap[ad.adId];
     if (criativo && criativo.imageUrl) {
       criativos.push({
         adId:        ad.adId,
@@ -288,7 +306,6 @@ async function buscarCriativos(anuncios) {
         campaign:    ad.campaign || '',
         imageUrl:    criativo.imageUrl,
         tipo:        criativo.tipo,
-        // Métricas de performance
         roas:        ad.roas,
         ctr:         ad.ctr,
         cpc:         ad.cpc,
@@ -303,8 +320,6 @@ async function buscarCriativos(anuncios) {
         freq:        ad.freq,
       });
     }
-    // Pausa pequena para não sobrecarregar a API
-    await new Promise(r => setTimeout(r, 200));
   }
 
   console.log('  Criativos com imagem:', criativos.length);
