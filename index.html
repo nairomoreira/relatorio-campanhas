@@ -221,6 +221,22 @@ tr.learn-row td{opacity:.7;font-style:italic;}
 
 .empty{display:flex;align-items:center;justify-content:center;min-height:90px;color:var(--text-3);font-size:13px;}
 
+/* ── CAMPANHA TABS ── */
+.camp-type-tabs{display:flex;gap:4px;margin-bottom:14px;}
+.ct-btn{font-family:'DM Sans',sans-serif;font-size:11px;font-weight:600;
+  padding:5px 14px;border-radius:20px;border:1px solid var(--border-md);
+  background:transparent;color:var(--text-3);cursor:pointer;transition:all .15s;}
+.ct-btn.active-trafego{background:rgba(96,165,250,0.15);color:var(--blue);border-color:rgba(96,165,250,0.3);}
+.ct-btn.active-conversao{background:rgba(34,197,94,0.1);color:var(--green);border-color:rgba(34,197,94,0.25);}
+.ct-btn.active-geral{background:rgba(230,57,70,0.1);color:var(--accent);border-color:rgba(230,57,70,0.25);}
+
+/* ── TRÁFEGO METRICS ── */
+.trafego-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:8px;margin-bottom:12px;}
+.tg-item{background:var(--surface2);border-radius:var(--r-sm);padding:12px 14px;border-top:2px solid var(--blue);}
+.tg-label{font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.06em;color:var(--text-3);margin-bottom:5px;}
+.tg-val{font-family:'Rajdhani',sans-serif;font-size:22px;font-weight:700;color:var(--blue);}
+.tg-sub{font-size:10px;color:var(--text-3);margin-top:2px;}
+
 /* ── LOGIN ── */
 .login-screen{position:fixed;inset:0;background:var(--bg);z-index:999;
   display:flex;align-items:center;justify-content:center;padding:20px;}
@@ -459,7 +475,7 @@ const CFG = {
 
 
 
-let raw=[], rawAds=[], rawCriativos=[], rawSeguidores=[], tokenExpira=null, periodo='7d', gran='dia', charts={};
+let raw=[], rawAds=[], rawCriativos=[], rawSeguidores=[], rawTrafego=[], rawConversao=[], tokenExpira=null, periodo='7d', gran='dia', charts={};
 let customFrom=null, customTo=null;
 let compareMode=false, cmpFrom=null, cmpTo=null;
 let metricaAtiva='roas';
@@ -478,6 +494,8 @@ async function init() {
     rawAds=(json.anuncios||[]);
     rawCriativos=(json.criativos||[]);
     rawSeguidores=(json.seguidores||[]);
+    rawTrafego=(json.diasTrafego||[]).filter(d=>d&&d.data).sort((a,b)=>a.data.localeCompare(b.data));
+    rawConversao=(json.diasConversao||[]).filter(d=>d&&d.data).sort((a,b)=>a.data.localeCompare(b.data));
     tokenExpira=json.tokenExpira||null;
     const upd=document.getElementById('upd');
     if(upd&&json.atualizadoEm) upd.textContent='Atualizado '+json.atualizadoEm;
@@ -673,6 +691,19 @@ function buildApp(){
         <div class="cart-grid" id="cart"></div>
       </div>
     </div>
+    <div class="card fu fu5" id="camp-section">
+      <div class="card-hd">
+        <div><div class="card-title">Performance por campanha</div>
+        <div class="card-sub">Tráfego vs Conversão — métricas separadas por objetivo</div></div>
+      </div>
+      <div class="camp-type-tabs">
+        <button class="ct-btn active-geral" data-ct="geral">Geral</button>
+        <button class="ct-btn" data-ct="conversao">🛒 Conversão</button>
+        <button class="ct-btn" data-ct="trafego">🔗 Tráfego</button>
+      </div>
+      <div id="camp-type-content"></div>
+    </div>
+
     <div class="card fu fu5">
       <div class="card-hd">
         <div><div class="card-title">Ranking de anúncios</div>
@@ -720,6 +751,13 @@ function buildApp(){
     document.querySelectorAll('.gb[data-gs]').forEach(x=>x.classList.remove('active'));
     b.classList.add('active');
     renderSeguidores(b.dataset.gs);
+  }));
+
+  // Camp type tabs
+  document.querySelectorAll('.ct-btn').forEach(b=>b.addEventListener('click',()=>{
+    document.querySelectorAll('.ct-btn').forEach(x=>x.className='ct-btn');
+    b.classList.add('active-'+b.dataset.ct);
+    renderCampType(b.dataset.ct, filtrar(periodo));
   }));
 
   // Period buttons
@@ -772,6 +810,11 @@ function render(){
   renderAlertas(tot);
   renderCart(tot,dias.length);
   renderMetricChart(dias,ant);
+  renderCampType('geral', dias);
+  // Reset tab ativo
+  document.querySelectorAll('.ct-btn').forEach(b=>b.className='ct-btn');
+  const geralBtn=document.querySelector('.ct-btn[data-ct="geral"]');
+  if(geralBtn) geralBtn.classList.add('active-geral');
   renderRanking(dias);
   renderTabela(dias,'dia');
   document.querySelectorAll('.gb[data-gt]').forEach(b=>b.classList.remove('active'));
@@ -1212,6 +1255,126 @@ function renderSeguidores(rede) {
           ticks: { font: { size: 9 }, color: '#60a5fa', callback: v => fN(v) },
           title: { display: true, text: 'Total', color: '#60a5fa', font: { size: 9 } },
         },
+      }
+    }
+  });
+}
+
+// ── PERFORMANCE POR CAMPANHA ─────────────────────────────
+function filtrarPorPeriodo(dados, diasFiltrados) {
+  if (!diasFiltrados.length || !dados.length) return dados;
+  const de = diasFiltrados[0].data;
+  const ate = diasFiltrados[diasFiltrados.length-1].data;
+  return dados.filter(d => d.data >= de && d.data <= ate);
+}
+
+function renderCampType(tipo, diasFiltrados) {
+  const el = document.getElementById('camp-type-content');
+  if (!el) return;
+
+  let dados;
+  if (tipo === 'trafego')   dados = filtrarPorPeriodo(rawTrafego, diasFiltrados);
+  else if (tipo === 'conversao') dados = filtrarPorPeriodo(rawConversao, diasFiltrados);
+  else dados = diasFiltrados;
+
+  if (!dados.length) {
+    el.innerHTML = '<div class="empty">Sem dados de ' + tipo + ' no período</div>';
+    return;
+  }
+
+  const tot = somar(dados);
+
+  if (tipo === 'trafego') {
+    // Métricas focadas em tráfego
+    el.innerHTML = '<div class="trafego-grid">' +
+      '<div class="tg-item"><div class="tg-label">Cliques no link</div><div class="tg-val">' + fN(tot.cliquesLink) + '</div><div class="tg-sub">total no período</div></div>' +
+      '<div class="tg-item"><div class="tg-label">CPC</div><div class="tg-val">' + fR(tot.cliquesLink>0?tot.valorUsado/tot.cliquesLink:0) + '</div><div class="tg-sub">custo por clique</div></div>' +
+      '<div class="tg-item"><div class="tg-label">CTR</div><div class="tg-val">' + fP(tot.ctr) + '</div><div class="tg-sub">taxa de cliques</div></div>' +
+      '<div class="tg-item"><div class="tg-label">Alcance</div><div class="tg-val">' + fN(tot.alcance) + '</div><div class="tg-sub">pessoas únicas</div></div>' +
+      '<div class="tg-item"><div class="tg-label">Impressões</div><div class="tg-val">' + fN(tot.impressoes) + '</div><div class="tg-sub">exibições totais</div></div>' +
+      '<div class="tg-item"><div class="tg-label">Investido</div><div class="tg-val" style="color:var(--accent)">' + fR(tot.valorUsado) + '</div><div class="tg-sub">verba de tráfego</div></div>' +
+    '</div>' +
+    '<div style="position:relative;height:160px"><canvas id="cTrafego"></canvas></div>';
+    renderChartLinha('cTrafego', dados, 'cliquesLink', 'Cliques/dia', 'var(--blue)');
+
+  } else if (tipo === 'conversao') {
+    // Métricas focadas em conversão
+    const roasColor = tot.roas>=CFG.roasOtimo?'var(--green)':tot.roas>=CFG.roasMin?'var(--amber)':'var(--red)';
+    el.innerHTML = '<div class="trafego-grid">' +
+      '<div class="tg-item" style="border-top-color:var(--green)"><div class="tg-label">Compras</div><div class="tg-val" style="color:var(--green)">' + fN(tot.compras) + '</div><div class="tg-sub">conversões</div></div>' +
+      '<div class="tg-item" style="border-top-color:var(--green)"><div class="tg-label">Valor gerado</div><div class="tg-val" style="color:var(--green)">' + fR(tot.valorCompras) + '</div><div class="tg-sub">receita atribuída</div></div>' +
+      '<div class="tg-item" style="border-top-color:'+roasColor+'"><div class="tg-label">ROAS</div><div class="tg-val" style="color:'+roasColor+'">' + fX(tot.roas) + '</div><div class="tg-sub">meta: ' + fX(CFG.roasOtimo) + '</div></div>' +
+      '<div class="tg-item" style="border-top-color:var(--accent)"><div class="tg-label">Custo/compra</div><div class="tg-val" style="color:var(--accent)">' + fR(tot.custoC) + '</div><div class="tg-sub">meta: até ' + fR(CFG.custoCompraMax) + '</div></div>' +
+      '<div class="tg-item"><div class="tg-label">Add carrinho</div><div class="tg-val">' + fN(tot.addCarrinho) + '</div><div class="tg-sub">intenção de compra</div></div>' +
+      '<div class="tg-item" style="border-top-color:var(--accent)"><div class="tg-label">Investido</div><div class="tg-val" style="color:var(--accent)">' + fR(tot.valorUsado) + '</div><div class="tg-sub">verba de conversão</div></div>' +
+    '</div>' +
+    '<div style="position:relative;height:160px"><canvas id="cConversao"></canvas></div>';
+    renderChartLinha('cConversao', dados, 'compras', 'Compras/dia', 'var(--green)');
+
+  } else {
+    // Geral — comparativo lado a lado
+    const totT = somar(filtrarPorPeriodo(rawTrafego, diasFiltrados));
+    const totC = somar(filtrarPorPeriodo(rawConversao, diasFiltrados));
+    const temT = rawTrafego.length > 0;
+    const temC = rawConversao.length > 0;
+
+    el.innerHTML =
+      '<div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">' +
+      // Tráfego
+      '<div style="background:var(--surface2);border-radius:var(--r-sm);padding:14px 16px;border-top:2px solid var(--blue)">' +
+        '<div style="font-size:11px;font-weight:600;color:var(--blue);margin-bottom:10px;text-transform:uppercase;letter-spacing:.05em">🔗 Tráfego</div>' +
+        (temT ? [
+          ['Cliques', fN(totT.cliquesLink)],
+          ['CPC', fR(totT.cliquesLink>0?totT.valorUsado/totT.cliquesLink:0)],
+          ['CTR', fP(totT.ctr)],
+          ['Investido', fR(totT.valorUsado)],
+        ] : [['—','Sem dados']]).map(([l,v])=>
+          '<div style="display:flex;justify-content:space-between;align-items:center;padding:5px 0;border-bottom:1px solid var(--border)">' +
+            '<span style="font-size:11px;color:var(--text-3)">' + l + '</span>' +
+            '<span style="font-family:DM Mono,monospace;font-size:11px">' + v + '</span>' +
+          '</div>'
+        ).join('') +
+      '</div>' +
+      // Conversão
+      '<div style="background:var(--surface2);border-radius:var(--r-sm);padding:14px 16px;border-top:2px solid var(--green)">' +
+        '<div style="font-size:11px;font-weight:600;color:var(--green);margin-bottom:10px;text-transform:uppercase;letter-spacing:.05em">🛒 Conversão</div>' +
+        (temC ? [
+          ['Compras', fN(totC.compras)],
+          ['ROAS', fX(totC.roas)],
+          ['Custo/compra', fR(totC.custoC)],
+          ['Investido', fR(totC.valorUsado)],
+        ] : [['—','Sem dados']]).map(([l,v])=>
+          '<div style="display:flex;justify-content:space-between;align-items:center;padding:5px 0;border-bottom:1px solid var(--border)">' +
+            '<span style="font-size:11px;color:var(--text-3)">' + l + '</span>' +
+            '<span style="font-family:DM Mono,monospace;font-size:11px">' + v + '</span>' +
+          '</div>'
+        ).join('') +
+      '</div>' +
+      '</div>';
+  }
+}
+
+function renderChartLinha(id, dados, metrica, label, cor) {
+  if (charts[id]) { charts[id].destroy(); delete charts[id]; }
+  const el = document.getElementById(id);
+  if (!el || !dados.length) return;
+  const rows = agrupar(dados, gran);
+  const vals = rows.map(r => +(r[metrica]||0));
+  charts[id] = new Chart(el, {
+    type: 'bar',
+    data: { labels: rows.map(r=>r.label), datasets: [{
+      label, data: vals,
+      backgroundColor: cor.replace(')', ',0.4)').replace('var(','rgba(').replace('--blue','96,165,250').replace('--green','34,197,94'),
+      borderColor: cor.replace(')', ',0.8)').replace('var(','rgba(').replace('--blue','96,165,250').replace('--green','34,197,94'),
+      borderWidth: 1, borderRadius: 3,
+    }]},
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      plugins: { legend: { display: false },
+        tooltip: { backgroundColor: '#18181d', borderColor: 'rgba(255,255,255,0.08)', borderWidth: 1, padding: 8 }},
+      scales: {
+        x: { grid: { display: false }, ticks: { font: { size: 9 }, color: '#4a4a5a', maxTicksLimit: 14, maxRotation: 0 }},
+        y: { grid: { color: 'rgba(255,255,255,0.03)' }, ticks: { font: { size: 9 }, color: '#4a4a5a' }},
       }
     }
   });
