@@ -583,7 +583,7 @@ async function main() {
 
   if (!resultados.length) throw new Error('Nenhuma conta retornou dados.');
 
-  const { dias, anuncios, anunciosDia } = mergeContas(resultados);
+  const { dias, diasTrafego, diasConversao, anuncios, anunciosDia } = mergeContas(resultados);
 
   // Busca criativos dos top anúncios
   console.log('\nBuscando criativos...');
