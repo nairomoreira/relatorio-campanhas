@@ -112,7 +112,9 @@ async function buscarCriativo(adId) {
 
 // ── PROCESSAR ─────────────────────────────────────────────
 function processar(rawData) {
-  const porDia     = {};
+  const porDia         = {};  // todos os dias agregados
+  const porDiaTrafego  = {};  // só campanhas [Tráfego]
+  const porDiaConversao= {};  // só campanhas [Compra]
   const porAnuncio = {}; // key: adName
   const adIds      = {}; // adName → adId (para buscar criativo)
 
@@ -136,7 +138,11 @@ function processar(rawData) {
     // Guarda ad_id por nome (para buscar criativo depois)
     if (adId && !adIds[adName]) adIds[adName] = adId;
 
-    // Agrega por dia
+    // Detecta tipo de campanha pelo nome
+    const isTrafego   = campaign && campaign.startsWith('[Tráfego]');
+    const isConversao = campaign && campaign.startsWith('[Compra]');
+
+    // Agrega por dia — total geral
     if (!porDia[data]) porDia[data] = { data, impressoes:0, alcance:0, valorUsado:0, cliquesLink:0, addCarrinho:0, compras:0, valorCompras:0 };
     const dia = porDia[data];
     dia.impressoes   += imp;
@@ -146,6 +152,24 @@ function processar(rawData) {
     dia.addCarrinho  += addCart;
     dia.compras      += compras;
     dia.valorCompras += valComp;
+
+    // Agrega por dia — tráfego
+    if (isTrafego) {
+      if (!porDiaTrafego[data]) porDiaTrafego[data] = { data, impressoes:0, alcance:0, valorUsado:0, cliquesLink:0, addCarrinho:0, compras:0, valorCompras:0 };
+      const dt = porDiaTrafego[data];
+      dt.impressoes += imp; dt.alcance += alcance; dt.valorUsado += invest;
+      dt.cliquesLink += cliques; dt.addCarrinho += addCart;
+      dt.compras += compras; dt.valorCompras += valComp;
+    }
+
+    // Agrega por dia — conversão
+    if (isConversao) {
+      if (!porDiaConversao[data]) porDiaConversao[data] = { data, impressoes:0, alcance:0, valorUsado:0, cliquesLink:0, addCarrinho:0, compras:0, valorCompras:0 };
+      const dc = porDiaConversao[data];
+      dc.impressoes += imp; dc.alcance += alcance; dc.valorUsado += invest;
+      dc.cliquesLink += cliques; dc.addCarrinho += addCart;
+      dc.compras += compras; dc.valorCompras += valComp;
+    }
 
     // Agrega por anúncio (total do período)
     if (!porAnuncio[adName]) {
@@ -167,24 +191,31 @@ function processar(rawData) {
     ad._dias        += 1;
   });
 
-  const dias = Object.values(porDia)
-    .filter(d => d.valorUsado > 0 || d.impressoes > 0)
-    .map(d => ({
-      data:             d.data,
-      valorUsado:       r2(d.valorUsado),
-      impressoes:       ri(d.impressoes),
-      alcance:          ri(d.alcance),
-      cliquesLink:      ri(d.cliquesLink),
-      cliquesTodos:     ri(d.cliquesLink),
-      resultados:       ri(d.compras),
-      addCarrinho:      ri(d.addCarrinho),
-      compras:          ri(d.compras),
-      valorCompras:     r2(d.valorCompras),
-      ctr:              d.impressoes > 0 ? r2(d.cliquesLink/d.impressoes*100) : 0,
-      custoAddCarrinho: d.addCarrinho > 0 ? r2(d.valorUsado/d.addCarrinho) : 0,
-      custoCompra:      d.compras > 0 ? r2(d.valorUsado/d.compras) : 0,
-    }))
-    .sort((a,b) => a.data.localeCompare(b.data));
+  function mapDias(pool) {
+    return Object.values(pool)
+      .filter(d => d.valorUsado > 0 || d.impressoes > 0)
+      .map(d => ({
+        data:             d.data,
+        valorUsado:       r2(d.valorUsado),
+        impressoes:       ri(d.impressoes),
+        alcance:          ri(d.alcance),
+        cliquesLink:      ri(d.cliquesLink),
+        cliquesTodos:     ri(d.cliquesLink),
+        resultados:       ri(d.compras),
+        addCarrinho:      ri(d.addCarrinho),
+        compras:          ri(d.compras),
+        valorCompras:     r2(d.valorCompras),
+        ctr:              d.impressoes > 0 ? r2(d.cliquesLink/d.impressoes*100) : 0,
+        cpc:              d.cliquesLink > 0 ? r2(d.valorUsado/d.cliquesLink) : 0,
+        custoAddCarrinho: d.addCarrinho > 0 ? r2(d.valorUsado/d.addCarrinho) : 0,
+        custoCompra:      d.compras > 0 ? r2(d.valorUsado/d.compras) : 0,
+      }))
+      .sort((a,b) => a.data.localeCompare(b.data));
+  }
+
+  const dias          = mapDias(porDia);
+  const diasTrafego   = mapDias(porDiaTrafego);
+  const diasConversao = mapDias(porDiaConversao);
 
   // Anúncios agregados (para ranking e criativos)
   const anuncios = Object.values(porAnuncio)
@@ -233,7 +264,7 @@ function processar(rawData) {
     });
   });
 
-  return { dias, anuncios, anunciosDia };
+  return { dias, diasTrafego, diasConversao, anuncios, anunciosDia };
 }
 
 // ── BUSCAR CRIATIVOS DOS TOP ANÚNCIOS ─────────────────────
@@ -284,6 +315,7 @@ async function buscarCriativos(anuncios) {
 function mergeContas(resultados) {
   const porDia = {};
   const anuncios = [], anunciosDia = [];
+  const diasTrafego = [], diasConversao = [];
 
   resultados.forEach(({ dias, anuncios: ads, anunciosDia: adsDia }) => {
     dias.forEach(d => {
@@ -306,12 +338,17 @@ function mergeContas(resultados) {
     });
     anuncios.push(...ads);
     anunciosDia.push(...(adsDia||[]));
+    // Merge tráfego e conversão
+    if (resultado.diasTrafego)   diasTrafego.push(...resultado.diasTrafego);
+    if (resultado.diasConversao) diasConversao.push(...resultado.diasConversao);
   });
 
   return {
     dias: Object.values(porDia).sort((a,b) => a.data.localeCompare(b.data)),
     anuncios,
     anunciosDia,
+    diasTrafego,
+    diasConversao,
   };
 }
 
@@ -556,6 +593,8 @@ async function main() {
     atualizadoEm: agora,
     tokenExpira,
     dias,
+    diasTrafego,
+    diasConversao,
     anuncios:    anunciosDia,
     criativos,
     seguidores,
