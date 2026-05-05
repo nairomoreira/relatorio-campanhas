@@ -317,7 +317,7 @@ function mergeContas(resultados) {
   const anuncios = [], anunciosDia = [];
   const diasTrafego = [], diasConversao = [];
 
-  resultados.forEach(({ dias, anuncios: ads, anunciosDia: adsDia }) => {
+  resultados.forEach(({ dias, diasTrafego: dt, diasConversao: dc, anuncios: ads, anunciosDia: adsDia }) => {
     dias.forEach(d => {
       if (!porDia[d.data]) { porDia[d.data] = { ...d }; }
       else {
@@ -339,8 +339,8 @@ function mergeContas(resultados) {
     anuncios.push(...ads);
     anunciosDia.push(...(adsDia||[]));
     // Merge tráfego e conversão
-    if (resultado.diasTrafego)   diasTrafego.push(...resultado.diasTrafego);
-    if (resultado.diasConversao) diasConversao.push(...resultado.diasConversao);
+    if (dt && dt.length) diasTrafego.push(...dt);
+    if (dc && dc.length) diasConversao.push(...dc);
   });
 
   return {
@@ -559,7 +559,7 @@ async function main() {
       const raw = await buscarInsights(conta.id, dataInicio, dataFim);
       console.log('  Linhas brutas:', raw.length);
       const resultado = processar(raw);
-      console.log('  Dias:', resultado.dias.length, '| Anúncios:', resultado.anuncios.length);
+      console.log('  Dias:', r.dias.length, '| Anúncios:', r.anuncios.length, '| Tráfego:', (r.diasTrafego||[]).length, '| Conversão:', (r.diasConversao||[]).length);
       resultados.push(resultado);
     } catch(e) {
       console.error('  Erro:', e.message);
