@@ -142,9 +142,10 @@ function processar(rawData) {
     const alcance  = parseInt(row.reach)       || 0;
     const cliques  = parseInt(row.clicks)      || 0;
     const freq     = parseFloat(row.frequency) || 0;
-    const addCart  = getAction(row.actions, ['add_to_cart']);
-    const compras  = getAction(row.actions, ['purchase','omni_purchase']);
-    const valComp  = getAction(row.action_values, ['purchase','omni_purchase']);
+    const addCart       = getAction(row.actions, ['add_to_cart']);
+    const compras       = getAction(row.actions, ['purchase','omni_purchase']);
+    const valComp       = getAction(row.action_values, ['purchase','omni_purchase']);
+    const visitasPerfil = getAction(row.actions, ['onsite_conversion.post_save','visit_instagram_profile','profile_visit','page_engagement']);
     const adName   = row.ad_name    || 'Sem nome';
     const adSet    = row.adset_name || '';
     const campaign = row.campaign_name || '';
@@ -189,11 +190,12 @@ function processar(rawData) {
 
     // Agrega por dia — seguidores
     if (isSeguidores) {
-      if (!porDiaSeguidores[data]) porDiaSeguidores[data] = { data, impressoes:0, alcance:0, valorUsado:0, cliquesLink:0, addCarrinho:0, compras:0, valorCompras:0 };
+      if (!porDiaSeguidores[data]) porDiaSeguidores[data] = { data, impressoes:0, alcance:0, valorUsado:0, cliquesLink:0, addCarrinho:0, compras:0, valorCompras:0, visitasPerfil:0 };
       const ds = porDiaSeguidores[data];
       ds.impressoes += imp; ds.alcance += alcance; ds.valorUsado += invest;
       ds.cliquesLink += cliques; ds.addCarrinho += addCart;
       ds.compras += compras; ds.valorCompras += valComp;
+      ds.visitasPerfil += visitasPerfil;
     }
 
     // Agrega por anúncio (total do período)
@@ -230,10 +232,12 @@ function processar(rawData) {
         addCarrinho:      ri(d.addCarrinho),
         compras:          ri(d.compras),
         valorCompras:     r2(d.valorCompras),
+        visitasPerfil:    ri(d.visitasPerfil||0),
         ctr:              d.impressoes > 0 ? r2(d.cliquesLink/d.impressoes*100) : 0,
         cpc:              d.cliquesLink > 0 ? r2(d.valorUsado/d.cliquesLink) : 0,
         custoAddCarrinho: d.addCarrinho > 0 ? r2(d.valorUsado/d.addCarrinho) : 0,
         custoCompra:      d.compras > 0 ? r2(d.valorUsado/d.compras) : 0,
+        custoVisita:      (d.visitasPerfil||0) > 0 ? r2(d.valorUsado/(d.visitasPerfil||1)) : 0,
       }))
       .sort((a,b) => a.data.localeCompare(b.data));
   }
