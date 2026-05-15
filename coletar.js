@@ -126,9 +126,10 @@ async function buscarCriativoBatch(adIds) {
 
 // ── PROCESSAR ─────────────────────────────────────────────
 function processar(rawData) {
-  const porDia         = {};  // todos os dias agregados
-  const porDiaTrafego  = {};  // só campanhas [Tráfego]
-  const porDiaConversao= {};  // só campanhas [Compra]
+  const porDia          = {};  // todos os dias agregados
+  const porDiaTrafego   = {};  // só campanhas [Tráfego]
+  const porDiaConversao = {};  // só campanhas [Compra]
+  const porDiaSeguidores= {};  // só campanhas [Seguidores]
   const porAnuncio = {}; // key: adName
   const adIds      = {}; // adName → adId (para buscar criativo)
 
@@ -153,8 +154,9 @@ function processar(rawData) {
     if (adId && !adIds[adName]) adIds[adName] = adId;
 
     // Detecta tipo de campanha pelo nome
-    const isTrafego   = campaign && campaign.startsWith('[Tráfego]');
-    const isConversao = campaign && campaign.startsWith('[Compra]');
+    const isTrafego    = campaign && campaign.startsWith('[Tráfego]');
+    const isConversao  = campaign && campaign.startsWith('[Compra]');
+    const isSeguidores = campaign && campaign.startsWith('[Seguidores]');
 
     // Agrega por dia — total geral
     if (!porDia[data]) porDia[data] = { data, impressoes:0, alcance:0, valorUsado:0, cliquesLink:0, addCarrinho:0, compras:0, valorCompras:0 };
@@ -183,6 +185,15 @@ function processar(rawData) {
       dc.impressoes += imp; dc.alcance += alcance; dc.valorUsado += invest;
       dc.cliquesLink += cliques; dc.addCarrinho += addCart;
       dc.compras += compras; dc.valorCompras += valComp;
+    }
+
+    // Agrega por dia — seguidores
+    if (isSeguidores) {
+      if (!porDiaSeguidores[data]) porDiaSeguidores[data] = { data, impressoes:0, alcance:0, valorUsado:0, cliquesLink:0, addCarrinho:0, compras:0, valorCompras:0 };
+      const ds = porDiaSeguidores[data];
+      ds.impressoes += imp; ds.alcance += alcance; ds.valorUsado += invest;
+      ds.cliquesLink += cliques; ds.addCarrinho += addCart;
+      ds.compras += compras; ds.valorCompras += valComp;
     }
 
     // Agrega por anúncio (total do período)
@@ -227,9 +238,10 @@ function processar(rawData) {
       .sort((a,b) => a.data.localeCompare(b.data));
   }
 
-  const dias          = mapDias(porDia);
-  const diasTrafego   = mapDias(porDiaTrafego);
-  const diasConversao = mapDias(porDiaConversao);
+  const dias            = mapDias(porDia);
+  const diasTrafego     = mapDias(porDiaTrafego);
+  const diasConversao   = mapDias(porDiaConversao);
+  const diasSeguidores  = mapDias(porDiaSeguidores);
 
   // Anúncios agregados (para ranking e criativos)
   const anuncios = Object.values(porAnuncio)
@@ -278,7 +290,7 @@ function processar(rawData) {
     });
   });
 
-  return { dias, diasTrafego, diasConversao, anuncios, anunciosDia };
+  return { dias, diasTrafego, diasConversao, diasSeguidores, anuncios, anunciosDia };
 }
 
 // ── BUSCAR CRIATIVOS DOS TOP ANÚNCIOS (BATCH) ───────────
@@ -330,9 +342,9 @@ async function buscarCriativos(anuncios) {
 function mergeContas(resultados) {
   const porDia = {};
   const anuncios = [], anunciosDia = [];
-  const diasTrafego = [], diasConversao = [];
+  const diasTrafego = [], diasConversao = [], diasSeguidores = [];
 
-  resultados.forEach(({ dias, diasTrafego: dt, diasConversao: dc, anuncios: ads, anunciosDia: adsDia }) => {
+  resultados.forEach(({ dias, diasTrafego: dt, diasConversao: dc, diasSeguidores: ds, anuncios: ads, anunciosDia: adsDia }) => {
     dias.forEach(d => {
       if (!porDia[d.data]) { porDia[d.data] = { ...d }; }
       else {
@@ -353,9 +365,10 @@ function mergeContas(resultados) {
     });
     anuncios.push(...ads);
     anunciosDia.push(...(adsDia||[]));
-    // Merge tráfego e conversão
+    // Merge tráfego, conversão e seguidores
     if (dt && dt.length) diasTrafego.push(...dt);
     if (dc && dc.length) diasConversao.push(...dc);
+    if (ds && ds.length) diasSeguidores.push(...ds);
   });
 
   return {
@@ -364,6 +377,7 @@ function mergeContas(resultados) {
     anunciosDia,
     diasTrafego,
     diasConversao,
+    diasSeguidores,
   };
 }
 
@@ -583,7 +597,7 @@ async function main() {
 
   if (!resultados.length) throw new Error('Nenhuma conta retornou dados.');
 
-  const { dias, diasTrafego, diasConversao, anuncios, anunciosDia } = mergeContas(resultados);
+  const { dias, diasTrafego, diasConversao, diasSeguidores, anuncios, anunciosDia } = mergeContas(resultados);
 
   // Busca criativos dos top anúncios
   console.log('\nBuscando criativos...');
@@ -610,6 +624,7 @@ async function main() {
     dias,
     diasTrafego,
     diasConversao,
+    diasSeguidores,
     anuncios:    anunciosDia,
     criativos,
     seguidores,
