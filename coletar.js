@@ -145,7 +145,10 @@ function processar(rawData) {
     const addCart       = getAction(row.actions, ['add_to_cart']);
     const compras       = getAction(row.actions, ['purchase','omni_purchase']);
     const valComp       = getAction(row.action_values, ['purchase','omni_purchase']);
-    const visitasPerfil = getAction(row.actions, ['onsite_conversion.post_save','visit_instagram_profile','profile_visit','page_engagement']);
+    const engajamento   = getAction(row.actions, ['page_engagement','post_engagement']);
+    const reacoes       = getAction(row.actions, ['post_reaction','onsite_conversion.post_net_like']);
+    const videoViews    = getAction(row.actions, ['video_view']);
+    const visitasPerfil = engajamento; // page_engagement é a métrica principal desta campanha
     const adName   = row.ad_name    || 'Sem nome';
     const adSet    = row.adset_name || '';
     const campaign = row.campaign_name || '';
@@ -159,12 +162,6 @@ function processar(rawData) {
     const isConversao  = campaign && campaign.startsWith('[Compra]');
     const isSeguidores = campaign && campaign.startsWith('[Seguidores]');
 
-    // Log de diagnóstico — lista todas as actions disponíveis na campanha de seguidores
-    if (isSeguidores && row.actions && row.actions.length && !global._loggedSegActions) {
-      global._loggedSegActions = true;
-      console.log('  Actions disponíveis na campanha de seguidores:');
-      row.actions.forEach(a => console.log('    -', a.action_type, ':', a.value));
-    }
 
     // Agrega por dia — total geral
     if (!porDia[data]) porDia[data] = { data, impressoes:0, alcance:0, valorUsado:0, cliquesLink:0, addCarrinho:0, compras:0, valorCompras:0 };
