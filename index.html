@@ -1,13 +1,4 @@
-<!
-
-const CONVIDADOS = [
-  'cereaw','caligrafo','anirap','ismeiow','m4rkim',
-  'akira heaven','fehdubs','caduxim','luisa horta','detonator',
-];
-function isConvidado(adName){
-  const n=(adName||'').toLowerCase();
-  return CONVIDADOS.some(c=>n.includes(c));
-}DOCTYPE html>
+<!DOCTYPE html>
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
@@ -482,6 +473,16 @@ const CFG = {
   diasAprendizado: 7,
   taxaImposto: 0.1303, // PIS+COFINS+ISS+IBS+CBS conforme NFS-e Meta
 };
+
+const CONVIDADOS = [
+  'cereaw','caligrafo','anirap','ismeiow','m4rkim',
+  'akira heaven','fehdubs','caduxim','luisa horta','detonator',
+];
+function isConvidado(adName){
+  const n=(adName||'').toLowerCase();
+  return CONVIDADOS.some(c=>n.includes(c));
+}
+
 
 
 
