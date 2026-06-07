@@ -117,7 +117,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
 .verba-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:16px 20px;}
 .verba-top{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:12px;gap:12px;flex-wrap:wrap;}
 .verba-title{font-family:'Rajdhani',sans-serif;font-size:14px;font-weight:700;letter-spacing:.02em;}
-.verba-nums{display:flex;gap:20px;flex-wrap:wrap;}
+.verba-nums{display:flex;gap:16px;flex-wrap:wrap;overflow-x:auto;padding-bottom:4px;}
 .vn-item{text-align:right;}
 .vn-label{font-size:10px;color:var(--text-3);text-transform:uppercase;letter-spacing:.05em;margin-bottom:2px;}
 .vn-val{font-family:'Rajdhani',sans-serif;font-size:17px;font-weight:700;line-height:1;}
@@ -352,7 +352,7 @@ tr.learn-row td{opacity:.7;font-style:italic;}
   .hdr-sub{display:none;}
   .rk-metrics{display:none;}
   .verba-nums{gap:10px;}
-  .verba-nums .vn-item:nth-child(n+3){display:none;}
+  .verba-nums .vn-item:nth-child(n+3){font-size:11px;}
   .metric-sel{gap:3px;}
   .ms-btn{padding:3px 7px;font-size:9px;}
   /* Mobile hero simplificado */
@@ -642,6 +642,7 @@ function buildApp(){
     <div class="tabs">
       <button class="tab-btn active" data-tab="dashboard">📊 Dashboard</button>
       <button class="tab-btn" data-tab="criativos">🎨 Melhores criativos</button>
+      <button class="tab-btn" data-tab="convidados">🎤 Convidados</button>
     </div>
     <div class="tab-panel active" id="tab-dashboard">
     <div id="token-alert"></div>
@@ -651,7 +652,7 @@ function buildApp(){
       <div class="card-hd">
         <div>
           <div class="card-title">Crescimento de seguidores</div>
-          <div class="card-sub">Instagram &amp; Facebook — últimos 30 dias</div>
+          <div class="card-sub">Crescimento orgânico — últimos 30 dias</div>
         </div>
         <div class="gran">
           <button class="gb active" data-gs="instagram">Instagram</button>
@@ -739,6 +740,9 @@ function buildApp(){
     <div class="tab-panel" id="tab-criativos">
       <div id="criativos-content"></div>
     </div>
+    <div class="tab-panel" id="tab-convidados">
+      <div id="convidados-content"></div>
+    </div>
   </div>`;
 
   // Tab buttons
@@ -748,6 +752,7 @@ function buildApp(){
     b.classList.add('active');
     document.getElementById('tab-'+b.dataset.tab).classList.add('active');
     if(b.dataset.tab==='criativos') renderCriativos();
+    if(b.dataset.tab==='convidados') renderConvidados();
   }));
 
   // Seguidores network toggle
@@ -928,8 +933,8 @@ function renderVerba(v,dias){
         <div style="font-size:11px;color:var(--text-3);margin-top:2px">${v.dr} dias até o evento · ${v.pct.toFixed(1)}% utilizado</div>
       </div>
       <div class="verba-nums">
-        <div class="vn-item"><div class="vn-label">Investido (líquido)</div><div class="vn-val" style="color:var(--accent)">${fR(v.inv)}</div></div>
-        <div class="vn-item"><div class="vn-label">Custo real c/ impostos</div><div class="vn-val" style="color:var(--amber)">${fR(v.inv*(1+CFG.taxaImposto))}</div><div style="font-size:10px;color:var(--text-3);margin-top:2px">+${(CFG.taxaImposto*100).toFixed(2)}% tributos</div></div>
+        <div class="vn-item"><div class="vn-label">Investido (Meta)</div><div class="vn-val" style="color:var(--accent)">${fR(v.inv)}</div></div>
+        <div class="vn-item" style="border-left:2px solid var(--amber);padding-left:10px"><div class="vn-label">Com impostos (13,03%)</div><div class="vn-val" style="color:var(--amber)">${fR(v.inv*(1+CFG.taxaImposto))}</div><div style="font-size:10px;color:var(--text-3);margin-top:2px">PIS+COFINS+ISS+IBS+CBS</div></div>
         <div class="vn-item"><div class="vn-label">Restante</div><div class="vn-val" style="color:var(--green)">${fR(v.rest)}</div></div>
         <div class="vn-item"><div class="vn-label">Necessário/dia</div><div class="vn-val">${fR(v.mediaNec)}</div></div>
         <div class="vn-item"><div class="vn-label">Real/dia (7d)</div><div class="vn-val" style="color:${rc}">${fR(v.mediaReal)} <span style="font-size:10px;font-family:'DM Sans'">${rl}</span></div></div>
@@ -1475,26 +1480,11 @@ function renderCriativos() {
     return;
   }
 
-  const crConvidados = rawCriativos.filter(c => isConvidado(c.adName)).sort((a,b) => b.roas - a.roas);
-  const crGeral      = rawCriativos.filter(c => !isConvidado(c.adName)).sort((a,b) => b.roas - a.roas);
+  const crGeral = rawCriativos.filter(c => !isConvidado(c.adName)).sort((a,b) => b.roas - a.roas);
 
-  let html = '';
-
-  // Seção convidados
-  if (crConvidados.length) {
-    html += '<div style="margin-bottom:20px">' +
-      '<div style="font-family:Rajdhani,sans-serif;font-size:15px;font-weight:700;margin-bottom:4px">🎤 Criativos dos convidados</div>' +
-      '<div style="font-size:11px;color:var(--text-3);margin-bottom:12px">Ordenado por ROAS</div>' +
-      '<div class="criativos-grid">' +
-      crConvidados.map((c,i) => gerarCardCriativo(c,i)).join('') +
-      '</div></div>' +
-      '<div style="height:1px;background:var(--border);margin-bottom:20px"></div>';
-  }
-
-  // Seção geral
-  html += '<div style="margin-bottom:14px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px">' +
+  let html = '<div style="margin-bottom:14px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px">' +
     '<div>' +
-      '<div style="font-family:Rajdhani,sans-serif;font-size:15px;font-weight:700">' + (crConvidados.length ? 'Melhores criativos gerais' : 'Melhores criativos') + '</div>' +
+      '<div style="font-family:Rajdhani,sans-serif;font-size:15px;font-weight:700">Melhores criativos</div>' +
       '<div style="font-size:11px;color:var(--text-3);margin-top:2px">Top anúncios por ROAS — imagens atualizadas a cada 6h</div>' +
     '</div>' +
     '<div style="font-size:11px;color:var(--text-3)">' + crGeral.length + ' criativos</div>' +
@@ -1504,6 +1494,34 @@ function renderCriativos() {
   '</div>';
 
   el.innerHTML = html;
+}
+
+// ── CONVIDADOS ────────────────────────────────────────────
+function renderConvidados() {
+  const el = document.getElementById('convidados-content');
+  if (!el) return;
+
+  const crConvidados = rawCriativos.filter(c => isConvidado(c.adName)).sort((a,b) => b.roas - a.roas);
+
+  if (!crConvidados.length) {
+    el.innerHTML = '<div class="empty" style="min-height:200px;flex-direction:column;gap:8px">' +
+      '<div style="font-size:28px;opacity:.3">🎤</div>' +
+      '<div>Criativos de convidados não disponíveis</div>' +
+      '<div style="font-size:11px;color:var(--text-3)">Aguarde a próxima atualização automática</div>' +
+    '</div>';
+    return;
+  }
+
+  el.innerHTML =
+    '<div style="margin-bottom:14px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px">' +
+      '<div>' +
+        '<div style="font-family:Rajdhani,sans-serif;font-size:15px;font-weight:700">Criativos dos convidados</div>' +
+        '<div style="font-size:11px;color:var(--text-3);margin-top:2px">Ordenado por ROAS · ' + crConvidados.length + ' criativos</div>' +
+      '</div>' +
+    '</div>' +
+    '<div class="criativos-grid">' +
+    crConvidados.map((c,i) => gerarCardCriativo(c,i)).join('') +
+    '</div>';
 }
 
 // Verifica se já está logado ao carregar a página
