@@ -1,4 +1,13 @@
-<!DOCTYPE html>
+<!
+
+const CONVIDADOS = [
+  'cereaw','caligrafo','anirap','ismeiow','m4rkim',
+  'akira heaven','fehdubs','caduxim','luisa horta','detonator',
+];
+function isConvidado(adName){
+  const n=(adName||'').toLowerCase();
+  return CONVIDADOS.some(c=>n.includes(c));
+}DOCTYPE html>
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
@@ -81,7 +90,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
 .main{padding:18px 28px 56px;display:flex;flex-direction:column;gap:14px;max-width:1440px;margin:0 auto;}
 
 /* ── HERO KPIs ── */
-.hero{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;
+.hero{display:grid;grid-template-columns:repeat(5,1fr);gap:1px;
   background:var(--border);border-radius:var(--r);overflow:hidden;}
 .hk{background:var(--surface);padding:18px 20px 14px;position:relative;transition:background .15s;}
 .hk:hover{background:var(--surface2);}
@@ -848,11 +857,13 @@ function renderHero(tot,ant,qtd,qtdAnt){
   const[ctC,ctT]=badge(tot.ctr>=CFG.ctrMin*1.5,tot.ctr>=CFG.ctrMin,'Ótimo','Aceitável','Abaixo');
   const[rcC,rcT]=badge(tot.roas>=CFG.roasOtimo,tot.roas>=CFG.roasMin,'Acima da meta','Aceitável','Crítico');
   const rc=e?'var(--text-2)':tot.roas>=CFG.roasOtimo?'var(--green)':tot.roas>=CFG.roasMin?'var(--amber)':'var(--red)';
-  const stripes=['var(--accent)','var(--green)','var(--blue)','var(--purple)'];
+  const stripes=['var(--accent)','var(--green)','var(--blue)','var(--amber)','var(--purple)'];
+  const custoComImposto = e ? 0 : tot.valorUsado*(1+CFG.taxaImposto);
   const items=[
     {l:'Custo por compra',v:e?'—':fR(tot.custoC),b:ccC,bt:ccT,meta:'Meta: até '+fR(CFG.custoCompraMax),d:dl(dlt(tot.custoC,ant.custoC),true),col:'var(--text)'},
     {l:'ROAS',v:e?'—':fX(tot.roas),b:rcC,bt:rcT,meta:'Meta: '+fX(CFG.roasOtimo),d:dl(dlt(tot.roas,ant.roas),false),col:rc},
-    {l:'Valor investido',v:e?'—':fR(tot.valorUsado),b:'bnt',bt:e?'—':fN(tot.compras)+' compras',meta:fN(tot.impressoes)+' impressões',d:dl(dlt(tot.valorUsado,ant.valorUsado),true),col:'var(--accent)'},
+    {l:'Investido (líquido)',v:e?'—':fR(tot.valorUsado),b:'bnt',bt:e?'—':fN(tot.compras)+' compras',meta:fN(tot.impressoes)+' impressões',d:dl(dlt(tot.valorUsado,ant.valorUsado),true),col:'var(--accent)'},
+    {l:'Custo real c/ impostos',v:e?'—':fR(custoComImposto),b:'bnt',bt:e?'—':'+13,03% tributos',meta:'PIS+COFINS+ISS+IBS+CBS',d:'',col:'var(--amber)'},
     {l:'Valor em compras',v:e?'—':fR(tot.valorCompras),b:'bnt',bt:e?'—':'ROAS '+fX(tot.roas),meta:fN(tot.compras)+' compras geradas',d:dl(dlt(tot.valorCompras,ant.valorCompras),false),col:'var(--green)'},
   ];
   document.getElementById('hero').innerHTML=items.map((k,i)=>`
@@ -934,7 +945,7 @@ function renderVerba(v,dias){
       </div>
       <div class="verba-nums">
         <div class="vn-item"><div class="vn-label">Investido (Meta)</div><div class="vn-val" style="color:var(--accent)">${fR(v.inv)}</div></div>
-        <div class="vn-item" style="border-left:2px solid var(--amber);padding-left:10px"><div class="vn-label">Com impostos (13,03%)</div><div class="vn-val" style="color:var(--amber)">${fR(v.inv*(1+CFG.taxaImposto))}</div><div style="font-size:10px;color:var(--text-3);margin-top:2px">PIS+COFINS+ISS+IBS+CBS</div></div>
+
         <div class="vn-item"><div class="vn-label">Restante</div><div class="vn-val" style="color:var(--green)">${fR(v.rest)}</div></div>
         <div class="vn-item"><div class="vn-label">Necessário/dia</div><div class="vn-val">${fR(v.mediaNec)}</div></div>
         <div class="vn-item"><div class="vn-label">Real/dia (7d)</div><div class="vn-val" style="color:${rc}">${fR(v.mediaReal)} <span style="font-size:10px;font-family:'DM Sans'">${rl}</span></div></div>
