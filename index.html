@@ -928,7 +928,8 @@ function renderVerba(v,dias){
         <div style="font-size:11px;color:var(--text-3);margin-top:2px">${v.dr} dias até o evento · ${v.pct.toFixed(1)}% utilizado</div>
       </div>
       <div class="verba-nums">
-        <div class="vn-item"><div class="vn-label">Investido</div><div class="vn-val" style="color:var(--accent)">${fR(v.inv)}</div></div>
+        <div class="vn-item"><div class="vn-label">Investido (líquido)</div><div class="vn-val" style="color:var(--accent)">${fR(v.inv)}</div></div>
+        <div class="vn-item"><div class="vn-label">Custo real c/ impostos</div><div class="vn-val" style="color:var(--amber)">${fR(v.inv*(1+CFG.taxaImposto))}</div><div style="font-size:10px;color:var(--text-3);margin-top:2px">+${(CFG.taxaImposto*100).toFixed(2)}% tributos</div></div>
         <div class="vn-item"><div class="vn-label">Restante</div><div class="vn-val" style="color:var(--green)">${fR(v.rest)}</div></div>
         <div class="vn-item"><div class="vn-label">Necessário/dia</div><div class="vn-val">${fR(v.mediaNec)}</div></div>
         <div class="vn-item"><div class="vn-label">Real/dia (7d)</div><div class="vn-val" style="color:${rc}">${fR(v.mediaReal)} <span style="font-size:10px;font-family:'DM Sans'">${rl}</span></div></div>
@@ -1426,6 +1427,41 @@ function imgErr(el) {
   el.style.display = 'none';
   if (el.nextElementSibling) el.nextElementSibling.style.display = 'flex';
 }
+
+
+function gerarCardCriativo(c, i) {
+  const roasColor = c.roas >= CFG.roasOtimo ? 'var(--green)' : c.roas >= CFG.roasMin ? 'var(--amber)' : 'var(--red)';
+  const medalha = i === 0 ? '🥇' : i === 1 ? '🥈' : i === 2 ? '🥉' : '';
+  return '<div class="criativo-card">' +
+    '<div class="criativo-img-wrap">' +
+      '<img class="criativo-img" src="' + c.imageUrl + '" alt="' + c.adName + '" onerror="imgErr(this)" loading="lazy">' +
+      '<div style="display:none;width:100%;aspect-ratio:1/1;align-items:center;justify-content:center;background:var(--surface3);color:var(--text-3);font-size:12px;flex-direction:column;gap:6px">' +
+        '<div style="font-size:24px;opacity:.4">🖼️</div><div>Imagem expirada</div>' +
+      '</div>' +
+      '<div class="criativo-tipo">' + c.tipo + '</div>' +
+      (medalha ? '<div style="position:absolute;top:8px;left:8px;font-size:18px">' + medalha + '</div>' : '') +
+    '</div>' +
+    '<div class="criativo-body">' +
+      '<div class="criativo-badge" style="background:' + roasColor + '22;color:' + roasColor + '">#' + (i+1) + ' por ROAS</div>' +
+      '<div class="criativo-name" title="' + c.adName + '">' + c.adName + '</div>' +
+      '<div class="criativo-set">' + (c.adSet || c.campaign || '') + '</div>' +
+      '<div class="criativo-metrics">' +
+        '<div class="cm"><div class="cm-val" style="color:' + roasColor + '">' + fX(c.roas) + '</div><div class="cm-label">ROAS</div></div>' +
+        '<div class="cm"><div class="cm-val">' + fP(c.ctr) + '</div><div class="cm-label">CTR</div></div>' +
+        '<div class="cm"><div class="cm-val">' + fR(c.cpc) + '</div><div class="cm-label">CPC</div></div>' +
+      '</div>' +
+      '<div class="criativo-metrics-2">' +
+        '<div class="cm"><div class="cm-val">' + fN(c.alcance) + '</div><div class="cm-label">Alcance</div></div>' +
+        '<div class="cm"><div class="cm-val">' + fR(c.cpm) + '</div><div class="cm-label">CPM</div></div>' +
+        '<div class="cm"><div class="cm-val" style="color:var(--green)">' + fN(c.compras) + '</div><div class="cm-label">Compras</div></div>' +
+        '<div class="cm"><div class="cm-val">' + fR(c.custoCompra||0) + '</div><div class="cm-label">Custo/compra</div></div>' +
+        '<div class="cm"><div class="cm-val">' + fR(c.valorUsado) + '</div><div class="cm-label">Investido</div></div>' +
+        '<div class="cm"><div class="cm-val" style="color:var(--green)">' + fR(c.valorCompras) + '</div><div class="cm-label">Vlr compras</div></div>' +
+      '</div>' +
+    '</div>' +
+  '</div>';
+}
+
 function renderCriativos() {
   const el = document.getElementById('criativos-content');
   if (!el) return;
@@ -1439,57 +1475,35 @@ function renderCriativos() {
     return;
   }
 
-  // Ordena por ROAS por padrão
-  const ordenados = [...rawCriativos].sort((a,b) => b.roas - a.roas);
+  const crConvidados = rawCriativos.filter(c => isConvidado(c.adName)).sort((a,b) => b.roas - a.roas);
+  const crGeral      = rawCriativos.filter(c => !isConvidado(c.adName)).sort((a,b) => b.roas - a.roas);
 
-  const roasMax = Math.max(...ordenados.map(c=>c.roas));
+  let html = '';
 
-  el.innerHTML = '<div style="margin-bottom:14px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px">' +
+  // Seção convidados
+  if (crConvidados.length) {
+    html += '<div style="margin-bottom:20px">' +
+      '<div style="font-family:Rajdhani,sans-serif;font-size:15px;font-weight:700;margin-bottom:4px">🎤 Criativos dos convidados</div>' +
+      '<div style="font-size:11px;color:var(--text-3);margin-bottom:12px">Ordenado por ROAS</div>' +
+      '<div class="criativos-grid">' +
+      crConvidados.map((c,i) => gerarCardCriativo(c,i)).join('') +
+      '</div></div>' +
+      '<div style="height:1px;background:var(--border);margin-bottom:20px"></div>';
+  }
+
+  // Seção geral
+  html += '<div style="margin-bottom:14px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px">' +
     '<div>' +
-      '<div style="font-family:Rajdhani,sans-serif;font-size:15px;font-weight:700">Melhores criativos</div>' +
+      '<div style="font-family:Rajdhani,sans-serif;font-size:15px;font-weight:700">' + (crConvidados.length ? 'Melhores criativos gerais' : 'Melhores criativos') + '</div>' +
       '<div style="font-size:11px;color:var(--text-3);margin-top:2px">Top anúncios por ROAS — imagens atualizadas a cada 6h</div>' +
     '</div>' +
-    '<div style="font-size:11px;color:var(--text-3)">' + ordenados.length + ' criativos</div>' +
+    '<div style="font-size:11px;color:var(--text-3)">' + crGeral.length + ' criativos</div>' +
   '</div>' +
   '<div class="criativos-grid">' +
-  ordenados.map((c, i) => {
-    const roasColor = c.roas >= CFG.roasOtimo ? 'var(--green)' : c.roas >= CFG.roasMin ? 'var(--amber)' : 'var(--red)';
-    const badgeColor = i === 0 ? '#f59e0b' : i === 1 ? '#9ca3af' : i === 2 ? '#b45309' : 'var(--text-3)';
-    const medalha = i === 0 ? '🥇' : i === 1 ? '🥈' : i === 2 ? '🥉' : '';
-    return '<div class="criativo-card">' +
-      '<div class="criativo-img-wrap">' +
-        '<img class="criativo-img" src="' + c.imageUrl + '" alt="' + c.adName + '" ' +
-          'onerror="imgErr(this)" loading="lazy">' +
-        '<div style="display:none;width:100%;aspect-ratio:1/1;align-items:center;justify-content:center;' +
-          'background:var(--surface3);color:var(--text-3);font-size:12px;flex-direction:column;gap:6px">' +
-          '<div style="font-size:24px;opacity:.4">🖼️</div><div>Imagem expirada</div>' +
-        '</div>' +
-        '<div class="criativo-tipo">' + c.tipo + '</div>' +
-        (medalha ? '<div style="position:absolute;top:8px;left:8px;font-size:18px">' + medalha + '</div>' : '') +
-      '</div>' +
-      '<div class="criativo-body">' +
-        '<div class="criativo-badge" style="background:' + roasColor + '22;color:' + roasColor + '">' +
-          '<span>#' + (i+1) + ' por ROAS</span>' +
-        '</div>' +
-        '<div class="criativo-name" title="' + c.adName + '">' + c.adName + '</div>' +
-        '<div class="criativo-set">' + (c.adSet || c.campaign || '') + '</div>' +
-        '<div class="criativo-metrics">' +
-          '<div class="cm"><div class="cm-val" style="color:' + roasColor + '">' + fX(c.roas) + '</div><div class="cm-label">ROAS</div></div>' +
-          '<div class="cm"><div class="cm-val">' + fP(c.ctr) + '</div><div class="cm-label">CTR</div></div>' +
-          '<div class="cm"><div class="cm-val">' + fR(c.cpc) + '</div><div class="cm-label">CPC</div></div>' +
-        '</div>' +
-        '<div class="criativo-metrics-2">' +
-          '<div class="cm"><div class="cm-val">' + fN(c.alcance) + '</div><div class="cm-label">Alcance</div></div>' +
-          '<div class="cm"><div class="cm-val">' + fR(c.cpm) + '</div><div class="cm-label">CPM</div></div>' +
-          '<div class="cm"><div class="cm-val" style="color:var(--green)">' + fN(c.compras) + '</div><div class="cm-label">Compras</div></div>' +
-          '<div class="cm"><div class="cm-val">' + fR(c.custoCompra||0) + '</div><div class="cm-label">Custo/compra</div></div>' +
-          '<div class="cm"><div class="cm-val">' + fR(c.valorUsado) + '</div><div class="cm-label">Investido</div></div>' +
-          '<div class="cm"><div class="cm-val" style="color:var(--green)">' + fR(c.valorCompras) + '</div><div class="cm-label">Vlr compras</div></div>' +
-        '</div>' +
-      '</div>' +
-    '</div>';
-  }).join('') +
+  crGeral.map((c,i) => gerarCardCriativo(c,i)).join('') +
   '</div>';
+
+  el.innerHTML = html;
 }
 
 // Verifica se já está logado ao carregar a página
