@@ -1,5 +1,5 @@
 {
-  "atualizadoEm": "28/06/2026, 01:18",
+  "atualizadoEm": "28/06/2026, 06:18",
   "tokenExpira": null,
   "dias": [
     {
@@ -1354,9 +1354,9 @@
     },
     {
       "data": "2026-06-27",
-      "valorUsado": 186.15,
-      "impressoes": 33373,
-      "alcance": 23882,
+      "valorUsado": 186.16,
+      "impressoes": 33379,
+      "alcance": 23883,
       "cliquesLink": 563,
       "cliquesTodos": 563,
       "resultados": 6,
@@ -1372,20 +1372,20 @@
     },
     {
       "data": "2026-06-28",
-      "valorUsado": 6.92,
-      "impressoes": 1077,
-      "alcance": 942,
-      "cliquesLink": 39,
-      "cliquesTodos": 39,
-      "resultados": 0,
-      "addCarrinho": 2,
-      "compras": 0,
-      "valorCompras": 0,
+      "valorUsado": 14.11,
+      "impressoes": 2145,
+      "alcance": 1979,
+      "cliquesLink": 87,
+      "cliquesTodos": 87,
+      "resultados": 3,
+      "addCarrinho": 4,
+      "compras": 3,
+      "valorCompras": 463.5,
       "visitasPerfil": 0,
-      "ctr": 3.62,
-      "cpc": 0.18,
-      "custoAddCarrinho": 3.46,
-      "custoCompra": 0,
+      "ctr": 4.06,
+      "cpc": 0.16,
+      "custoAddCarrinho": 3.53,
+      "custoCompra": 4.7,
       "custoVisita": 0
     }
   ],
@@ -2834,9 +2834,9 @@
     },
     {
       "data": "2026-06-27",
-      "valorUsado": 169.1,
-      "impressoes": 30665,
-      "alcance": 21193,
+      "valorUsado": 169.11,
+      "impressoes": 30671,
+      "alcance": 21194,
       "cliquesLink": 417,
       "cliquesTodos": 417,
       "resultados": 6,
@@ -2852,20 +2852,20 @@
     },
     {
       "data": "2026-06-28",
-      "valorUsado": 4.81,
-      "impressoes": 681,
-      "alcance": 579,
-      "cliquesLink": 19,
-      "cliquesTodos": 19,
-      "resultados": 0,
-      "addCarrinho": 2,
-      "compras": 0,
-      "valorCompras": 0,
+      "valorUsado": 10.06,
+      "impressoes": 1467,
+      "alcance": 1308,
+      "cliquesLink": 38,
+      "cliquesTodos": 38,
+      "resultados": 3,
+      "addCarrinho": 4,
+      "compras": 3,
+      "valorCompras": 463.5,
       "visitasPerfil": 0,
-      "ctr": 2.79,
-      "cpc": 0.25,
-      "custoAddCarrinho": 2.4,
-      "custoCompra": 0,
+      "ctr": 2.59,
+      "cpc": 0.26,
+      "custoAddCarrinho": 2.52,
+      "custoCompra": 3.35,
       "custoVisita": 0
     }
   ],
@@ -3736,18 +3736,18 @@
     },
     {
       "data": "2026-06-28",
-      "valorUsado": 2.11,
-      "impressoes": 396,
-      "alcance": 363,
-      "cliquesLink": 20,
-      "cliquesTodos": 20,
+      "valorUsado": 4.05,
+      "impressoes": 678,
+      "alcance": 671,
+      "cliquesLink": 49,
+      "cliquesTodos": 49,
       "resultados": 0,
       "addCarrinho": 0,
       "compras": 0,
       "valorCompras": 0,
-      "visitasPerfil": 151,
-      "ctr": 5.05,
-      "cpc": 0.11,
+      "visitasPerfil": 309,
+      "ctr": 7.23,
+      "cpc": 0.08,
       "custoAddCarrinho": 0,
       "custoCompra": 0,
       "custoVisita": 0.01
@@ -21542,7 +21542,7 @@
       "data": "2026-06-27",
       "adName": "AD 01 - Akira Heaven",
       "adSet": "00 - VV 95% 30D - Convidados tier médio",
-      "impressoes": 3040,
+      "impressoes": 3041,
       "alcance": 2155,
       "cliquesLink": 34,
       "addCarrinho": 6,
@@ -21650,8 +21650,8 @@
       "data": "2026-06-27",
       "adName": "AD 07 - Teaser Video 02",
       "adSet": "00 - rpg",
-      "impressoes": 178,
-      "alcance": 160,
+      "impressoes": 179,
+      "alcance": 161,
       "cliquesLink": 3,
       "addCarrinho": 0,
       "compras": 0,
@@ -21686,7 +21686,7 @@
       "data": "2026-06-27",
       "adName": "AD 06 - Teaser Video 01",
       "adSet": "00 - rpg",
-      "impressoes": 4799,
+      "impressoes": 4801,
       "alcance": 3765,
       "cliquesLink": 79,
       "addCarrinho": 27,
@@ -21698,12 +21698,12 @@
       "data": "2026-06-27",
       "adName": "AD 10 - etzinho",
       "adSet": "00 - kpop",
-      "impressoes": 2063,
+      "impressoes": 2065,
       "alcance": 1550,
       "cliquesLink": 25,
       "addCarrinho": 6,
       "compras": 0,
-      "valorUsado": 13.02,
+      "valorUsado": 13.03,
       "valorCompras": 0
     },
     {
@@ -21734,96 +21734,156 @@
       "data": "2026-06-28",
       "adName": "AD 02 - ISMEIOW",
       "adSet": "00 - anime e manga",
-      "impressoes": 42,
-      "alcance": 32,
-      "cliquesLink": 1,
+      "impressoes": 128,
+      "alcance": 119,
+      "cliquesLink": 6,
       "addCarrinho": 0,
       "compras": 0,
-      "valorUsado": 0.39,
+      "valorUsado": 0.93,
+      "valorCompras": 0
+    },
+    {
+      "data": "2026-06-28",
+      "adName": "AD 04 - Detonator",
+      "adSet": "00 - anime e manga",
+      "impressoes": 4,
+      "alcance": 3,
+      "cliquesLink": 0,
+      "addCarrinho": 0,
+      "compras": 0,
+      "valorUsado": 0.01,
       "valorCompras": 0
     },
     {
       "data": "2026-06-28",
       "adName": "AD 02 - ansioso para ir",
       "adSet": "00 - anime e manga",
-      "impressoes": 396,
-      "alcance": 363,
-      "cliquesLink": 20,
+      "impressoes": 678,
+      "alcance": 671,
+      "cliquesLink": 49,
       "addCarrinho": 0,
       "compras": 0,
-      "valorUsado": 2.11,
+      "valorUsado": 4.05,
       "valorCompras": 0
     },
     {
       "data": "2026-06-28",
       "adName": "AD 02 - Fehdubs",
       "adSet": "00 - VV 95% 30D - Convidados tier top",
-      "impressoes": 37,
-      "alcance": 29,
-      "cliquesLink": 2,
+      "impressoes": 65,
+      "alcance": 61,
+      "cliquesLink": 3,
       "addCarrinho": 0,
       "compras": 0,
-      "valorUsado": 0.22,
+      "valorUsado": 0.38,
       "valorCompras": 0
     },
     {
       "data": "2026-06-28",
       "adName": "AD 01 - Akira Heaven",
       "adSet": "00 - VV 95% 30D - Convidados tier médio",
-      "impressoes": 84,
-      "alcance": 75,
-      "cliquesLink": 2,
+      "impressoes": 234,
+      "alcance": 198,
+      "cliquesLink": 4,
       "addCarrinho": 0,
       "compras": 0,
-      "valorUsado": 0.79,
+      "valorUsado": 1.9,
       "valorCompras": 0
+    },
+    {
+      "data": "2026-06-28",
+      "adName": "AD 03 - Cereaw",
+      "adSet": "00 - VV 95% 30D - Convidados tier top",
+      "impressoes": 125,
+      "alcance": 112,
+      "cliquesLink": 3,
+      "addCarrinho": 0,
+      "compras": 0,
+      "valorUsado": 0.63,
+      "valorCompras": 0
+    },
+    {
+      "data": "2026-06-28",
+      "adName": "AD 05 - anirap",
+      "adSet": "00 - VV 95% 30D - Convidados tier top",
+      "impressoes": 172,
+      "alcance": 157,
+      "cliquesLink": 3,
+      "addCarrinho": 2,
+      "compras": 3,
+      "valorUsado": 1.06,
+      "valorCompras": 463.5
     },
     {
       "data": "2026-06-28",
       "adName": "AD 02 - ISMEIOW",
       "adSet": "00 - video game",
-      "impressoes": 144,
-      "alcance": 124,
+      "impressoes": 166,
+      "alcance": 154,
       "cliquesLink": 8,
       "addCarrinho": 0,
       "compras": 0,
-      "valorUsado": 0.75,
+      "valorUsado": 0.89,
       "valorCompras": 0
     },
     {
       "data": "2026-06-28",
       "adName": "AD 07 - Teaser Video 02",
       "adSet": "00 - rpg",
-      "impressoes": 91,
-      "alcance": 74,
+      "impressoes": 97,
+      "alcance": 86,
       "cliquesLink": 1,
       "addCarrinho": 0,
       "compras": 0,
-      "valorUsado": 0.56,
+      "valorUsado": 0.68,
+      "valorCompras": 0
+    },
+    {
+      "data": "2026-06-28",
+      "adName": "AD 03 - Fehdubs",
+      "adSet": "00 - rpg",
+      "impressoes": 6,
+      "alcance": 6,
+      "cliquesLink": 0,
+      "addCarrinho": 0,
+      "compras": 0,
+      "valorUsado": 0.03,
       "valorCompras": 0
     },
     {
       "data": "2026-06-28",
       "adName": "AD 06 - Teaser Video 01",
       "adSet": "00 - rpg",
-      "impressoes": 142,
-      "alcance": 120,
+      "impressoes": 191,
+      "alcance": 174,
       "cliquesLink": 3,
       "addCarrinho": 0,
       "compras": 0,
-      "valorUsado": 0.86,
+      "valorUsado": 1.2,
       "valorCompras": 0
     },
     {
       "data": "2026-06-28",
       "adName": "AD 10 - etzinho",
       "adSet": "00 - kpop",
-      "impressoes": 141,
-      "alcance": 125,
-      "cliquesLink": 2,
+      "impressoes": 264,
+      "alcance": 226,
+      "cliquesLink": 5,
       "addCarrinho": 2,
       "compras": 0,
-      "valorUsado": 1.24,
+      "valorUsado": 2.1,
+      "valorCompras": 0
+    },
+    {
+      "data": "2026-06-28",
+      "adName": "AD 10 - etzinho",
+      "adSet": "00 - video game",
+      "impressoes": 15,
+      "alcance": 12,
+      "cliquesLink": 2,
+      "addCarrinho": 0,
+      "compras": 0,
+      "valorUsado": 0.25,
       "valorCompras": 0
     }
   ],
@@ -21833,7 +21893,7 @@
       "adName": "AD 08 - Goularte",
       "adSet": "00 - VV 95% 30D - Convidados tier top",
       "campaign": "[Compra][Feed/Stories][ABO] Animextreme 34 - Convidados",
-      "imageUrl": "https://external-ord5-2.xx.fbcdn.net/emg1/v/t13/2189592737158429696?url=https%3A%2F%2Fwww.facebook.com%2Fads%2Fimage%2F%3Fd%3DAQLsC8i463KG_uklxAYDlv68XgZo5FIelZMYNJAAyqMRFbDGSvW2xDotQZgf9azxOJdt_I2beRpXrlaqqaFuv0NsGnBekInZskFWrDK4nQ5JTxd3yh-VDk7S6sseHHfUfc121CoXFln0ATV5AJ6aKImU&fb_obo=1&utld=facebook.com&stp=c0.5000x0.5000f_dst-emg0_p64x64_q75_tt6&edm=AAwGEdEEAAAA&_nc_gid=RJuPPlGJ744qPD-zEIxf2w&_nc_oc=AdomtL8j2vBmmRTdII_V754lCJQwERpXN8A18DLjHdRj9tOxfDubMw2jTtLQ-FXPEf0&ccb=13-1&oh=06_Q3_AARKzM8tw6RWE3QgRAhjdhSraWaDG_G9XVFWTPI6siLmV&oe=6A428272&_nc_sid=58080a",
+      "imageUrl": "https://external-sjc3-1.xx.fbcdn.net/emg1/v/t13/2189592737158429696?url=https%3A%2F%2Fwww.facebook.com%2Fads%2Fimage%2F%3Fd%3DAQLsC8i463KG_uklxAYDlv68XgZo5FIelZMYNJAAyqMRFbDGSvW2xDotQZgf9azxOJdt_I2beRpXrlaqqaFuv0NsGnBekInZskFWrDK4nQ5JTxd3yh-VDk7S6sseHHfUfc121CoXFln0ATV5AJ6aKImU&fb_obo=1&utld=facebook.com&stp=c0.5000x0.5000f_dst-emg0_p64x64_q75_tt6&edm=AAwGEdEEAAAA&_nc_gid=8aylDormo5O9Tv5Rs3-L5Q&_nc_oc=AdrmcZVyM3B6llaH4tRLYEsWh3xVg6rr0zAZ59a3v7klnOwSd70QKOfReTIQI2Li4XQ&ccb=13-1&oh=06_Q3_AAcMqB20btNeoXP4NL39wcpgr_qON82MIgX9oJdg_y_ov&oe=6A42BAB2&_nc_sid=58080a",
       "tipo": "imagem",
       "roas": 28.25,
       "ctr": 2.09,
@@ -21853,7 +21913,7 @@
       "adName": "AD 08 - o que tem no vip",
       "adSet": "00 - kpop",
       "campaign": "[Compra][Feed/Stories] Animextreme 34 - Interesses",
-      "imageUrl": "https://external-ord5-2.xx.fbcdn.net/emg1/v/t13/7551746331353406884?url=https%3A%2F%2Fwww.facebook.com%2Fads%2Fimage%2F%3Fd%3DAQJHqdqChamufNIpyNctYesQbcqblN2rFeEDKNltRMIAs-kfW06jN-VWQLDhD1YfBdKdcz7PW4Q9hiuljiu2hPGyWuSElV977db9ZFm6Ov7YVe-tu-f2G4AbVoNkZ3RF2MszReNi6M-0-N9P7Ixts7wj&fb_obo=1&utld=facebook.com&stp=c0.5000x0.5000f_dst-emg0_p64x64_q75_tt6&edm=AAwGEdEEAAAA&_nc_gid=RJuPPlGJ744qPD-zEIxf2w&_nc_oc=AdrgwGMU8A_E-XvVEGCbCaZviCJMCUFnwdmxULPNnsd6OO1Av_ND2tEeYDuaaz7Cntg&ccb=13-1&oh=06_Q3_AAaL4K6jnjjzm3Hhn4UChwjJ6nocNTvx2tJKQppTAwrz3&oe=6A4295DA&_nc_sid=58080a",
+      "imageUrl": "https://external-sjc3-1.xx.fbcdn.net/emg1/v/t13/7551746331353406884?url=https%3A%2F%2Fwww.facebook.com%2Fads%2Fimage%2F%3Fd%3DAQJHqdqChamufNIpyNctYesQbcqblN2rFeEDKNltRMIAs-kfW06jN-VWQLDhD1YfBdKdcz7PW4Q9hiuljiu2hPGyWuSElV977db9ZFm6Ov7YVe-tu-f2G4AbVoNkZ3RF2MszReNi6M-0-N9P7Ixts7wj&fb_obo=1&utld=facebook.com&stp=c0.5000x0.5000f_dst-emg0_p64x64_q75_tt6&edm=AAwGEdEEAAAA&_nc_gid=8aylDormo5O9Tv5Rs3-L5Q&_nc_oc=AdoL94QFds2Lly6KE2HRyl-inMN4zedwTJTp2CaQ9DkzsEjaJevtJBD_2XE2Zf-gJhM&ccb=13-1&oh=06_Q3_AAWy5AKiFWL3o8TIGiq1iD4Bww7aYV_Ny9WJGOsJD4vqQ&oe=6A42CE1A&_nc_sid=58080a",
       "tipo": "imagem",
       "roas": 27.81,
       "ctr": 1.5,
@@ -21869,11 +21929,31 @@
       "freq": 1.16
     },
     {
+      "adId": "120246790501260383",
+      "adName": "AD 05 - anirap",
+      "adSet": "00 - VV 95% 30D - Convidados tier top",
+      "campaign": "[Compra][Feed/Stories][ABO] Animextreme 34 - Convidados",
+      "imageUrl": "https://external-sjc3-1.xx.fbcdn.net/emg1/v/t13/5635785065084084484?url=https%3A%2F%2Fwww.facebook.com%2Fads%2Fimage%2F%3Fd%3DAQLryA5hz3ZA7PPfCCx7x1T3T-KHXJbjKLe3zEEhaUXhmG6fXAUHKfOs1bOGyrX7-FdOQgvxsye6Xvq_bwEAgfsyVJ9YdiTJMA7VGNP1sFoDGNo8jOS-G_sYCUuUZ64rAkwIxzSPLQXR9GWDeA637QDf&fb_obo=1&utld=facebook.com&stp=c0.5000x0.5000f_dst-emg0_p64x64_q75_tt6&edm=AAwGEdEEAAAA&_nc_gid=8aylDormo5O9Tv5Rs3-L5Q&_nc_oc=Ado_wdVWZZVifT4nrSgtmJcV6o4i21loDchmS66n-O1aC7V-GRCTuyNXtDqSGi41kkA&ccb=13-1&oh=06_Q3_AARRK3T_JXyhh4yGOyHMVr9cIsHJ24G88asEiZ2ahRlxA&oe=6A42CA8D&_nc_sid=58080a",
+      "tipo": "imagem",
+      "roas": 26.59,
+      "ctr": 1.43,
+      "cpc": 0.32,
+      "cpm": 4.64,
+      "alcance": 12569,
+      "impressoes": 15598,
+      "cliquesLink": 223,
+      "compras": 8,
+      "valorCompras": 1925,
+      "valorUsado": 72.39,
+      "custoCompra": 9.05,
+      "freq": 0.95
+    },
+    {
       "adId": "120245192554400383",
       "adName": "AD 09 - Luísa Horta",
       "adSet": "00 - anime e manga",
       "campaign": "[Compra][Feed/Stories] Animextreme 34 - Interesses",
-      "imageUrl": "https://external-ord5-2.xx.fbcdn.net/emg1/v/t13/3487902474432601724?url=https%3A%2F%2Fwww.facebook.com%2Fads%2Fimage%2F%3Fd%3DAQIxpn_ODbh8zpGh9D_HyECbOFilTAaQeMKA9P8KN0IG3x8jBBeCBx9wURPUUZ8WRAuqhKCEDD0GR_s3jGxJ31ybzuXMqoOHx3sIIPKC9mVvwHspjzWEzkq_G9ZCZA5lBEAcOdI-G0VK6u4M1Ob3o6Cc&fb_obo=1&utld=facebook.com&stp=c0.5000x0.5000f_dst-emg0_p64x64_q75_tt6&edm=AAwGEdEEAAAA&_nc_gid=RJuPPlGJ744qPD-zEIxf2w&_nc_oc=Adr4GIaPZPteWGOJL7PNFdtllpH9EMof89BHWPF2eqrWNR7t76JRD_4C2hrgP1VF7Mk&ccb=13-1&oh=06_Q3_AAXOBWSaoyUWcAQYr6hngIbjhglQsF0KeMg4jQ3WbWuLR&oe=6A428223&_nc_sid=58080a",
+      "imageUrl": "https://external-sjc3-1.xx.fbcdn.net/emg1/v/t13/3487902474432601724?url=https%3A%2F%2Fwww.facebook.com%2Fads%2Fimage%2F%3Fd%3DAQIxpn_ODbh8zpGh9D_HyECbOFilTAaQeMKA9P8KN0IG3x8jBBeCBx9wURPUUZ8WRAuqhKCEDD0GR_s3jGxJ31ybzuXMqoOHx3sIIPKC9mVvwHspjzWEzkq_G9ZCZA5lBEAcOdI-G0VK6u4M1Ob3o6Cc&fb_obo=1&utld=facebook.com&stp=c0.5000x0.5000f_dst-emg0_p64x64_q75_tt6&edm=AAwGEdEEAAAA&_nc_gid=8aylDormo5O9Tv5Rs3-L5Q&_nc_oc=AdrrnujOMKH-Liu8eYBKvUlWxYQslvOMzoafRwoCm1m6NPXRFwIy9Zilgjp755Kl-cM&ccb=13-1&oh=06_Q3_AAR0nBdpW6VxeW7rK7Ap1sN9urNO4YAYrjCXNVYakRWzW&oe=6A42BA63&_nc_sid=58080a",
       "tipo": "imagem",
       "roas": 26.05,
       "ctr": 1.6,
@@ -21893,19 +21973,19 @@
       "adName": "AD 10 - etzinho",
       "adSet": "00 - kpop",
       "campaign": "[Compra][Feed/Stories] Animextreme 34 - Interesses",
-      "imageUrl": "https://scontent-ord5-2.xx.fbcdn.net/v/t15.5256-10/724335438_2035832887062764_6127450441897748693_n.jpg?_nc_cat=102&ccb=1-7&_nc_ohc=HNNxKcbHGTcQ7kNvwEt5Iap&_nc_oc=Ado4rJSA_cm1A69yVuLwne1MV9fNKQKmyUluas1F9pc9HweBZQf5nIW16we5QNsTpfA&_nc_zt=23&_nc_ht=scontent-ord5-2.xx&edm=AAwGEdEEAAAA&_nc_gid=RJuPPlGJ744qPD-zEIxf2w&_nc_tpa=Q5bMBQFaC8g-KpFggPzu0rQPeBG9kls8O6rrRYl75k20CeKtT5dXGI_pjkE95J791DIWtCri0m-07eL6vw&stp=c0.5000x0.5000f_dst-emg0_p64x64_q75_tt6&ur=a7ce7f&_nc_sid=58080a&oh=00_Af9e5T51FgLeTECDMbmYo2WUxOuMqQgQ_i6EKqS0PU7lDA&oe=6A465B81",
+      "imageUrl": "https://scontent-sjc6-1.xx.fbcdn.net/v/t15.5256-10/724335438_2035832887062764_6127450441897748693_n.jpg?_nc_cat=102&ccb=1-7&_nc_ohc=HNNxKcbHGTcQ7kNvwENrT-Y&_nc_oc=Adr8yXZouleNAbI98kPcDBUS-DXieiv4ox73jbDbAv8j_xNqtr0d7wKtdHzCJF9TMo0&_nc_zt=23&_nc_ht=scontent-sjc6-1.xx&edm=AAwGEdEEAAAA&_nc_gid=8aylDormo5O9Tv5Rs3-L5Q&_nc_tpa=Q5bMBQFMGHacEcFy8LPWRF3xbvd1Whm8m9-l3iQZRJ64iW9490R95FvUQ-bhmSjZb0tQ5_uj5jhHUt4UEw&stp=c0.5000x0.5000f_dst-emg0_p64x64_q75_tt6&ur=a7ce7f&_nc_sid=58080a&oh=00_Af-4SHLNLujcGCl2XSiJXuXEyG5vAOb90VVNVNhBkXet1A&oe=6A46CC01",
       "tipo": "video",
-      "roas": 25.44,
+      "roas": 25.38,
       "ctr": 0.93,
       "cpc": 0.6,
-      "cpm": 5.57,
-      "alcance": 57451,
-      "impressoes": 81473,
-      "cliquesLink": 755,
+      "cpm": 5.58,
+      "alcance": 57564,
+      "impressoes": 81613,
+      "cliquesLink": 760,
       "compras": 46,
       "valorCompras": 11551.67,
-      "valorUsado": 454.04,
-      "custoCompra": 9.87,
+      "valorUsado": 455.16,
+      "custoCompra": 9.89,
       "freq": 1.28
     },
     {
@@ -21913,19 +21993,19 @@
       "adName": "AD 07 - Teaser Video 02",
       "adSet": "00 - kpop",
       "campaign": "[Compra][Feed/Stories] Animextreme 34 - Interesses",
-      "imageUrl": "https://scontent-ord5-3.xx.fbcdn.net/v/t15.5256-10/682453728_2609133192817450_7364994238433154579_n.jpg?_nc_cat=107&ccb=1-7&_nc_ohc=t3f-2sTwdNoQ7kNvwGJEbiK&_nc_oc=AdrFxzr7DqoCqY0SMrzOTyX-jhluw92TA9RxrwmUQVMVjFo37ld2H4v9C9R27eXp4iA&_nc_zt=23&_nc_ht=scontent-ord5-3.xx&edm=AAwGEdEEAAAA&_nc_gid=RJuPPlGJ744qPD-zEIxf2w&_nc_tpa=Q5bMBQHcuXrN4bnKkHhga9bCW6VuNCcpb3NSKg_pkJRi51H4x4z-VSgzzyOs7gx5RWn9NQUbgGvSP6B7-A&stp=c0.5000x0.5000f_dst-emg0_p64x64_q75_tt6&ur=5fad0e&_nc_sid=58080a&oh=00_Af-mp6vIL_C8vcLsx6i-B-utNOtR_K_fGXy9TVVFz-8Edw&oe=6A467464",
+      "imageUrl": "https://scontent-sjc6-1.xx.fbcdn.net/v/t15.5256-10/682453728_2609133192817450_7364994238433154579_n.jpg?_nc_cat=107&ccb=1-7&_nc_ohc=t3f-2sTwdNoQ7kNvwGpOkZK&_nc_oc=AdoGoT0ESVz5a0aJymfxBf83G6fh4Jh3VEEHpW7fKgHoRPWXUn4nfBtXF96i23s9k9E&_nc_zt=23&_nc_ht=scontent-sjc6-1.xx&edm=AAwGEdEEAAAA&_nc_gid=8aylDormo5O9Tv5Rs3-L5Q&_nc_tpa=Q5bMBQHZGZbKiMkm-SD7WYUyVL-RPZueN-2Jdc00SCagcPXbvAi-NuKbjOzytZSKp1bfuWPl0YWyDXRCBA&stp=c0.5000x0.5000f_dst-emg0_p64x64_q75_tt6&ur=5fad0e&_nc_sid=58080a&oh=00_Af9WDV7DT8TPLC6tAAHoZH2aQIEN_IBK3ojyZ0JYGGNzMQ&oe=6A46ACA4",
       "tipo": "video",
-      "roas": 23.62,
+      "roas": 23.61,
       "ctr": 1.79,
       "cpc": 0.29,
       "cpm": 5.25,
-      "alcance": 44735,
-      "impressoes": 54804,
+      "alcance": 44748,
+      "impressoes": 54811,
       "cliquesLink": 983,
       "compras": 20,
       "valorCompras": 6789.5,
-      "valorUsado": 287.5,
-      "custoCompra": 14.37,
+      "valorUsado": 287.62,
+      "custoCompra": 14.38,
       "freq": 1.03
     },
     {
@@ -21933,18 +22013,18 @@
       "adName": "AD 02 - ISMEIOW",
       "adSet": "00 - Full Advantage",
       "campaign": "[Compra][Feed/Stories] Animextreme 34 - Full Adv.",
-      "imageUrl": "https://external-ord5-2.xx.fbcdn.net/emg1/v/t13/9946066216741833161?url=https%3A%2F%2Fwww.facebook.com%2Fads%2Fimage%2F%3Fd%3DAQJmRaBQ-rWh_PJCI-e5R2m5RuMxXx7zZGBWhzJDX9yAIk05HfQZMSapJMb7hT7udcTyjZu6bSz2mDHic1W-qlFClxKqSNXlABngonzEKbgen3MOHRLPjmB9TedHmwN3gYDYMmAlC1d6XFAheB3VI-h-&fb_obo=1&utld=facebook.com&stp=c0.5000x0.5000f_dst-emg0_p64x64_q75_tt6&edm=AAwGEdEEAAAA&_nc_gid=RJuPPlGJ744qPD-zEIxf2w&_nc_oc=AdqUf5MtXjDvXUtPt-bfOtEC4IXHnSR0ULipfsBy5qrDu4GxAs7iIhD6IfHvEIXgYmw&ccb=13-1&oh=06_Q3_AAZ8yokQ0_96NJZ8I0zZK9-uVIztjWT34ejjON87AsFeS&oe=6A427D80&_nc_sid=58080a",
+      "imageUrl": "https://external-sjc3-1.xx.fbcdn.net/emg1/v/t13/9946066216741833161?url=https%3A%2F%2Fwww.facebook.com%2Fads%2Fimage%2F%3Fd%3DAQJmRaBQ-rWh_PJCI-e5R2m5RuMxXx7zZGBWhzJDX9yAIk05HfQZMSapJMb7hT7udcTyjZu6bSz2mDHic1W-qlFClxKqSNXlABngonzEKbgen3MOHRLPjmB9TedHmwN3gYDYMmAlC1d6XFAheB3VI-h-&fb_obo=1&utld=facebook.com&stp=c0.5000x0.5000f_dst-emg0_p64x64_q75_tt6&edm=AAwGEdEEAAAA&_nc_gid=8aylDormo5O9Tv5Rs3-L5Q&_nc_oc=AdpZoQXaKMpitJTyp7XHDQVie7To4JlfQ3I_dFXbjO8WkYY30f1uEczapDW4coXMf4I&ccb=13-1&oh=06_Q3_AAf1PT7rrl93uvR39-70x4ewYgLcKVC6pwGjJybGFRBog&oe=6A42B5C0&_nc_sid=58080a",
       "tipo": "imagem",
-      "roas": 22.61,
+      "roas": 22.6,
       "ctr": 2.05,
       "cpc": 0.21,
       "cpm": 4.29,
-      "alcance": 211981,
-      "impressoes": 287474,
-      "cliquesLink": 5895,
+      "alcance": 212098,
+      "impressoes": 287582,
+      "cliquesLink": 5900,
       "compras": 135,
       "valorCompras": 27895,
-      "valorUsado": 1233.71,
+      "valorUsado": 1234.39,
       "custoCompra": 9.14,
       "freq": 1.1
     },
@@ -21953,47 +22033,27 @@
       "adName": "AD 06 - Teaser Video 01",
       "adSet": "00 - kpop",
       "campaign": "[Compra][Feed/Stories] Animextreme 34 - Interesses",
-      "imageUrl": "https://scontent-ord5-3.xx.fbcdn.net/v/t15.5256-10/681307523_717882941382845_8815288944734111880_n.jpg?_nc_cat=110&ccb=1-7&_nc_ohc=C9o0l_w3JosQ7kNvwHfISVw&_nc_oc=AdovKc5nvm8wGbCeclp6sNx41HbSHT3l95a7IiWB-qAP2-px8xexwK68u0VfKH6qD5E&_nc_zt=23&_nc_ht=scontent-ord5-3.xx&edm=AAwGEdEEAAAA&_nc_gid=RJuPPlGJ744qPD-zEIxf2w&_nc_tpa=Q5bMBQHmpTCtLQiwOqXBwNYpLjBSoOoDdpDwB7kxoDf7zk3w8u-sqx5PhztiEb-BxQAvz72aW2-kYlVeIw&stp=c0.5000x0.5000f_dst-emg0_p64x64_q75_tt6&ur=5fad0e&_nc_sid=58080a&oh=00_Af96SznMXmpWmyD_gG_-EY3wsKludIzDfU437B9weIh__g&oe=6A4675C0",
+      "imageUrl": "https://scontent-sjc3-1.xx.fbcdn.net/v/t15.5256-10/681307523_717882941382845_8815288944734111880_n.jpg?_nc_cat=110&ccb=1-7&_nc_ohc=C9o0l_w3JosQ7kNvwFf3K0a&_nc_oc=AdqKkZtdLdeALLTkScMZh4XcD6E42s1DUE6OJ_2QQPL8uVQPx5qVqVMyUNs-f9g4o68&_nc_zt=23&_nc_ht=scontent-sjc3-1.xx&edm=AAwGEdEEAAAA&_nc_gid=8aylDormo5O9Tv5Rs3-L5Q&_nc_tpa=Q5bMBQH8UiOoiSYbnMooNUCUq2TJT_B_rKnsHCFcPaP6-0cnLWDtYPwEhZZHp69MVtE1S5nlE6cmnEuxaQ&stp=c0.5000x0.5000f_dst-emg0_p64x64_q75_tt6&ur=5fad0e&_nc_sid=58080a&oh=00_Af_bUYU6kCiVVLYbGLwK8qigQtw-7la9bM7M6t1Z2dPdpA&oe=6A46AE00",
       "tipo": "video",
-      "roas": 21.79,
+      "roas": 21.78,
       "ctr": 2.08,
       "cpc": 0.27,
       "cpm": 5.65,
-      "alcance": 97519,
-      "impressoes": 129621,
+      "alcance": 97573,
+      "impressoes": 129672,
       "cliquesLink": 2697,
       "compras": 57,
       "valorCompras": 15952.28,
-      "valorUsado": 732.04,
-      "custoCompra": 12.84,
+      "valorUsado": 732.38,
+      "custoCompra": 12.85,
       "freq": 1.07
-    },
-    {
-      "adId": "120246790501260383",
-      "adName": "AD 05 - anirap",
-      "adSet": "00 - VV 95% 30D - Convidados tier top",
-      "campaign": "[Compra][Feed/Stories][ABO] Animextreme 34 - Convidados",
-      "imageUrl": "https://external-ord5-2.xx.fbcdn.net/emg1/v/t13/5635785065084084484?url=https%3A%2F%2Fwww.facebook.com%2Fads%2Fimage%2F%3Fd%3DAQLryA5hz3ZA7PPfCCx7x1T3T-KHXJbjKLe3zEEhaUXhmG6fXAUHKfOs1bOGyrX7-FdOQgvxsye6Xvq_bwEAgfsyVJ9YdiTJMA7VGNP1sFoDGNo8jOS-G_sYCUuUZ64rAkwIxzSPLQXR9GWDeA637QDf&fb_obo=1&utld=facebook.com&stp=c0.5000x0.5000f_dst-emg0_p64x64_q75_tt6&edm=AAwGEdEEAAAA&_nc_gid=RJuPPlGJ744qPD-zEIxf2w&_nc_oc=AdqYcnrmPGelLaoR6t7rwzScKP-8m4whbacFaTqsz3XisKqyTr1Z5rYjrJ5Y5WtVHuA&ccb=13-1&oh=06_Q3_AAd497zWn7Ezk4UZWBEB-AUb0znSildgM_jYypcyHQRtV&oe=6A42924D&_nc_sid=58080a",
-      "tipo": "imagem",
-      "roas": 20.49,
-      "ctr": 1.43,
-      "cpc": 0.32,
-      "cpm": 4.62,
-      "alcance": 12412,
-      "impressoes": 15426,
-      "cliquesLink": 220,
-      "compras": 5,
-      "valorCompras": 1461.5,
-      "valorUsado": 71.33,
-      "custoCompra": 14.27,
-      "freq": 0.95
     },
     {
       "adId": "120243557497350383",
       "adName": "AD 01 - o que tem no ax",
       "adSet": "00 - Full Advantage",
       "campaign": "[Compra][Feed/Stories] Animextreme 34 - Full Adv.",
-      "imageUrl": "https://external-ord5-2.xx.fbcdn.net/emg1/v/t13/14387652982162243028?url=https%3A%2F%2Fwww.facebook.com%2Fads%2Fimage%2F%3Fd%3DAQJtKC99FfzYYItvSdHimoeLCg7oTBckXcDFH4Lp13vWCzyF0n83gzIiiHYmFeNddZzr8otXilLkiPUIFqO13Xhppc4kSdVgYu9D6zkOqoG7lSI5_fzgBwgDXxLIIp3Ph38U8QQE1rOXpZPOz_tskiqR&fb_obo=1&utld=facebook.com&stp=c0.5000x0.5000f_dst-emg0_p64x64_q75_tt6&edm=AAwGEdEEAAAA&_nc_gid=RJuPPlGJ744qPD-zEIxf2w&_nc_oc=AdrhxAmES2AXuq_QGB0_bXUl7SeLtGbLiNSMSiLH1i6LYqa6fPy0bL0WbkzOmN_awco&ccb=13-1&oh=06_Q3_AAWgHnjNEJjV5nx6wsvA508pWtjfhQUeTMZjaAwCq3h2T&oe=6A427B2D&_nc_sid=58080a",
+      "imageUrl": "https://external-sjc3-1.xx.fbcdn.net/emg1/v/t13/14387652982162243028?url=https%3A%2F%2Fwww.facebook.com%2Fads%2Fimage%2F%3Fd%3DAQJtKC99FfzYYItvSdHimoeLCg7oTBckXcDFH4Lp13vWCzyF0n83gzIiiHYmFeNddZzr8otXilLkiPUIFqO13Xhppc4kSdVgYu9D6zkOqoG7lSI5_fzgBwgDXxLIIp3Ph38U8QQE1rOXpZPOz_tskiqR&fb_obo=1&utld=facebook.com&stp=c0.5000x0.5000f_dst-emg0_p64x64_q75_tt6&edm=AAwGEdEEAAAA&_nc_gid=8aylDormo5O9Tv5Rs3-L5Q&_nc_oc=Ado9pagrnXmw8921idRIJcP2V-W77XZGkGhjKjiyCk0UkVoaBN7HAa7iHyYSM8-ccGs&ccb=13-1&oh=06_Q3_AAZ_0GRrQ0fSo6QwIsKm0tIMW9m-Esxcc8b2LtzyJbu16&oe=6A42B36D&_nc_sid=58080a",
       "tipo": "imagem",
       "roas": 19.01,
       "ctr": 1.7,
@@ -22013,381 +22073,381 @@
       "adName": "AD 04 - Detonator",
       "adSet": "00 - anime e manga",
       "campaign": "[Compra][Feed/Stories] Animextreme 34 - Interesses",
-      "imageUrl": "https://external-ord5-2.xx.fbcdn.net/emg1/v/t13/839938264652327615?url=https%3A%2F%2Fwww.facebook.com%2Fads%2Fimage%2F%3Fd%3DAQKAUb2sEb0UAAZGKYirCO_pQJVdj53vqNxknh0qk2dYGJJP1DqHfE_Leucz_0oC7tlJcSF12OWrVLEWyg0uQsBkhLXtCEYKkmFYMtIGQoU0SS-pRLAxzXQHh3dhDWe0WZHtoLrIcYAkqNP4j2OhERZj&fb_obo=1&utld=facebook.com&stp=c0.5000x0.5000f_dst-emg0_p64x64_q75_tt6&edm=AAwGEdEEAAAA&_nc_gid=RJuPPlGJ744qPD-zEIxf2w&_nc_oc=Ado7MV0MrW5GQDMNp8cPRC8UDjtpRh3V3LbIm42mkE3fp6xQYNFULRQr_KV0VzKQR2Q&ccb=13-1&oh=06_Q3_AARVfOoiqUuZAx2uqoEpbWuFfLNKDv9oYrgiU5v6C2Zj_&oe=6A426502&_nc_sid=58080a",
+      "imageUrl": "https://external-sjc3-1.xx.fbcdn.net/emg1/v/t13/839938264652327615?url=https%3A%2F%2Fwww.facebook.com%2Fads%2Fimage%2F%3Fd%3DAQKAUb2sEb0UAAZGKYirCO_pQJVdj53vqNxknh0qk2dYGJJP1DqHfE_Leucz_0oC7tlJcSF12OWrVLEWyg0uQsBkhLXtCEYKkmFYMtIGQoU0SS-pRLAxzXQHh3dhDWe0WZHtoLrIcYAkqNP4j2OhERZj&fb_obo=1&utld=facebook.com&stp=c0.5000x0.5000f_dst-emg0_p64x64_q75_tt6&edm=AAwGEdEEAAAA&_nc_gid=8aylDormo5O9Tv5Rs3-L5Q&_nc_oc=AdooP4EWeBI38Pbrg2TxR9E3FhZJj3OPUpwqdk5V_BSi5TqN179Nl_ka-Fe8j2yvDMc&ccb=13-1&oh=06_Q3_AAdlUxjnbKUJrU_k4oxkSU3rSWBXWtnekqn7ZfYOJ5GQs&oe=6A42D582&_nc_sid=58080a",
       "tipo": "imagem",
       "roas": 16.42,
       "ctr": 2.13,
       "cpc": 0.2,
       "cpm": 4.36,
-      "alcance": 118440,
-      "impressoes": 156884,
+      "alcance": 118443,
+      "impressoes": 156888,
       "cliquesLink": 3343,
       "compras": 49,
       "valorCompras": 11241.01,
-      "valorUsado": 684.6,
+      "valorUsado": 684.61,
       "custoCompra": 13.97,
       "freq": 1.06
     }
   ],
   "seguidores": [
     {
-      "data": "2026-05-30",
-      "novos": 126292,
-      "total": 0,
-      "rede": "facebook"
-    },
-    {
       "data": "2026-05-31",
-      "novos": 126296,
-      "total": 0,
-      "rede": "facebook"
-    },
-    {
-      "data": "2026-06-01",
-      "novos": 126298,
-      "total": 0,
-      "rede": "facebook"
-    },
-    {
-      "data": "2026-06-02",
       "novos": 126295,
       "total": 0,
       "rede": "facebook"
     },
     {
+      "data": "2026-06-01",
+      "novos": 126297,
+      "total": 0,
+      "rede": "facebook"
+    },
+    {
+      "data": "2026-06-02",
+      "novos": 126294,
+      "total": 0,
+      "rede": "facebook"
+    },
+    {
       "data": "2026-06-03",
-      "novos": 126292,
+      "novos": 126291,
       "total": 0,
       "rede": "facebook"
     },
     {
       "data": "2026-06-04",
-      "novos": 126289,
+      "novos": 126288,
       "total": 0,
       "rede": "facebook"
     },
     {
       "data": "2026-06-05",
-      "novos": 126285,
+      "novos": 126284,
       "total": 0,
       "rede": "facebook"
     },
     {
       "data": "2026-06-06",
-      "novos": 126282,
+      "novos": 126281,
       "total": 0,
       "rede": "facebook"
     },
     {
       "data": "2026-06-07",
-      "novos": 126279,
+      "novos": 126278,
       "total": 0,
       "rede": "facebook"
     },
     {
       "data": "2026-06-08",
-      "novos": 126276,
+      "novos": 126275,
       "total": 0,
       "rede": "facebook"
     },
     {
       "data": "2026-06-09",
-      "novos": 126272,
+      "novos": 126271,
       "total": 0,
       "rede": "facebook"
     },
     {
       "data": "2026-06-10",
-      "novos": 126272,
+      "novos": 126271,
       "total": 0,
       "rede": "facebook"
     },
     {
       "data": "2026-06-11",
-      "novos": 126273,
+      "novos": 126272,
       "total": 0,
       "rede": "facebook"
     },
     {
       "data": "2026-06-12",
-      "novos": 126269,
+      "novos": 126268,
       "total": 0,
       "rede": "facebook"
     },
     {
       "data": "2026-06-13",
-      "novos": 126265,
+      "novos": 126264,
       "total": 0,
       "rede": "facebook"
     },
     {
       "data": "2026-06-14",
-      "novos": 126265,
+      "novos": 126264,
       "total": 0,
       "rede": "facebook"
     },
     {
       "data": "2026-06-15",
-      "novos": 126266,
+      "novos": 126265,
       "total": 0,
       "rede": "facebook"
     },
     {
       "data": "2026-06-16",
-      "novos": 126264,
+      "novos": 126263,
       "total": 0,
       "rede": "facebook"
     },
     {
       "data": "2026-06-17",
-      "novos": 126265,
-      "total": 0,
-      "rede": "facebook"
-    },
-    {
-      "data": "2026-06-18",
-      "novos": 126265,
-      "total": 0,
-      "rede": "facebook"
-    },
-    {
-      "data": "2026-06-19",
       "novos": 126264,
       "total": 0,
       "rede": "facebook"
     },
     {
+      "data": "2026-06-18",
+      "novos": 126264,
+      "total": 0,
+      "rede": "facebook"
+    },
+    {
+      "data": "2026-06-19",
+      "novos": 126263,
+      "total": 0,
+      "rede": "facebook"
+    },
+    {
       "data": "2026-06-20",
-      "novos": 126262,
+      "novos": 126261,
       "total": 0,
       "rede": "facebook"
     },
     {
       "data": "2026-06-21",
+      "novos": 126257,
+      "total": 0,
+      "rede": "facebook"
+    },
+    {
+      "data": "2026-06-22",
       "novos": 126258,
       "total": 0,
       "rede": "facebook"
     },
     {
-      "data": "2026-06-22",
-      "novos": 126259,
-      "total": 0,
-      "rede": "facebook"
-    },
-    {
       "data": "2026-06-23",
-      "novos": 126254,
-      "total": 0,
-      "rede": "facebook"
-    },
-    {
-      "data": "2026-06-24",
       "novos": 126253,
       "total": 0,
       "rede": "facebook"
     },
     {
+      "data": "2026-06-24",
+      "novos": 126252,
+      "total": 0,
+      "rede": "facebook"
+    },
+    {
       "data": "2026-06-25",
-      "novos": 126250,
+      "novos": 126249,
       "total": 0,
       "rede": "facebook"
     },
     {
       "data": "2026-06-26",
-      "novos": 126245,
+      "novos": 126244,
       "total": 0,
       "rede": "facebook"
     },
     {
       "data": "2026-06-27",
-      "novos": 126241,
+      "novos": 126240,
       "total": 0,
       "rede": "facebook"
     },
     {
       "data": "2026-06-28",
-      "novos": 126237,
-      "total": 126237,
+      "novos": 126235,
+      "total": 0,
       "rede": "facebook"
     },
     {
-      "data": "2026-05-29",
-      "novos": 150,
-      "total": 67027,
-      "rede": "instagram"
+      "data": "2026-06-29",
+      "novos": 126235,
+      "total": 126235,
+      "rede": "facebook"
     },
     {
       "data": "2026-05-30",
       "novos": 182,
-      "total": 67209,
+      "total": 67217,
       "rede": "instagram"
     },
     {
       "data": "2026-05-31",
       "novos": 168,
-      "total": 67377,
+      "total": 67385,
       "rede": "instagram"
     },
     {
       "data": "2026-06-01",
       "novos": 140,
-      "total": 67517,
+      "total": 67525,
       "rede": "instagram"
     },
     {
       "data": "2026-06-02",
       "novos": 92,
-      "total": 67609,
+      "total": 67617,
       "rede": "instagram"
     },
     {
       "data": "2026-06-03",
       "novos": 134,
-      "total": 67743,
+      "total": 67751,
       "rede": "instagram"
     },
     {
       "data": "2026-06-04",
       "novos": 109,
-      "total": 67852,
+      "total": 67860,
       "rede": "instagram"
     },
     {
       "data": "2026-06-05",
       "novos": 154,
-      "total": 68006,
+      "total": 68014,
       "rede": "instagram"
     },
     {
       "data": "2026-06-06",
       "novos": 164,
-      "total": 68170,
+      "total": 68178,
       "rede": "instagram"
     },
     {
       "data": "2026-06-07",
       "novos": 162,
-      "total": 68332,
+      "total": 68340,
       "rede": "instagram"
     },
     {
       "data": "2026-06-08",
       "novos": 123,
-      "total": 68455,
+      "total": 68463,
       "rede": "instagram"
     },
     {
       "data": "2026-06-09",
       "novos": 116,
-      "total": 68571,
+      "total": 68579,
       "rede": "instagram"
     },
     {
       "data": "2026-06-10",
       "novos": 123,
-      "total": 68694,
+      "total": 68702,
       "rede": "instagram"
     },
     {
       "data": "2026-06-11",
       "novos": 111,
-      "total": 68805,
+      "total": 68813,
       "rede": "instagram"
     },
     {
       "data": "2026-06-12",
       "novos": 127,
-      "total": 68932,
+      "total": 68940,
       "rede": "instagram"
     },
     {
       "data": "2026-06-13",
       "novos": 109,
-      "total": 69041,
+      "total": 69049,
       "rede": "instagram"
     },
     {
       "data": "2026-06-14",
       "novos": 144,
-      "total": 69185,
+      "total": 69193,
       "rede": "instagram"
     },
     {
       "data": "2026-06-15",
       "novos": 135,
-      "total": 69320,
+      "total": 69328,
       "rede": "instagram"
     },
     {
       "data": "2026-06-16",
       "novos": 112,
-      "total": 69432,
+      "total": 69440,
       "rede": "instagram"
     },
     {
       "data": "2026-06-17",
       "novos": 106,
-      "total": 69538,
+      "total": 69546,
       "rede": "instagram"
     },
     {
       "data": "2026-06-18",
       "novos": 92,
-      "total": 69630,
+      "total": 69638,
       "rede": "instagram"
     },
     {
       "data": "2026-06-19",
       "novos": 93,
-      "total": 69723,
+      "total": 69731,
       "rede": "instagram"
     },
     {
       "data": "2026-06-20",
       "novos": 126,
-      "total": 69849,
+      "total": 69857,
       "rede": "instagram"
     },
     {
       "data": "2026-06-21",
       "novos": 107,
-      "total": 69956,
+      "total": 69964,
       "rede": "instagram"
     },
     {
       "data": "2026-06-22",
       "novos": 124,
-      "total": 70080,
+      "total": 70088,
       "rede": "instagram"
     },
     {
       "data": "2026-06-23",
       "novos": 112,
-      "total": 70192,
+      "total": 70200,
       "rede": "instagram"
     },
     {
       "data": "2026-06-24",
       "novos": 100,
-      "total": 70292,
+      "total": 70300,
       "rede": "instagram"
     },
     {
       "data": "2026-06-25",
       "novos": 97,
-      "total": 70389,
+      "total": 70397,
       "rede": "instagram"
     },
     {
       "data": "2026-06-26",
       "novos": 102,
-      "total": 70491,
+      "total": 70499,
       "rede": "instagram"
     },
     {
       "data": "2026-06-27",
       "novos": 0,
-      "total": 70491,
+      "total": 70499,
+      "rede": "instagram"
+    },
+    {
+      "data": "2026-06-28",
+      "novos": 0,
+      "total": 70499,
       "rede": "instagram"
     }
   ]
