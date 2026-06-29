@@ -16,6 +16,16 @@ const CONTAS = [
   // { id: 'act_XXXXXXXXX', nome: 'Cliente 2' },
 ];
 
+// Lista de convidados — mantida em sincronia com o dashboard
+const CONVIDADOS = [
+  'cereaw','caligrafo','anirap','ismeiow','m4rkim',
+  'akira heaven','fehdubs','caduxim','luisa horta','luiza horta','luísa horta','detonator',
+];
+function isConvidado(adName) {
+  const n = (adName||'').toLowerCase();
+  return CONVIDADOS.some(c => n.includes(c));
+}
+
 // Page IDs para buscar seguidores (Facebook e Instagram)
 // Facebook: acesse facebook.com/[suapagina]/about e veja o Page ID
 // Instagram: use a Graph API — /me/accounts para listar páginas vinculadas
@@ -303,13 +313,27 @@ function processar(rawData) {
 
 // ── BUSCAR CRIATIVOS DOS TOP ANÚNCIOS (BATCH) ───────────
 async function buscarCriativos(anuncios) {
-  const top = anuncios
-    .filter(a => a.adId && a.valorUsado > 5)
+  const validos = anuncios.filter(a => a.adId && a.valorUsado > 5);
+
+  // Sempre inclui todos os convidados, independente do ROAS
+  const convidadosAds = validos.filter(a => isConvidado(a.adName));
+
+  // Top 10 geral (excluindo convidados para não duplicar)
+  const topGeral = validos
+    .filter(a => !isConvidado(a.adName))
     .sort((a,b) => b.roas - a.roas)
     .slice(0, 10);
 
+  // Junta os dois grupos, removendo duplicatas por adId
+  const vistos = new Set();
+  const top = [...convidadosAds, ...topGeral].filter(a => {
+    if (vistos.has(a.adId)) return false;
+    vistos.add(a.adId);
+    return true;
+  });
+
   if (!top.length) return [];
-  console.log('  Buscando criativos de', top.length, 'anúncios (1 chamada batch)...');
+  console.log('  Buscando criativos de', top.length, 'anúncios (' + convidadosAds.length + ' convidados + ' + topGeral.length + ' top geral)...');
 
   // Uma única chamada para todos os anúncios
   const adIds = top.map(a => a.adId);
