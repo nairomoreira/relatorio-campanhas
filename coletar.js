@@ -63,14 +63,15 @@ function fetchJSON(url, retries) {
       res.on('end', () => {
         try {
           const json = JSON.parse(data);
-          // Rate limit — espera e tenta novamente
-          if (json.error && (json.error.code === 4 || json.error.code === 17 || json.error.code === 32 || json.error.code === 613)) {
+          // Erros transitórios — rate limit e erros temporários do Meta
+          const RETRY_CODES = [1, 2, 4, 17, 32, 613]; // 1 e 2 = unknown/service errors
+          if (json.error && RETRY_CODES.indexOf(json.error.code) !== -1) {
             if (retries > 0) {
               const wait = (4 - retries) * 30000; // 30s, 60s, 90s
-              console.log('  Rate limit atingido — aguardando ' + (wait/1000) + 's antes de tentar novamente...');
+              console.log('  Erro transitório (code ' + json.error.code + ') — aguardando ' + (wait/1000) + 's antes de tentar novamente...');
               setTimeout(() => fetchJSON(url, retries - 1).then(resolve).catch(reject), wait);
             } else {
-              reject(new Error('Rate limit após 3 tentativas: ' + json.error.message));
+              reject(new Error('Erro persistente após 3 tentativas: ' + json.error.message));
             }
             return;
           }
@@ -586,15 +587,22 @@ async function verificarToken() {
     const res = await fetchJSON(url);
     if (res.error) return null;
 
-    // Debugger endpoint para ver expiração
     const debugUrl = 'https://graph.facebook.com/v19.0/debug_token?' +
       'input_token=' + META_TOKEN +
       '&access_token=' + META_TOKEN;
     const debug = await fetchJSON(debugUrl);
-    if (debug.data && debug.data.expires_at) {
-      const exp = new Date(debug.data.expires_at * 1000);
-      console.log('Token expira em:', exp.toLocaleDateString('pt-BR'));
-      return exp.toISOString();
+
+    if (debug.data) {
+      // expires_at === 0 significa "nunca expira" (System User Token)
+      if (debug.data.expires_at === 0) {
+        console.log('Token nunca expira (System User Token)');
+        return null; // null = não mostra alerta no dashboard
+      }
+      if (debug.data.expires_at) {
+        const exp = new Date(debug.data.expires_at * 1000);
+        console.log('Token expira em:', exp.toLocaleDateString('pt-BR'));
+        return exp.toISOString();
+      }
     }
     return null;
   } catch(e) {
