@@ -434,7 +434,11 @@ tr.learn-row td{opacity:.7;font-style:italic;}
 </div>
 
 <script>
-const DADOS_URL = 'https://raw.githubusercontent.com/nairomoreira/relatorio-campanhas/main/dados.json';
+// URLs do JSON — tenta raw primeiro, fallback para API do GitHub
+const DADOS_URLS = [
+  'https://raw.githubusercontent.com/nairomoreira/relatorio-campanhas/main/dados.json',
+  'https://api.github.com/repos/nairomoreira/relatorio-campanhas/contents/dados.json',
+];
 
 // ── LOGIN CONFIG ──────────────────────────────────────────
 // Troque usuário e senha antes de publicar
@@ -497,10 +501,27 @@ async function init() {
   if (!verificarLogin()) return;
   renderCountdown();
   try {
-    const ctrl=new AbortController(); setTimeout(()=>ctrl.abort(),12000);
-    const res=await fetch(DADOS_URL+'?t='+Date.now(),{signal:ctrl.signal});
-    if(!res.ok) throw new Error('HTTP '+res.status);
-    const json=await res.json();
+    let json = null;
+    let lastError = null;
+    for (const url of DADOS_URLS) {
+      try {
+        const ctrl = new AbortController();
+        setTimeout(() => ctrl.abort(), 12000);
+        const res = await fetch(url + '?t=' + Date.now(), { signal: ctrl.signal });
+        if (!res.ok) throw new Error('HTTP ' + res.status);
+        const data = await res.json();
+        if (data.content && data.encoding === 'base64') {
+          const b64 = data.content.split('\n').join('');
+          json = JSON.parse(atob(b64));
+        } else {
+          json = data;
+        }
+        break;
+      } catch(e) {
+        lastError = e;
+      }
+    }
+    if (!json) throw lastError || new Error('Todas as URLs falharam');
     raw=(json.dias||[]).filter(d=>d&&d.data).sort((a,b)=>a.data.localeCompare(b.data));
     rawAds=(json.anuncios||[]);
     rawCriativos=(json.criativos||[]);
