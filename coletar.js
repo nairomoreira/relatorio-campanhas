@@ -615,7 +615,7 @@ async function main() {
   if (!META_TOKEN) throw new Error('META_TOKEN não configurado');
 
   const hoje   = new Date();
-  const inicio = new Date(hoje); inicio.setDate(inicio.getDate() - 90);
+  const inicio = new Date(hoje);   const dataInicio = '2026-04-13'; // início da campanha AX34;
   const dataFim    = hoje.toISOString().slice(0,10);
   const dataInicio = inicio.toISOString().slice(0,10);
 
