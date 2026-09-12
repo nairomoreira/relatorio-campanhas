@@ -437,7 +437,7 @@ tr.learn-row td{opacity:.7;font-style:italic;}
 // URLs do JSON — tenta raw primeiro, fallback para API do GitHub
 const DADOS_URLS = [
   'https://raw.githubusercontent.com/nairomoreira/relatorio-campanhas/main/dados.json',
-  'https://api.github.com/repos/nairomoreira/relatorio-campanhas/contents/dados.json',
+  'https://cdn.jsdelivr.net/gh/nairomoreira/relatorio-campanhas@main/dados.json',
 ];
 
 // ── LOGIN CONFIG ──────────────────────────────────────────
@@ -503,11 +503,13 @@ async function init() {
   try {
     let json = null;
     let lastError = null;
-    for (const url of DADOS_URLS) {
+    for (let i = 0; i < DADOS_URLS.length; i++) {
+      const url = DADOS_URLS[i];
       try {
-        const ctrl = new AbortController();
-        setTimeout(() => ctrl.abort(), 12000);
-        const res = await fetch(url + '?t=' + Date.now(), { signal: ctrl.signal });
+        const res = await Promise.race([
+          fetch(url + '?t=' + Date.now()),
+          new Promise((_, reject) => setTimeout(() => reject(new Error('Timeout')), 12000))
+        ]);
         if (!res.ok) throw new Error('HTTP ' + res.status);
         const data = await res.json();
         if (data.content && data.encoding === 'base64') {
@@ -519,6 +521,7 @@ async function init() {
         break;
       } catch(e) {
         lastError = e;
+        console.warn('URL ' + (i+1) + ' falhou:', e.message);
       }
     }
     if (!json) throw lastError || new Error('Todas as URLs falharam');
