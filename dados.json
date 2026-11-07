@@ -1,5 +1,5 @@
 {
-  "atualizadoEm": "07/11/2026, 02:28",
+  "atualizadoEm": "07/11/2026, 18:41",
   "tokenExpira": null,
   "dias": [
     {
@@ -3568,17 +3568,17 @@
     },
     {
       "data": "2026-11-06",
-      "valorUsado": 47.41,
-      "impressoes": 7399,
-      "alcance": 7114,
-      "cliquesLink": 356,
-      "cliquesTodos": 356,
+      "valorUsado": 47.43,
+      "impressoes": 7406,
+      "alcance": 7122,
+      "cliquesLink": 358,
+      "cliquesTodos": 358,
       "resultados": 0,
       "addCarrinho": 0,
       "compras": 0,
       "valorCompras": 0,
       "visitasPerfil": 0,
-      "ctr": 4.81,
+      "ctr": 4.83,
       "cpc": 0.13,
       "custoAddCarrinho": 0,
       "custoCompra": 0,
@@ -3586,18 +3586,18 @@
     },
     {
       "data": "2026-11-07",
-      "valorUsado": 4.04,
-      "impressoes": 614,
-      "alcance": 562,
-      "cliquesLink": 31,
-      "cliquesTodos": 31,
+      "valorUsado": 36.18,
+      "impressoes": 5881,
+      "alcance": 5298,
+      "cliquesLink": 344,
+      "cliquesTodos": 344,
       "resultados": 0,
       "addCarrinho": 0,
       "compras": 0,
       "valorCompras": 0,
       "visitasPerfil": 0,
-      "ctr": 5.05,
-      "cpc": 0.13,
+      "ctr": 5.85,
+      "cpc": 0.11,
       "custoAddCarrinho": 0,
       "custoCompra": 0,
       "custoVisita": 0
@@ -9496,17 +9496,17 @@
     },
     {
       "data": "2026-11-06",
-      "valorUsado": 47.41,
-      "impressoes": 7399,
-      "alcance": 7114,
-      "cliquesLink": 356,
-      "cliquesTodos": 356,
+      "valorUsado": 47.43,
+      "impressoes": 7406,
+      "alcance": 7122,
+      "cliquesLink": 358,
+      "cliquesTodos": 358,
       "resultados": 0,
       "addCarrinho": 0,
       "compras": 0,
       "valorCompras": 0,
-      "visitasPerfil": 3138,
-      "ctr": 4.81,
+      "visitasPerfil": 3141,
+      "ctr": 4.83,
       "cpc": 0.13,
       "custoAddCarrinho": 0,
       "custoCompra": 0,
@@ -9514,21 +9514,21 @@
     },
     {
       "data": "2026-11-07",
-      "valorUsado": 4.04,
-      "impressoes": 614,
-      "alcance": 562,
-      "cliquesLink": 31,
-      "cliquesTodos": 31,
+      "valorUsado": 36.18,
+      "impressoes": 5881,
+      "alcance": 5298,
+      "cliquesLink": 344,
+      "cliquesTodos": 344,
       "resultados": 0,
       "addCarrinho": 0,
       "compras": 0,
       "valorCompras": 0,
-      "visitasPerfil": 247,
-      "ctr": 5.05,
-      "cpc": 0.13,
+      "visitasPerfil": 2563,
+      "ctr": 5.85,
+      "cpc": 0.11,
       "custoAddCarrinho": 0,
       "custoCompra": 0,
-      "custoVisita": 0.02
+      "custoVisita": 0.01
     }
   ],
   "anuncios": [
@@ -76640,12 +76640,12 @@
       "data": "2026-11-06",
       "adName": "AD 02 - ansioso para ir",
       "adSet": "00 - anime e manga",
-      "impressoes": 6547,
-      "alcance": 6326,
-      "cliquesLink": 333,
+      "impressoes": 6553,
+      "alcance": 6334,
+      "cliquesLink": 335,
       "addCarrinho": 0,
       "compras": 0,
-      "valorUsado": 42.67,
+      "valorUsado": 42.69,
       "valorCompras": 0
     },
     {
@@ -76664,7 +76664,7 @@
       "data": "2026-11-06",
       "adName": "AD 01 - novo teaser",
       "adSet": "00 - anime e manga",
-      "impressoes": 791,
+      "impressoes": 792,
       "alcance": 728,
       "cliquesLink": 23,
       "addCarrinho": 0,
@@ -76688,48 +76688,60 @@
       "data": "2026-11-07",
       "adName": "AD 02 - ansioso para ir",
       "adSet": "00 - anime e manga",
-      "impressoes": 563,
-      "alcance": 517,
-      "cliquesLink": 28,
+      "impressoes": 5185,
+      "alcance": 4661,
+      "cliquesLink": 310,
       "addCarrinho": 0,
       "compras": 0,
-      "valorUsado": 3.74,
+      "valorUsado": 32.49,
       "valorCompras": 0
     },
     {
       "data": "2026-11-07",
       "adName": "AD 02 - novo teaser2",
       "adSet": "00 - afterparty",
-      "impressoes": 2,
-      "alcance": 2,
+      "impressoes": 8,
+      "alcance": 7,
       "cliquesLink": 0,
       "addCarrinho": 0,
       "compras": 0,
-      "valorUsado": 0.01,
+      "valorUsado": 0.04,
+      "valorCompras": 0
+    },
+    {
+      "data": "2026-11-07",
+      "adName": "AD 02 - novo teaser2",
+      "adSet": "00 - anime e manga",
+      "impressoes": 38,
+      "alcance": 34,
+      "cliquesLink": 3,
+      "addCarrinho": 0,
+      "compras": 0,
+      "valorUsado": 0.31,
       "valorCompras": 0
     },
     {
       "data": "2026-11-07",
       "adName": "AD 01 - novo teaser",
       "adSet": "00 - anime e manga",
-      "impressoes": 48,
-      "alcance": 42,
-      "cliquesLink": 3,
+      "impressoes": 643,
+      "alcance": 589,
+      "cliquesLink": 31,
       "addCarrinho": 0,
       "compras": 0,
-      "valorUsado": 0.29,
+      "valorUsado": 3.27,
       "valorCompras": 0
     },
     {
       "data": "2026-11-07",
       "adName": "AD 06 - novo teaser v2",
       "adSet": "00 - anime e manga",
-      "impressoes": 1,
-      "alcance": 1,
+      "impressoes": 7,
+      "alcance": 7,
       "cliquesLink": 0,
       "addCarrinho": 0,
       "compras": 0,
-      "valorUsado": 0,
+      "valorUsado": 0.07,
       "valorCompras": 0
     }
   ],
@@ -76739,7 +76751,7 @@
       "adName": "AD 02 - ISMEIOW",
       "adSet": "00 - Full Advantage",
       "campaign": "[Compra][Feed/Stories] Animextreme 34 - Full Adv.",
-      "imageUrl": "https://external-sea5-1.xx.fbcdn.net/emg1/v/t13/9946066216741833161?url=https%3A%2F%2Fwww.facebook.com%2Fads%2Fimage%2F%3Fd%3DAQJmRaBQ-rWh_PJCI-e5R2m5RuMxXx7zZGBWhzJDX9yAIk05HfQZMSapJMb7hT7udcTyjZu6bSz2mDHic1W-qlFClxKqSNXlABngonzEKbgen3MOHRLPjmB9TedHmwN3gYDYMmAlC1d6XFAheB3VI-h-&fb_obo=1&utld=facebook.com&_nc_sid=58080a&_nc_ht=external-sea5-1.xx.fbcdn.net&stp=c0.5000x0.5000f_dst-emg0_p64x64_q75_tt6&ccb=18-1&_nc_gid=bzGImB0cglGPQ-NyHeda-Q&edm=AAwGEdEEAAAA&_nc_zt=3&_nc_eui2=AeHxPbxmW31vNZWp7Ii5U6D3EiEFn5muTmoSIQWfma5Oal1t6I8YkFBWNjeuycfcj0IirvKljZ1UQHs_iRygR4X_&_nc_tpa=Q5bMBQIjGxyyroF8dZ81gNu7oSTenRypagfT9QpXGr4wvOPBNvwUPcu0EWGLj6FhNCFaxN93e3wZ44LUcg&oh=06_Q3_FASga79OTamqZh-mYxqJvKzX506nvl946ROFWCS8kG3gW&oe=6AF08380",
+      "imageUrl": "https://external-sjc6-1.xx.fbcdn.net/emg1/v/t13/9946066216741833161?url=https%3A%2F%2Fwww.facebook.com%2Fads%2Fimage%2F%3Fd%3DAQJmRaBQ-rWh_PJCI-e5R2m5RuMxXx7zZGBWhzJDX9yAIk05HfQZMSapJMb7hT7udcTyjZu6bSz2mDHic1W-qlFClxKqSNXlABngonzEKbgen3MOHRLPjmB9TedHmwN3gYDYMmAlC1d6XFAheB3VI-h-&fb_obo=1&utld=facebook.com&_nc_sid=58080a&_nc_ht=external-sjc6-1.xx.fbcdn.net&stp=c0.5000x0.5000f_dst-emg0_p64x64_q75_tt6&ccb=18-1&_nc_gid=h0lvTHmInOPXTbhrP7aooQ&edm=AAwGEdEEAAAA&_nc_zt=3&_nc_eui2=AeHxPbxmW31vNZWp7Ii5U6D3EiEFn5muTmoSIQWfma5Oal1t6I8YkFBWNjeuycfcj0IirvKljZ1UQHs_iRygR4X_&_nc_tpa=Q5bMBQKA88-HY6XkmZ7pn6va-q6q7F200WR5NrfC7-hevmCLbr7uHG4asoBR-y9g9Wi6_t0JGWd0sL3OUQ&oh=06_Q3_FAR2n0ev4FGdE0zt87MzkjhGnZyvL7taf1aD7QY1XGg3V&oe=6AF16480",
       "tipo": "imagem",
       "roas": 24.05,
       "ctr": 2.01,
@@ -76759,7 +76771,7 @@
       "adName": "AD 01 - Akira Heaven",
       "adSet": "00 - VV 95% 30D - Convidados tier médio",
       "campaign": "[Compra][Feed/Stories][ABO] Animextreme 34 - Convidados",
-      "imageUrl": "https://external-sea5-1.xx.fbcdn.net/emg1/v/t13/11503724732197037485?url=https%3A%2F%2Fwww.facebook.com%2Fads%2Fimage%2F%3Fd%3DAQK3WvPf8Z32AWcJSuhGGzIMZAMLSA47VP2nST9DENW8klfWfdGXLu0_X3fSeW81n24GE7lL3SV_bqjhgXih0-C2gYkrQpmJf4WmuM-v6j8Lep4CrEZ7o4DpIshg2om6Y_EwroPNpaV3QohPG5hTL7R8&fb_obo=1&utld=facebook.com&_nc_sid=58080a&_nc_ht=external-sea5-1.xx.fbcdn.net&stp=c0.5000x0.5000f_dst-emg0_p64x64_q75_tt6&ccb=18-1&_nc_gid=bzGImB0cglGPQ-NyHeda-Q&edm=AAwGEdEEAAAA&_nc_zt=3&_nc_eui2=AeEmrA-SqWkb1tf5br43BerM43peBhJCLtfjel4GEkIu1ypftYQjzfimGnzH6KweW3WyYawauS_X3We_8Olh6dEZ&_nc_tpa=Q5bMBQLilvHXFnJ_eYS231UZSRxzim5Ng7wBiczZTr9a45ipcMFYLAqP31CC3qBnNsYalJg9FlbKNEfMyA&oh=06_Q3_FAZ2iHlHWhQkpd2Lui_4O-i-bAJ0M8vMFxpFpf0rOj2T9&oe=6AF0A00A",
+      "imageUrl": "https://external-sjc6-1.xx.fbcdn.net/emg1/v/t13/11503724732197037485?url=https%3A%2F%2Fwww.facebook.com%2Fads%2Fimage%2F%3Fd%3DAQK3WvPf8Z32AWcJSuhGGzIMZAMLSA47VP2nST9DENW8klfWfdGXLu0_X3fSeW81n24GE7lL3SV_bqjhgXih0-C2gYkrQpmJf4WmuM-v6j8Lep4CrEZ7o4DpIshg2om6Y_EwroPNpaV3QohPG5hTL7R8&fb_obo=1&utld=facebook.com&_nc_sid=58080a&_nc_ht=external-sjc6-1.xx.fbcdn.net&stp=c0.5000x0.5000f_dst-emg0_p64x64_q75_tt6&ccb=18-1&_nc_gid=h0lvTHmInOPXTbhrP7aooQ&edm=AAwGEdEEAAAA&_nc_zt=3&_nc_eui2=AeEmrA-SqWkb1tf5br43BerM43peBhJCLtfjel4GEkIu1ypftYQjzfimGnzH6KweW3WyYawauS_X3We_8Olh6dEZ&_nc_tpa=Q5bMBQJUe1ZUjAFEl5ExR5jcdv1cwMxDQJg2HoCtELpBFo4I0FsBGtRw_7j4-3YH8wbfqFjg2h7G87odlw&oh=06_Q3_FAYm4BC5akd8v2jUqp5LL3NnZKj5MT9Up3f7TiIythn1i&oe=6AF1810A",
       "tipo": "imagem",
       "roas": 12.83,
       "ctr": 1.52,
@@ -76779,7 +76791,7 @@
       "adName": "VD 06 - Cereaw",
       "adSet": "00 - rpg",
       "campaign": "[Compra][Feed/Stories] Animextreme 34 - Interesses",
-      "imageUrl": "https://scontent-sea5-2.xx.fbcdn.net/v/t15.5256-10/814806751_1461758859334848_180129451801550430_n.jpg?_nc_cat=107&ccb=1-7&_nc_eui2=AeEvgzrisYo_0N-E2pKvwcAzVxBYLhm4pXdXEFguGbild_1kFEszmOh7LegeI_mhNevpzEDtgl7zh4MoQ-0pWjK0&_nc_ohc=9v2dzdKBehEQ7kNvwFcwUqP&_nc_oc=Adqnwl7VUPWlkYt0vfhWGc2yF77falRimFq5x0ZxdBehXGgaifB5EEbuEghRoTjQEPM&_nc_zt=23&_nc_ht=scontent-sea5-2.xx&edm=AAwGEdEEAAAA&_nc_gid=bzGImB0cglGPQ-NyHeda-Q&_nc_tpa=Q5bMBQKC3loxFVlSMobQxBBnasiVM4zz7y91Vhh36u7EOjpDVrjfAlKV-YObhqY6sj5pjHg1tnRus9tOYg&stp=c0.5000x0.5000f_dst-emg0_p64x64_q75_tt6&ur=5fad0e&_nc_sid=58080a&oh=00_AQRb-PxjkSmciwMXHJIo2XVqdrkHWSxnE6C76IsCU-Ne9w&oe=6AF485BC",
+      "imageUrl": "https://scontent-sjc6-1.xx.fbcdn.net/v/t15.5256-10/814806751_1461758859334848_180129451801550430_n.jpg?_nc_cat=107&ccb=1-7&_nc_eui2=AeEvgzrisYo_0N-E2pKvwcAzVxBYLhm4pXdXEFguGbild_1kFEszmOh7LegeI_mhNevpzEDtgl7zh4MoQ-0pWjK0&_nc_ohc=-DdK_QHAcPEQ7kNvwERkkp8&_nc_oc=AdrCRx0WkKN_H3FFAtvKgIrwqGjR-QgFfdPz5S_bN_qREL7O6jPSTNFp11EoZZwebRc&_nc_zt=23&_nc_ht=scontent-sjc6-1.xx&edm=AAwGEdEEAAAA&_nc_gid=h0lvTHmInOPXTbhrP7aooQ&_nc_tpa=Q5bMBQLR5F8dbtR3qPJqbbTSxeE_tXAd5rQZFB9iF1EkQIPI5_Fhz6eqoye6Oeo3l92t1SqY7bn5RMtEyQ&stp=c0.5000x0.5000f_dst-emg0_p64x64_q75_tt6&ur=5fad0e&_nc_sid=58080a&oh=00_AQSAXRmVlj_43nliDBgCTWhOVPvX44tMnv7y3gdObj027Q&oe=6AF566BC",
       "tipo": "video",
       "roas": 37.22,
       "ctr": 0.78,
@@ -76799,7 +76811,7 @@
       "adName": "AD 04 - Detonator",
       "adSet": "00 - anime e manga",
       "campaign": "[Compra][Feed/Stories] Animextreme 34 - Interesses",
-      "imageUrl": "https://external-sea5-1.xx.fbcdn.net/emg1/v/t13/839938264652327615?url=https%3A%2F%2Fwww.facebook.com%2Fads%2Fimage%2F%3Fd%3DAQKAUb2sEb0UAAZGKYirCO_pQJVdj53vqNxknh0qk2dYGJJP1DqHfE_Leucz_0oC7tlJcSF12OWrVLEWyg0uQsBkhLXtCEYKkmFYMtIGQoU0SS-pRLAxzXQHh3dhDWe0WZHtoLrIcYAkqNP4j2OhERZj&fb_obo=1&utld=facebook.com&_nc_sid=58080a&_nc_ht=external-sea5-1.xx.fbcdn.net&stp=c0.5000x0.5000f_dst-emg0_p64x64_q75_tt6&ccb=18-1&_nc_gid=bzGImB0cglGPQ-NyHeda-Q&edm=AAwGEdEEAAAA&_nc_zt=3&_nc_eui2=AeHWKLB485kLX58nqWjhZ6HQmON6-vTQ5zyY43r69NDnPDP-kvtZDGRcEiRHS_x-weT31knLs6pJG4AcJg6r39C1&_nc_tpa=Q5bMBQK5RdhE2ZDdpaxqEZUhNR8zM7kx2pYcw9oSqDBZMHySAeATnbxLdJFjI5KYcFIu6vDKrRIHRlYV3Q&oh=06_Q3_FAX-N3cntm5FJGXO_7frE1aSPsBiujqrGsKGCv81DMImF&oe=6AF0A342",
+      "imageUrl": "https://external-sjc6-1.xx.fbcdn.net/emg1/v/t13/839938264652327615?url=https%3A%2F%2Fwww.facebook.com%2Fads%2Fimage%2F%3Fd%3DAQKAUb2sEb0UAAZGKYirCO_pQJVdj53vqNxknh0qk2dYGJJP1DqHfE_Leucz_0oC7tlJcSF12OWrVLEWyg0uQsBkhLXtCEYKkmFYMtIGQoU0SS-pRLAxzXQHh3dhDWe0WZHtoLrIcYAkqNP4j2OhERZj&fb_obo=1&utld=facebook.com&_nc_sid=58080a&_nc_ht=external-sjc6-1.xx.fbcdn.net&stp=c0.5000x0.5000f_dst-emg0_p64x64_q75_tt6&ccb=18-1&_nc_gid=h0lvTHmInOPXTbhrP7aooQ&edm=AAwGEdEEAAAA&_nc_zt=3&_nc_eui2=AeHWKLB485kLX58nqWjhZ6HQmON6-vTQ5zyY43r69NDnPDP-kvtZDGRcEiRHS_x-weT31knLs6pJG4AcJg6r39C1&_nc_tpa=Q5bMBQLvPiCl5hS5jZH9jPMsyJ0-q3V9J0pavTJA0Yc2X2MXCN1y-ChJxXKvhWxCcSzJ54s7eAfW6jenvw&oh=06_Q3_FAXCdDnyIeEbe-60BmJ4M_jxBMCtKq9YhZxHajY7ePI9n&oe=6AF18442",
       "tipo": "imagem",
       "roas": 16.33,
       "ctr": 2.13,
@@ -76819,7 +76831,7 @@
       "adName": "AD 03 - Cereaw",
       "adSet": "00 - VV 95% 30D - Convidados tier top",
       "campaign": "[Compra][Feed/Stories][ABO] Animextreme 34 - Convidados",
-      "imageUrl": "https://external-sea5-1.xx.fbcdn.net/emg1/v/t13/7952008522533968578?url=https%3A%2F%2Fwww.facebook.com%2Fads%2Fimage%2F%3Fd%3DAQKushh8Tg-aRkzEvzYuU4CHxtr7z-Iu-Y6koJXGSEcbNbacD3n2QS5YCPav1ZngLoefR0ejcDwuTHenY9puGPSc6B-jtyOrtTyrwU3EXiXPve63lEbANFJ_yquhLTte_l7ocU0-2S06FZ-TIprYTbNl&fb_obo=1&utld=facebook.com&_nc_sid=58080a&_nc_ht=external-sea5-1.xx.fbcdn.net&stp=c0.5000x0.5000f_dst-emg0_p64x64_q75_tt6&ccb=18-1&_nc_gid=bzGImB0cglGPQ-NyHeda-Q&edm=AAwGEdEEAAAA&_nc_zt=3&_nc_eui2=AeFEAF5-dhNK3RW_PXE03ldp_xEU17KNBq3_ERTXso0GrWAMwkPI1ozPBJxKifKqm-1s4A_zA4tWD0YDo6UNcJKN&_nc_tpa=Q5bMBQIuj3G0QxF3GhWqRGC7-DSg_CucXJ3WkF18idNJNgho_GpKc10YAvDzpzit6zOEO8cF9nXyMd8hPQ&oh=06_Q3_FAfetvKkDhbUoxxiUmzOPyjrb7vqM84-GfLkK0CwBmmGN&oe=6AF08FC5",
+      "imageUrl": "https://external-sjc6-1.xx.fbcdn.net/emg1/v/t13/7952008522533968578?url=https%3A%2F%2Fwww.facebook.com%2Fads%2Fimage%2F%3Fd%3DAQKushh8Tg-aRkzEvzYuU4CHxtr7z-Iu-Y6koJXGSEcbNbacD3n2QS5YCPav1ZngLoefR0ejcDwuTHenY9puGPSc6B-jtyOrtTyrwU3EXiXPve63lEbANFJ_yquhLTte_l7ocU0-2S06FZ-TIprYTbNl&fb_obo=1&utld=facebook.com&_nc_sid=58080a&_nc_ht=external-sjc6-1.xx.fbcdn.net&stp=c0.5000x0.5000f_dst-emg0_p64x64_q75_tt6&ccb=18-1&_nc_gid=h0lvTHmInOPXTbhrP7aooQ&edm=AAwGEdEEAAAA&_nc_zt=3&_nc_eui2=AeFEAF5-dhNK3RW_PXE03ldp_xEU17KNBq3_ERTXso0GrWAMwkPI1ozPBJxKifKqm-1s4A_zA4tWD0YDo6UNcJKN&_nc_tpa=Q5bMBQL6XJ6pxVxhudffrus77Q4bQd8oVNGjt50tuhsPF0EZSeBZdtFI2YSQw_P3YNKOZf64j03ON5X2DQ&oh=06_Q3_FAV9te59AVf1aZotOx4sT__k9irIM8EeVDc5Tu7-1KPrx&oe=6AF170C5",
       "tipo": "imagem",
       "roas": 13.45,
       "ctr": 1.7,
@@ -76839,7 +76851,7 @@
       "adName": "AD 09 - Luísa Horta",
       "adSet": "00 - anime e manga",
       "campaign": "[Compra][Feed/Stories] Animextreme 34 - Interesses",
-      "imageUrl": "https://external-sea5-1.xx.fbcdn.net/emg1/v/t13/10660666237799819284?url=https%3A%2F%2Fwww.facebook.com%2Fads%2Fimage%2F%3Fd%3DAQJZ82lrYnYCRv3P55s6q2UpWqmfSlNgZpW10DvOTMQjEyoQuLRQHTJLxERzEnLgEFnnDX2n7lPs_oUIVLYb8uOsu_jwzb6QnynEY_SCuOuY_HyoAM9OPIv-rUloHAHnYpmwzLApNhB5x9D4aOk1ProL&fb_obo=1&utld=facebook.com&_nc_sid=58080a&_nc_ht=external-sea5-1.xx.fbcdn.net&stp=c0.5000x0.5000f_dst-emg0_p64x64_q75_tt6&ccb=18-1&_nc_gid=bzGImB0cglGPQ-NyHeda-Q&edm=AAwGEdEEAAAA&_nc_zt=3&_nc_eui2=AeGtY4xSrZ8SWnJwpY8unoPAGp41TZMHBQwanjVNkwcFDIwlW10zeBeeWvRVufzRaHXq4cEdbZHsG_GmNXhwHfdZ&_nc_tpa=Q5bMBQKDudk1MdxsOmNFNr5iEPzP2Td35m3mCycCEycqUp2IgpJf7EttjiApq87c3rsCVJHjiz5KVR3alQ&oh=06_Q3_FASHxUlTXwKdADH4qluzrhiGuD3Z0VtXYHpAu3nkZHEsO&oe=6AF082E9",
+      "imageUrl": "https://external-sjc6-1.xx.fbcdn.net/emg1/v/t13/10660666237799819284?url=https%3A%2F%2Fwww.facebook.com%2Fads%2Fimage%2F%3Fd%3DAQJZ82lrYnYCRv3P55s6q2UpWqmfSlNgZpW10DvOTMQjEyoQuLRQHTJLxERzEnLgEFnnDX2n7lPs_oUIVLYb8uOsu_jwzb6QnynEY_SCuOuY_HyoAM9OPIv-rUloHAHnYpmwzLApNhB5x9D4aOk1ProL&fb_obo=1&utld=facebook.com&_nc_sid=58080a&_nc_ht=external-sjc6-1.xx.fbcdn.net&stp=c0.5000x0.5000f_dst-emg0_p64x64_q75_tt6&ccb=18-1&_nc_gid=h0lvTHmInOPXTbhrP7aooQ&edm=AAwGEdEEAAAA&_nc_zt=3&_nc_eui2=AeGtY4xSrZ8SWnJwpY8unoPAGp41TZMHBQwanjVNkwcFDIwlW10zeBeeWvRVufzRaHXq4cEdbZHsG_GmNXhwHfdZ&_nc_tpa=Q5bMBQJqV4GzkMe3JTpgFzBxW_G9sc8tSLkWx4NNsYdLckJ2x-n84z58UOKH_5xEm5Drdhw--nDv7GVktA&oh=06_Q3_FAQMhFAO40gypFanv0yRcG64WsmxtnSJpiCPHvHPMuCh2&oe=6AF163E9",
       "tipo": "imagem",
       "roas": 30.53,
       "ctr": 1.68,
@@ -76859,7 +76871,7 @@
       "adName": "AD 05 - anirap",
       "adSet": "00 - VV 95% 30D - Convidados tier top",
       "campaign": "[Compra][Feed/Stories][ABO] Animextreme 34 - Convidados",
-      "imageUrl": "https://external-sea5-1.xx.fbcdn.net/emg1/v/t13/9846110751558617892?url=https%3A%2F%2Fwww.facebook.com%2Fads%2Fimage%2F%3Fd%3DAQI6r8efVSLUwEOkrCc7XDnLQTmWQRe2X5VZIF3MbAGM6Ffry-JsL_ZuALcoPcT2JYYOjlUZGnXdQ4R3A4qRJX90RQWVhKRjqBhxGVgxpVHx6mEBlZbctXqdQpAKWboAbA2CTWxNCPx1b0tkXRBj7avj&fb_obo=1&utld=facebook.com&_nc_sid=58080a&_nc_ht=external-sea5-1.xx.fbcdn.net&stp=c0.5000x0.5000f_dst-emg0_p64x64_q75_tt6&ccb=18-1&_nc_gid=bzGImB0cglGPQ-NyHeda-Q&edm=AAwGEdEEAAAA&_nc_zt=3&_nc_eui2=AeH3LJt2AoOK0uzF0XSoGhziFRCWQ2jUvAYVEJZDaNS8BqJ_pATybV9J-Nyt74cee_l5RburBwRuIbz82P94iYaH&_nc_tpa=Q5bMBQKZpry5kt9ep1eAtbgkKPNYQjJjPmuhdFgsf_Z5DBMuTtJpQqu48cYEj-YiU27srHerZaWSHM3hLg&oh=06_Q3_FAb-V7kocK_HxW5s1Jp0KdIRNDQBjY1_HlGi2ODqDYDQ2&oe=6AF093F7",
+      "imageUrl": "https://external-sjc6-1.xx.fbcdn.net/emg1/v/t13/9846110751558617892?url=https%3A%2F%2Fwww.facebook.com%2Fads%2Fimage%2F%3Fd%3DAQI6r8efVSLUwEOkrCc7XDnLQTmWQRe2X5VZIF3MbAGM6Ffry-JsL_ZuALcoPcT2JYYOjlUZGnXdQ4R3A4qRJX90RQWVhKRjqBhxGVgxpVHx6mEBlZbctXqdQpAKWboAbA2CTWxNCPx1b0tkXRBj7avj&fb_obo=1&utld=facebook.com&_nc_sid=58080a&_nc_ht=external-sjc6-1.xx.fbcdn.net&stp=c0.5000x0.5000f_dst-emg0_p64x64_q75_tt6&ccb=18-1&_nc_gid=h0lvTHmInOPXTbhrP7aooQ&edm=AAwGEdEEAAAA&_nc_zt=3&_nc_eui2=AeH3LJt2AoOK0uzF0XSoGhziFRCWQ2jUvAYVEJZDaNS8BqJ_pATybV9J-Nyt74cee_l5RburBwRuIbz82P94iYaH&_nc_tpa=Q5bMBQIOmAZFvrPZoyJC270ILXTbn-NdHOZDJaG0AZcrzZyNnf7jw94BQ5mTEYNFP7gqrehM1X49Pwt84A&oh=06_Q3_FASfLHzS2PQ7HM_sl1Eah4H49NmhrnLUvY5zXrD0XbQQf&oe=6AF174F7",
       "tipo": "imagem",
       "roas": 12.38,
       "ctr": 1.61,
@@ -76879,7 +76891,7 @@
       "adName": "AD 03 - Fehdubs",
       "adSet": "00 - anime e manga",
       "campaign": "[Compra][Feed/Stories] Animextreme 34 - Interesses",
-      "imageUrl": "https://external-sea5-1.xx.fbcdn.net/emg1/v/t13/5617118600741802753?url=https%3A%2F%2Fwww.facebook.com%2Fads%2Fimage%2F%3Fd%3DAQKBtYi8dEzOK9f_xrt7xNSfryvSnZnjk8HZIdgV0Zplfc602_ozKih15iFZOcBtShGus1iwOZFZAGTPGXpmSi1irX0O2mBtiFqwqYg8K-l_CcW7GtMEGC6cSybFHSW1rCPMwsGOGtvSZeOUtI5EeebB&fb_obo=1&utld=facebook.com&_nc_sid=58080a&_nc_ht=external-sea5-1.xx.fbcdn.net&stp=c0.5000x0.5000f_dst-emg0_p64x64_q75_tt6&ccb=18-1&_nc_gid=bzGImB0cglGPQ-NyHeda-Q&edm=AAwGEdEEAAAA&_nc_zt=3&_nc_eui2=AeGlqDpinrg58pSFjI17wPD49WxegMfGm2T1bF6Ax8abZB6aUR82wU8b_ZEW67BIWka3qkPy45i5Eit_mTocN7iB&_nc_tpa=Q5bMBQLFTtN67X6OOe7N8PAkFmFLxUpaQ7VNmsY3GzNe14u-i_Nds0VyFXt9hxE9uxod5oCG1RBwbVAaEA&oh=06_Q3_FATSW6hk9o_S4TcC6ER9dwZtTCOYINjG4BfHTucROM5LX&oe=6AF0A426",
+      "imageUrl": "https://external-sjc6-1.xx.fbcdn.net/emg1/v/t13/5617118600741802753?url=https%3A%2F%2Fwww.facebook.com%2Fads%2Fimage%2F%3Fd%3DAQKBtYi8dEzOK9f_xrt7xNSfryvSnZnjk8HZIdgV0Zplfc602_ozKih15iFZOcBtShGus1iwOZFZAGTPGXpmSi1irX0O2mBtiFqwqYg8K-l_CcW7GtMEGC6cSybFHSW1rCPMwsGOGtvSZeOUtI5EeebB&fb_obo=1&utld=facebook.com&_nc_sid=58080a&_nc_ht=external-sjc6-1.xx.fbcdn.net&stp=c0.5000x0.5000f_dst-emg0_p64x64_q75_tt6&ccb=18-1&_nc_gid=h0lvTHmInOPXTbhrP7aooQ&edm=AAwGEdEEAAAA&_nc_zt=3&_nc_eui2=AeGlqDpinrg58pSFjI17wPD49WxegMfGm2T1bF6Ax8abZB6aUR82wU8b_ZEW67BIWka3qkPy45i5Eit_mTocN7iB&_nc_tpa=Q5bMBQK4eZtq46wfJdHzrJHp0hz2ht9kKz80MKPn2XbuKInWCe-W-wrcMV7LEDQH9jBSPqwviaGmV4qfEg&oh=06_Q3_FAflYo0wLPLn0BkBU-bW8frV6Hay2QbpIXPl3LGLvKmp2&oe=6AF18526",
       "tipo": "imagem",
       "roas": 12.82,
       "ctr": 3.06,
@@ -76899,7 +76911,7 @@
       "adName": "AD 04 - Caligrafo",
       "adSet": "00 - VV 95% 30D - Convidados tier top",
       "campaign": "[Compra][Feed/Stories][ABO] Animextreme 34 - Convidados",
-      "imageUrl": "https://external-sea5-1.xx.fbcdn.net/emg1/v/t13/13709834210618014802?url=https%3A%2F%2Fwww.facebook.com%2Fads%2Fimage%2F%3Fd%3DAQJIJFzeJnC3X-jHkZBhi17fmJOY2IvlaA0Bo7x_zrZF4oPNcvfUAswmqXpiJ9NWU0sdzLlb6qvZFiJYumneduWh5bPhwUZyjXk4Fy9I6hC_10C_PfGzS0H-ban-deuuXi6oeOYzvCW_Ji3_E0P02NBj&fb_obo=1&utld=facebook.com&_nc_sid=58080a&_nc_ht=external-sea5-1.xx.fbcdn.net&stp=c0.5000x0.5000f_dst-emg0_p64x64_q75_tt6&ccb=18-1&_nc_gid=bzGImB0cglGPQ-NyHeda-Q&edm=AAwGEdEEAAAA&_nc_zt=3&_nc_eui2=AeE6qO2VHZYuhVEDpr8Fm93Q-RlAEHrnPg_5GUAQeuc-DxiXLOiWjpMfTGwrAhvoRmM2zjmbmIePQdLgc8YDh5mG&_nc_tpa=Q5bMBQLKBEDoQwFEZmcxmRb3L5PtnyckD7DuQfSYOYciNRo_GCqwVC4Nje97KnM35j0L37MSeR1E0-VWSw&oh=06_Q3_FAVoCq1cns0sgJHyFOPn1qW0jFaFuudCjX4OLb3hFxKjn&oe=6AF08005",
+      "imageUrl": "https://external-sjc6-1.xx.fbcdn.net/emg1/v/t13/13709834210618014802?url=https%3A%2F%2Fwww.facebook.com%2Fads%2Fimage%2F%3Fd%3DAQJIJFzeJnC3X-jHkZBhi17fmJOY2IvlaA0Bo7x_zrZF4oPNcvfUAswmqXpiJ9NWU0sdzLlb6qvZFiJYumneduWh5bPhwUZyjXk4Fy9I6hC_10C_PfGzS0H-ban-deuuXi6oeOYzvCW_Ji3_E0P02NBj&fb_obo=1&utld=facebook.com&_nc_sid=58080a&_nc_ht=external-sjc6-1.xx.fbcdn.net&stp=c0.5000x0.5000f_dst-emg0_p64x64_q75_tt6&ccb=18-1&_nc_gid=h0lvTHmInOPXTbhrP7aooQ&edm=AAwGEdEEAAAA&_nc_zt=3&_nc_eui2=AeE6qO2VHZYuhVEDpr8Fm93Q-RlAEHrnPg_5GUAQeuc-DxiXLOiWjpMfTGwrAhvoRmM2zjmbmIePQdLgc8YDh5mG&_nc_tpa=Q5bMBQJdWI7OSTZhRBJ3jY0RW57D0yJqL7FCf9bvmRV_U2Hzk5fAsDwf1vC3I2-mpLSSsyLeEZPh21uhTw&oh=06_Q3_FAQ5uhwPUXs2S-UNgL0goYxluSQeopEZL53SCS8OSWPVa&oe=6AF16105",
       "tipo": "imagem",
       "roas": 14.82,
       "ctr": 2.3,
@@ -76919,7 +76931,7 @@
       "adName": "AD 06 - Caduxim",
       "adSet": "00 - VV 95% 30D - Convidados tier top",
       "campaign": "[Compra][Feed/Stories][ABO] Animextreme 34 - Convidados",
-      "imageUrl": "https://external-sea5-1.xx.fbcdn.net/emg1/v/t13/11378388304306418650?url=https%3A%2F%2Fwww.facebook.com%2Fads%2Fimage%2F%3Fd%3DAQKExv7eqM9p9_sCOS4iiupCxTRfI-oZ0P5vX8Ew-kXAsDTR0gzZqb1UGoVGrx4FkuIrtqaAbt8DGchbnTfYhclZ04Lul7YEaMk_toGhNEGwRWd-LqNw35NGlyhSQNAvnD4RS5uAhbfRG6Qc2DZaUqeC&fb_obo=1&utld=facebook.com&_nc_sid=58080a&_nc_ht=external-sea5-1.xx.fbcdn.net&stp=c0.5000x0.5000f_dst-emg0_p64x64_q75_tt6&ccb=18-1&_nc_gid=bzGImB0cglGPQ-NyHeda-Q&edm=AAwGEdEEAAAA&_nc_zt=3&_nc_eui2=AeE0HRJR6bj4a5D_FIz6CMOE026Qz64yeFPTbpDPrjJ4U4PtC4pDxEgPWtHnLtts61PM78zaTi7RBdmF_pDcvJRD&_nc_tpa=Q5bMBQKuah7ulqDyPlBdNy88Mv_5FRxVz1IuLumXMDrzdD3xJgG1GAYHmmCaM5vF34abJu6cxP6Bka4tww&oh=06_Q3_FAQsKTUpWeGQGkuZyzGW9Zn_yYtmJhiJOQ04hvqkcYW_V&oe=6AF09E16",
+      "imageUrl": "https://external-sjc6-1.xx.fbcdn.net/emg1/v/t13/11378388304306418650?url=https%3A%2F%2Fwww.facebook.com%2Fads%2Fimage%2F%3Fd%3DAQKExv7eqM9p9_sCOS4iiupCxTRfI-oZ0P5vX8Ew-kXAsDTR0gzZqb1UGoVGrx4FkuIrtqaAbt8DGchbnTfYhclZ04Lul7YEaMk_toGhNEGwRWd-LqNw35NGlyhSQNAvnD4RS5uAhbfRG6Qc2DZaUqeC&fb_obo=1&utld=facebook.com&_nc_sid=58080a&_nc_ht=external-sjc6-1.xx.fbcdn.net&stp=c0.5000x0.5000f_dst-emg0_p64x64_q75_tt6&ccb=18-1&_nc_gid=h0lvTHmInOPXTbhrP7aooQ&edm=AAwGEdEEAAAA&_nc_zt=3&_nc_eui2=AeE0HRJR6bj4a5D_FIz6CMOE026Qz64yeFPTbpDPrjJ4U4PtC4pDxEgPWtHnLtts61PM78zaTi7RBdmF_pDcvJRD&_nc_tpa=Q5bMBQJPcnG77h7_EtLAdRrg1zr6OzodoTI_V7bOqLNSXiB0PCWcQgGCHJ-tS8X3fzJZUAA0drE74mdVNg&oh=06_Q3_FAcfwI1kQ3mmius_pkS52UATjClmtQtZ37k2E2m89mkw8&oe=6AF17F16",
       "tipo": "imagem",
       "roas": 6.52,
       "ctr": 1.56,
@@ -76939,7 +76951,7 @@
       "adName": "VD 05 - Caligrafo",
       "adSet": "00 - rpg",
       "campaign": "[Compra][Feed/Stories] Animextreme 34 - Interesses",
-      "imageUrl": "https://scontent-sea5-1.xx.fbcdn.net/v/t15.5256-10/797470137_1547291380532282_4809523835602800084_n.jpg?_nc_cat=105&ccb=1-7&_nc_eui2=AeFUtmirdAs_5OQYZkjLR71t3fQ9tygosDbd9D23KCiwNtTaRoJLC3IZ9r7yKcxxtf_4dT-kYGBSUHppcSfsu-_1&_nc_ohc=Y--9hBJQ-O8Q7kNvwEjlHDP&_nc_oc=AdqIZJzP3QtaELvn72_c5qiyqo28hG-Nm0pYts83JODPHR8M_dws1P2g9h93Z-SgKoI&_nc_zt=23&_nc_ht=scontent-sea5-1.xx&edm=AAwGEdEEAAAA&_nc_gid=bzGImB0cglGPQ-NyHeda-Q&_nc_tpa=Q5bMBQIXA3f52w8EH0DcK8V0iHNzuVuj3DCPqIUc0hYKxraObcpdVM7UQwjH8emF4hL6eP__KRyaACh-8Q&stp=c0.5000x0.5000f_dst-emg0_p64x64_q75_tt6&ur=5fad0e&_nc_sid=58080a&oh=00_AQQVxW9baBmN8d8NO1Qd0rvFiDcDS7JkOG4tWMv-yDjj3A&oe=6AF478AD",
+      "imageUrl": "https://scontent-sjc3-1.xx.fbcdn.net/v/t15.5256-10/797470137_1547291380532282_4809523835602800084_n.jpg?_nc_cat=105&ccb=1-7&_nc_eui2=AeFUtmirdAs_5OQYZkjLR71t3fQ9tygosDbd9D23KCiwNtTaRoJLC3IZ9r7yKcxxtf_4dT-kYGBSUHppcSfsu-_1&_nc_ohc=Y--9hBJQ-O8Q7kNvwG4LsJK&_nc_oc=AdpVjMlyzC6ZR8phYxxo-Sgjq_vDibZ9hJbJhc6uN1pN7lK5UTv8b8IFFnDQ13XCK6c&_nc_zt=23&_nc_ht=scontent-sjc3-1.xx&edm=AAwGEdEEAAAA&_nc_gid=h0lvTHmInOPXTbhrP7aooQ&_nc_tpa=Q5bMBQKTIqwAXEjZs3vQHS4g1A53Rd6sphzzPXLuPxHCtdnUfkoGtEyCJ02MDG9Z227n_yK387lM95ptfQ&stp=c0.5000x0.5000f_dst-emg0_p64x64_q75_tt6&ur=5fad0e&_nc_sid=58080a&oh=00_AQSB22IuAuwPKWaCQtiEo37vbTNRyNQ1jOPITmkStu1GyQ&oe=6AF559AD",
       "tipo": "video",
       "roas": 43.36,
       "ctr": 1.21,
@@ -76959,7 +76971,7 @@
       "adName": "AD 01 - Detonator + frogg",
       "adSet": "00 - kpop",
       "campaign": "[Compra][Feed/Stories] Animextreme 34 - Estratégia domingo",
-      "imageUrl": "https://external-sea5-1.xx.fbcdn.net/emg1/v/t13/12627722918939829653?url=https%3A%2F%2Fwww.facebook.com%2Fads%2Fimage%2F%3Fd%3DAQJcX2rttFdjo6K9L19ql343Be_ftapQlVMIONnAV7gRZRk2eaByORNqF6LPeep9wqE198dFJJFFQTz7D98m0tCsjRBYJs_kQDj1vWJPj7G_w4mpiMPdJgAiP_x80AXeLCfF60w3WCV_nUzL6mgNzkUo&fb_obo=1&utld=facebook.com&_nc_sid=58080a&_nc_ht=external-sea5-1.xx.fbcdn.net&stp=c0.5000x0.5000f_dst-emg0_p64x64_q75_tt6&ccb=18-1&_nc_gid=bzGImB0cglGPQ-NyHeda-Q&edm=AAwGEdEEAAAA&_nc_zt=3&_nc_eui2=AeHYP50_P7GC94BuAow9Q6K0LzBmhFG7oMYvMGaEUbugxhIgMowVJl44Avhar-b1Wnb-kdzezOe1ucwolVLYgan4&_nc_tpa=Q5bMBQIjacCY3Zk0OGB9W8VJO2ENBeCVjt4PMKDVnvSvG9Ua9Gj8LMgKAxeBbGlUjmGmfHcepB_Ja6gOCA&oh=06_Q3_FAQpacWD4aV4UpJyngKzEBn_fCmQ_ChY3RiB0oHkORLkW&oe=6AF0A33D",
+      "imageUrl": "https://external-sjc6-1.xx.fbcdn.net/emg1/v/t13/12627722918939829653?url=https%3A%2F%2Fwww.facebook.com%2Fads%2Fimage%2F%3Fd%3DAQJcX2rttFdjo6K9L19ql343Be_ftapQlVMIONnAV7gRZRk2eaByORNqF6LPeep9wqE198dFJJFFQTz7D98m0tCsjRBYJs_kQDj1vWJPj7G_w4mpiMPdJgAiP_x80AXeLCfF60w3WCV_nUzL6mgNzkUo&fb_obo=1&utld=facebook.com&_nc_sid=58080a&_nc_ht=external-sjc6-1.xx.fbcdn.net&stp=c0.5000x0.5000f_dst-emg0_p64x64_q75_tt6&ccb=18-1&_nc_gid=h0lvTHmInOPXTbhrP7aooQ&edm=AAwGEdEEAAAA&_nc_zt=3&_nc_eui2=AeHYP50_P7GC94BuAow9Q6K0LzBmhFG7oMYvMGaEUbugxhIgMowVJl44Avhar-b1Wnb-kdzezOe1ucwolVLYgan4&_nc_tpa=Q5bMBQILdzhQc37Z6BOmseVp3B9DG50t7Qu5ZvPe1AaQYM1VyOC4S5KfCxjmHNOZzWhhR5sA-Jyws4BoOg&oh=06_Q3_FAQtLpy4Ew7jDpLyLetOrGwTseXi7wCC7tDnfSjJDQMJS&oe=6AF1843D",
       "tipo": "imagem",
       "roas": 7.38,
       "ctr": 2.37,
@@ -76979,7 +76991,7 @@
       "adName": "AD 05 - M4rkim",
       "adSet": "00 - Full Advantage",
       "campaign": "[Compra][Feed/Stories] Animextreme 34 - Full Adv.",
-      "imageUrl": "https://scontent-sea5-1.xx.fbcdn.net/v/t39.30808-1/597112494_1259024572926649_7694318842719077643_n.jpg?_nc_cat=103&ccb=1-7&_nc_eui2=AeFNf02tZ8DZgXWuxqWfj1o1175wCt4Tck_XvnAK3hNyT8N4FKbKXlLt3TBBvMyaKSzVIdFmr90eHnA_IofLGXs8&_nc_ohc=982kSWGGqvIQ7kNvwEgzPpW&_nc_oc=AdpSaw4y14R3zBhPK87EafDRSB_5bxwAfWGqGY1OdMfdgLtnfgjPApQtLDSe_WebF_o&_nc_zt=24&_nc_ht=scontent-sea5-1.xx&edm=AAwGEdEEAAAA&_nc_gid=bzGImB0cglGPQ-NyHeda-Q&_nc_tpa=Q5bMBQK4gUjvWqr3N9KB5BY4tkr-tYv3MGAl07_RtFJq0vUgZtLV1qPY9jP7vA6E-BBSjV4lQxVV5f-wGw&stp=c0.5000x0.5000f_dst-emg0_p64x64_q75_tt6&ur=68aae3&_nc_sid=58080a&oh=00_AQSPRx1JnRderqDKTZz8Wv2clg6iedGrWav_tIjjRpT_lA&oe=6AF4A5CB",
+      "imageUrl": "https://scontent-sjc3-1.xx.fbcdn.net/v/t39.30808-1/597112494_1259024572926649_7694318842719077643_n.jpg?_nc_cat=103&ccb=1-7&_nc_eui2=AeFNf02tZ8DZgXWuxqWfj1o1175wCt4Tck_XvnAK3hNyT8N4FKbKXlLt3TBBvMyaKSzVIdFmr90eHnA_IofLGXs8&_nc_ohc=982kSWGGqvIQ7kNvwFRp7Ju&_nc_oc=AdpIDD410XRzbqfNxQWPamlhm3FIccpfKZ0YcUpXbLVi0o25CVoG6ruQ1v7KMs4czFE&_nc_zt=24&_nc_ht=scontent-sjc3-1.xx&edm=AAwGEdEEAAAA&_nc_gid=h0lvTHmInOPXTbhrP7aooQ&_nc_tpa=Q5bMBQLK4O0FGbTgke9psDiU8t2WBNl6GGkagrUhxoFUh_WxMtFK3u9uRoX8MmXX3zLi6gdb4lffGWCCtg&stp=c0.5000x0.5000f_dst-emg0_p64x64_q75_tt6&ur=68aae3&_nc_sid=58080a&oh=00_AQQ47Ntd--mm7upI4Ay_UrbEzfBFMd4V80Ecf0hfEOC-VA&oe=6AF586CB",
       "tipo": "imagem",
       "roas": 11.87,
       "ctr": 3.12,
@@ -76999,7 +77011,7 @@
       "adName": "AD 02 - Luísa Horta",
       "adSet": "00 - VV 95% 30D - Convidados tier médio",
       "campaign": "[Compra][Feed/Stories][ABO] Animextreme 34 - Convidados",
-      "imageUrl": "https://external-sea5-1.xx.fbcdn.net/emg1/v/t13/3487902474432601724?url=https%3A%2F%2Fwww.facebook.com%2Fads%2Fimage%2F%3Fd%3DAQIxpn_ODbh8zpGh9D_HyECbOFilTAaQeMKA9P8KN0IG3x8jBBeCBx9wURPUUZ8WRAuqhKCEDD0GR_s3jGxJ31ybzuXMqoOHx3sIIPKC9mVvwHspjzWEzkq_G9ZCZA5lBEAcOdI-G0VK6u4M1Ob3o6Cc&fb_obo=1&utld=facebook.com&_nc_sid=58080a&_nc_ht=external-sea5-1.xx.fbcdn.net&stp=c0.5000x0.5000f_dst-emg0_p64x64_q75_tt6&ccb=18-1&_nc_gid=bzGImB0cglGPQ-NyHeda-Q&edm=AAwGEdEEAAAA&_nc_zt=3&_nc_eui2=AeGZPjwphH72bb_OTeuOfPR2bPTbUmWE719s9NtSZYTvX5fskr2HwT_vbOM5ZilMOjHZi-smbijK_JYApvhBTqcM&_nc_tpa=Q5bMBQIQ5_5Dz8Kdd_6v_JNaFitPKczWxo5WsXnabiWmejY1van2jXxVwvQCNLIe9TXyVPqvS3lR6dvYMw&oh=06_Q3_FAdoEk914nEK2D89K-41xhW_px6_lSAEXXtZxeDK-iLe2&oe=6AF08823",
+      "imageUrl": "https://external-sjc6-1.xx.fbcdn.net/emg1/v/t13/3487902474432601724?url=https%3A%2F%2Fwww.facebook.com%2Fads%2Fimage%2F%3Fd%3DAQIxpn_ODbh8zpGh9D_HyECbOFilTAaQeMKA9P8KN0IG3x8jBBeCBx9wURPUUZ8WRAuqhKCEDD0GR_s3jGxJ31ybzuXMqoOHx3sIIPKC9mVvwHspjzWEzkq_G9ZCZA5lBEAcOdI-G0VK6u4M1Ob3o6Cc&fb_obo=1&utld=facebook.com&_nc_sid=58080a&_nc_ht=external-sjc6-1.xx.fbcdn.net&stp=c0.5000x0.5000f_dst-emg0_p64x64_q75_tt6&ccb=18-1&_nc_gid=h0lvTHmInOPXTbhrP7aooQ&edm=AAwGEdEEAAAA&_nc_zt=3&_nc_eui2=AeGZPjwphH72bb_OTeuOfPR2bPTbUmWE719s9NtSZYTvX5fskr2HwT_vbOM5ZilMOjHZi-smbijK_JYApvhBTqcM&_nc_tpa=Q5bMBQKD6XoFRjFqRSzwr-CA4PwSBmmRMU9HeQuEeCln8pp7IfUJo7fvrzAlAEgOCPGzCEsJtv5Ku4xS5A&oh=06_Q3_FASOxEZRe_NbwtS0vtxZEt1lzA2OK2OXuzjg1vTVze2Pw&oe=6AF16923",
       "tipo": "imagem",
       "roas": 2.23,
       "ctr": 2.46,
@@ -77019,7 +77031,7 @@
       "adName": "AD 03 - M4rkim",
       "adSet": "00 - VV 95% 30D - Convidados tier médio",
       "campaign": "[Compra][Feed/Stories][ABO] Animextreme 34 - Convidados",
-      "imageUrl": "https://scontent-sea5-1.xx.fbcdn.net/v/t39.30808-1/597112494_1259024572926649_7694318842719077643_n.jpg?_nc_cat=103&ccb=1-7&_nc_eui2=AeFNf02tZ8DZgXWuxqWfj1o1175wCt4Tck_XvnAK3hNyT8N4FKbKXlLt3TBBvMyaKSzVIdFmr90eHnA_IofLGXs8&_nc_ohc=982kSWGGqvIQ7kNvwEgzPpW&_nc_oc=AdpSaw4y14R3zBhPK87EafDRSB_5bxwAfWGqGY1OdMfdgLtnfgjPApQtLDSe_WebF_o&_nc_zt=24&_nc_ht=scontent-sea5-1.xx&edm=AAwGEdEEAAAA&_nc_gid=bzGImB0cglGPQ-NyHeda-Q&_nc_tpa=Q5bMBQK7VX_p4bqeg2elQ8hFHcdgnJrgTvjSG1V4-lpupxjiDxBmVstNuzj9bUxkbxOmOGoosB35lTDglA&stp=c0.5000x0.5000f_dst-emg0_p64x64_q75_tt6&ur=68aae3&_nc_sid=58080a&oh=00_AQTjDnP7U9-Z4J116s5OAp-cfxLEHLu4TKA7OlDexIs7pw&oe=6AF4A5CB",
+      "imageUrl": "https://scontent-sjc3-1.xx.fbcdn.net/v/t39.30808-1/597112494_1259024572926649_7694318842719077643_n.jpg?_nc_cat=103&ccb=1-7&_nc_eui2=AeFNf02tZ8DZgXWuxqWfj1o1175wCt4Tck_XvnAK3hNyT8N4FKbKXlLt3TBBvMyaKSzVIdFmr90eHnA_IofLGXs8&_nc_ohc=982kSWGGqvIQ7kNvwFRp7Ju&_nc_oc=AdpIDD410XRzbqfNxQWPamlhm3FIccpfKZ0YcUpXbLVi0o25CVoG6ruQ1v7KMs4czFE&_nc_zt=24&_nc_ht=scontent-sjc3-1.xx&edm=AAwGEdEEAAAA&_nc_gid=h0lvTHmInOPXTbhrP7aooQ&_nc_tpa=Q5bMBQLlAPU8Txc6v6QE4DQtH-80NXQY5mqQUvmx4XatHk0b9oyvtwHZW1X4zhck7qs5q4l7_cJdzU9NsQ&stp=c0.5000x0.5000f_dst-emg0_p64x64_q75_tt6&ur=68aae3&_nc_sid=58080a&oh=00_AQTve17tllZPxcGjSnJxJz0aJX8Y6NkiYuZFjV5-0NirLA&oe=6AF586CB",
       "tipo": "imagem",
       "roas": 10.69,
       "ctr": 1.8,
@@ -77039,7 +77051,7 @@
       "adName": "AD 02 - Fehdubs",
       "adSet": "00 - VV 95% 30D - Convidados tier top",
       "campaign": "[Compra][Feed/Stories][ABO] Animextreme 34 - Convidados",
-      "imageUrl": "https://external-sea5-1.xx.fbcdn.net/emg1/v/t13/7505439185669185164?url=https%3A%2F%2Fwww.facebook.com%2Fads%2Fimage%2F%3Fd%3DAQL1LCRcMjVt539-kNUg9NZWGjbQbdNjWP0N9k6Tw8NoBUZBe8RGYHrq1y_bROXemacs9RvIwega2_tThbyw0liDtCEF1ulI5VC4U9GTKYUDha0mp_60xC7BibErumxdUUvabe5WuXg7shSiKOw2JDfi&fb_obo=1&utld=facebook.com&_nc_sid=58080a&_nc_ht=external-sea5-1.xx.fbcdn.net&stp=c0.5000x0.5000f_dst-emg0_p64x64_q75_tt6&ccb=18-1&_nc_gid=bzGImB0cglGPQ-NyHeda-Q&edm=AAwGEdEEAAAA&_nc_zt=3&_nc_eui2=AeEfcbhY_Ot9y2N1T7qhTdTolDiX1X8BzdmUOJfVfwHN2WjcfBakgWW0PwPoTZoM2uD3ryp1x2LZjxm0wWyAy0cy&_nc_tpa=Q5bMBQLt1xP1PG6qNhenzFlpkcsBUk0y8uf1c4R4ltUq5RWH9cmoJznMBsO0xgptDtdHVKHBnRqcNwSFMA&oh=06_Q3_FATg19EZGH5IY72hwdt870Al3nhHpoNacuVGyRwL-cnf2&oe=6AF09A41",
+      "imageUrl": "https://external-sjc6-1.xx.fbcdn.net/emg1/v/t13/7505439185669185164?url=https%3A%2F%2Fwww.facebook.com%2Fads%2Fimage%2F%3Fd%3DAQL1LCRcMjVt539-kNUg9NZWGjbQbdNjWP0N9k6Tw8NoBUZBe8RGYHrq1y_bROXemacs9RvIwega2_tThbyw0liDtCEF1ulI5VC4U9GTKYUDha0mp_60xC7BibErumxdUUvabe5WuXg7shSiKOw2JDfi&fb_obo=1&utld=facebook.com&_nc_sid=58080a&_nc_ht=external-sjc6-1.xx.fbcdn.net&stp=c0.5000x0.5000f_dst-emg0_p64x64_q75_tt6&ccb=18-1&_nc_gid=h0lvTHmInOPXTbhrP7aooQ&edm=AAwGEdEEAAAA&_nc_zt=3&_nc_eui2=AeEfcbhY_Ot9y2N1T7qhTdTolDiX1X8BzdmUOJfVfwHN2WjcfBakgWW0PwPoTZoM2uD3ryp1x2LZjxm0wWyAy0cy&_nc_tpa=Q5bMBQLlfO2SFmxb91LkByRiyEHBj8ixjq7OuxvJWkz6VRVjEwdcCCQRt_JJ0lw4snKKxTRi9HZB7sBv8Q&oh=06_Q3_FAZstjInsVTT35yh9sUod1UjxevwsIKBNLtZNgow4o9JR&oe=6AF17B41",
       "tipo": "imagem",
       "roas": 1.74,
       "ctr": 2.8,
@@ -77059,7 +77071,7 @@
       "adName": "AD 01 - ISMEIOW",
       "adSet": "00 - VV 95% 30D - Convidados tier top",
       "campaign": "[Compra][Feed/Stories][ABO] Animextreme 34 - Convidados",
-      "imageUrl": "https://external-sea5-1.xx.fbcdn.net/emg1/v/t13/4011803195498808963?url=https%3A%2F%2Fwww.facebook.com%2Fads%2Fimage%2F%3Fd%3DAQL_mubdl30GWSmyFthHbqsRwFdqraTFRrX25dejJNOcBdt8jElSh620SreJWIUiLoEZhhiqLacXSUs1b5BrUd1SCMI-o8F_pXmLbHXBEf-fB0YwACWe6uzNC-sBvDJ8m2ITNXOo_W9Ieek2f_9s1LD_&fb_obo=1&utld=facebook.com&_nc_sid=58080a&_nc_ht=external-sea5-1.xx.fbcdn.net&stp=c0.5000x0.5000f_dst-emg0_p64x64_q75_tt6&ccb=18-1&_nc_gid=bzGImB0cglGPQ-NyHeda-Q&edm=AAwGEdEEAAAA&_nc_zt=3&_nc_eui2=AeG1qqFGwm9V5HtttTZvquM6V0WskvxbiKhXRayS_FuIqF7siBCQ6CrX-QvK6IxavEMdsOWJnD2z1M0j_MQetiwW&_nc_tpa=Q5bMBQK7AKvIBXQzwIiX_ewPWAgLXD5penl_-aEiGSkmnwcOGNlLe3Wy23tkwnJYss1slP2IyLdn7G6aHw&oh=06_Q3_FATWVQpAyovBCmd_Z1sBZR8vn9NXuKn0nbgPoWp2Cprr0&oe=6AF09283",
+      "imageUrl": "https://external-sjc6-1.xx.fbcdn.net/emg1/v/t13/4011803195498808963?url=https%3A%2F%2Fwww.facebook.com%2Fads%2Fimage%2F%3Fd%3DAQL_mubdl30GWSmyFthHbqsRwFdqraTFRrX25dejJNOcBdt8jElSh620SreJWIUiLoEZhhiqLacXSUs1b5BrUd1SCMI-o8F_pXmLbHXBEf-fB0YwACWe6uzNC-sBvDJ8m2ITNXOo_W9Ieek2f_9s1LD_&fb_obo=1&utld=facebook.com&_nc_sid=58080a&_nc_ht=external-sjc6-1.xx.fbcdn.net&stp=c0.5000x0.5000f_dst-emg0_p64x64_q75_tt6&ccb=18-1&_nc_gid=h0lvTHmInOPXTbhrP7aooQ&edm=AAwGEdEEAAAA&_nc_zt=3&_nc_eui2=AeG1qqFGwm9V5HtttTZvquM6V0WskvxbiKhXRayS_FuIqF7siBCQ6CrX-QvK6IxavEMdsOWJnD2z1M0j_MQetiwW&_nc_tpa=Q5bMBQJxvfIwwogt4aJ6oAhsJfcSEREaZmwPTt22mrnLUzFBLNeK_zcMiws_HK-IzvJ08diKbMm9KYpivw&oh=06_Q3_FAc87ZH7YZEF12s6862VQB-hqCQM8BcH9UscYzL-Jcqxa&oe=6AF17383",
       "tipo": "imagem",
       "roas": 0,
       "ctr": 2.01,
@@ -77079,7 +77091,7 @@
       "adName": "VD 09 - Goularte",
       "adSet": "00 - rpg",
       "campaign": "[Compra][Feed/Stories] Animextreme 34 - Interesses",
-      "imageUrl": "https://scontent-sea5-1.xx.fbcdn.net/v/t15.5256-10/796400627_2584669918640389_6036310739250939891_n.jpg?_nc_cat=110&ccb=1-7&_nc_eui2=AeGc0kXjVNlnV6SuQEvBt9V6EYhRu9SrvTwRiFG71Ku9PIag0j0EEqU0B1PraM7kkB930zqXpsa8tBBvz-12Iivm&_nc_ohc=TLChOYVkZpsQ7kNvwG_rY6S&_nc_oc=Adr_pTDMv36QJq28tTajXFkpHT1XjmXutvojYOiMF6RTKy3jvbQd3KTBZZPRZMbJm6s&_nc_zt=23&_nc_ht=scontent-sea5-1.xx&edm=AAwGEdEEAAAA&_nc_gid=bzGImB0cglGPQ-NyHeda-Q&_nc_tpa=Q5bMBQK391oAJXU5aMa9qIPQ6rRg3cFaCAS6EVH-2PJxrg5yXkYBoG_XJ0aIAYQOgXW8ctAqiavHaq76qA&stp=c0.5000x0.5000f_dst-emg0_p64x64_q75_tt6&ur=5fad0e&_nc_sid=58080a&oh=00_AQSGnznDJvrMHxW804jX_NEAZrzIOF3U8Lqiimr8eOHGcA&oe=6AF4A276",
+      "imageUrl": "https://scontent-sjc3-1.xx.fbcdn.net/v/t15.5256-10/796400627_2584669918640389_6036310739250939891_n.jpg?_nc_cat=110&ccb=1-7&_nc_eui2=AeGc0kXjVNlnV6SuQEvBt9V6EYhRu9SrvTwRiFG71Ku9PIag0j0EEqU0B1PraM7kkB930zqXpsa8tBBvz-12Iivm&_nc_ohc=7wIvXNBbPUUQ7kNvwHQA91a&_nc_oc=Adp-WcAfFTSoB3MT5J-WWvVLFLdgGRXphHWgn6-lpV1vrhlVKVW95uJ6nE_UhVbKXww&_nc_zt=23&_nc_ht=scontent-sjc3-1.xx&edm=AAwGEdEEAAAA&_nc_gid=h0lvTHmInOPXTbhrP7aooQ&_nc_tpa=Q5bMBQJ1H1UwCVRri4C2Hc3Fao2Wjh80hIoIjIEXPDcjKLbT6U6qMlK9nYKu-EPj41dTZ2IkRY82zHUJnQ&stp=c0.5000x0.5000f_dst-emg0_p64x64_q75_tt6&ur=5fad0e&_nc_sid=58080a&oh=00_AQQL3930j09_9EOCZzKLknOdPhELJ2Le6pYbH-hfM_ybVg&oe=6AF58376",
       "tipo": "video",
       "roas": 101.4,
       "ctr": 1.69,
@@ -77099,7 +77111,7 @@
       "adName": "AD 04 - Danny Bond - Video",
       "adSet": "00 - afterparty",
       "campaign": "[Compra][Feed/Stories] Animextreme 34 - After",
-      "imageUrl": "https://scontent-sea5-1.xx.fbcdn.net/v/t15.5256-10/825891801_1114323361134262_1978527304911856071_n.jpg?_nc_cat=103&ccb=1-7&_nc_eui2=AeG6VCcnNI7U_diEBcEAfxMGTEZkfJtF-g9MRmR8m0X6D0qIeJgHBJ1-jc9LwllCY8MO3v7VGC9FSbTrC3VsGavo&_nc_ohc=vAT-TI8ECvoQ7kNvwF26MDf&_nc_oc=Adr5waATlTKWqr09yaaem8_IGoDG11Uruy7n2e6A6-ZKnVtOm-7cOmE4YGvUxWVQIxg&_nc_zt=23&_nc_ht=scontent-sea5-1.xx&edm=AAwGEdEEAAAA&_nc_gid=bzGImB0cglGPQ-NyHeda-Q&_nc_tpa=Q5bMBQK-rmVUc_Ionrx9noGKOb5VWrW0rTMxI8naU_sgKb91kq3NiUbI1bBMaB1w8XqiPIqdI9fjeIT_og&stp=c0.5000x0.5000f_dst-emg0_p64x64_q75_tt6&ur=5fad0e&_nc_sid=58080a&oh=00_AQSj-sroaNGUGjjBCVe8gGsVCxrbnwvmX3pOYNkfeGsiIg&oe=6AF474D6",
+      "imageUrl": "https://scontent-sjc3-1.xx.fbcdn.net/v/t15.5256-10/825891801_1114323361134262_1978527304911856071_n.jpg?_nc_cat=103&ccb=1-7&_nc_eui2=AeG6VCcnNI7U_diEBcEAfxMGTEZkfJtF-g9MRmR8m0X6D0qIeJgHBJ1-jc9LwllCY8MO3v7VGC9FSbTrC3VsGavo&_nc_ohc=vAT-TI8ECvoQ7kNvwG69-TR&_nc_oc=AdqbBx4DSnOMhLJ3RZOciAyzIPh4fMHrfH2y70B5rqHUCW9efh9G9DgRrKuIYUkYdP4&_nc_zt=23&_nc_ht=scontent-sjc3-1.xx&edm=AAwGEdEEAAAA&_nc_gid=h0lvTHmInOPXTbhrP7aooQ&_nc_tpa=Q5bMBQJk7Occn6gQnCw-Anl4XkabHYR2ZM-dZiCE29VYwQzkJjra8-lmKJXaKc5Wu86SksQyVtcJgiYxQw&stp=c0.5000x0.5000f_dst-emg0_p64x64_q75_tt6&ur=5fad0e&_nc_sid=58080a&oh=00_AQQM4uHM4nKaz_u_5B87qDHWHqWbt32vrTYK5f7bvHGCvw&oe=6AF555D6",
       "tipo": "video",
       "roas": 85.05,
       "ctr": 1.01,
@@ -77119,7 +77131,7 @@
       "adName": "AD 05 - line after",
       "adSet": "00 - afterparty",
       "campaign": "[Compra][Feed/Stories] Animextreme 34 - After",
-      "imageUrl": "https://external-sea5-1.xx.fbcdn.net/emg1/v/t13/15641649163878937032?url=https%3A%2F%2Fwww.facebook.com%2Fads%2Fimage%2F%3Fd%3DAQLXwwPZy3SN1Ct1UywEBF3uUiJ7ODZIR37XhvKj52HHiYK9-HiZ-JqFAkb_WeWXJ6ri2Mhay8nJ2kLfrOKv5EpUYe_5Qw4u90UVcnFjGxMhuDvgRfieQd5nTnYL0O1MzdR0VX_j5ZgUqWLHMAyfV4IE&fb_obo=1&utld=facebook.com&_nc_sid=58080a&_nc_ht=external-sea5-1.xx.fbcdn.net&stp=c0.5000x0.5000f_dst-emg0_p64x64_q75_tt6&ccb=18-1&_nc_gid=bzGImB0cglGPQ-NyHeda-Q&edm=AAwGEdEEAAAA&_nc_zt=3&_nc_eui2=AeFiFqx4shCBLfJdxXsOfRltqwLSXsFP1q-rAtJewU_Wr9ExiVnZLybDQ3StWtsZh78Ptl8APgn8QLJjkQRjUpGk&_nc_tpa=Q5bMBQKZn6rlWHB6MbcmRqRW8bloBUDS49Uu7lRmI4xqjcn_IuSzhXSR-bh6Vz9otgyKNgdplkWgTzHocg&oh=06_Q3_FAQpIwZApO9PeV3EbU5QHPHm_o1ujWMiv9gMjU4ETqISg&oe=6AF09B26",
+      "imageUrl": "https://external-sjc6-1.xx.fbcdn.net/emg1/v/t13/15641649163878937032?url=https%3A%2F%2Fwww.facebook.com%2Fads%2Fimage%2F%3Fd%3DAQLXwwPZy3SN1Ct1UywEBF3uUiJ7ODZIR37XhvKj52HHiYK9-HiZ-JqFAkb_WeWXJ6ri2Mhay8nJ2kLfrOKv5EpUYe_5Qw4u90UVcnFjGxMhuDvgRfieQd5nTnYL0O1MzdR0VX_j5ZgUqWLHMAyfV4IE&fb_obo=1&utld=facebook.com&_nc_sid=58080a&_nc_ht=external-sjc6-1.xx.fbcdn.net&stp=c0.5000x0.5000f_dst-emg0_p64x64_q75_tt6&ccb=18-1&_nc_gid=h0lvTHmInOPXTbhrP7aooQ&edm=AAwGEdEEAAAA&_nc_zt=3&_nc_eui2=AeFiFqx4shCBLfJdxXsOfRltqwLSXsFP1q-rAtJewU_Wr9ExiVnZLybDQ3StWtsZh78Ptl8APgn8QLJjkQRjUpGk&_nc_tpa=Q5bMBQKJEFuer_139s-kWO5KfwqkkWRzN8bLyjv4Vmo1tyiV51vCMNfCW1SdSzcRfeIm41lC8P6UoeGBbA&oh=06_Q3_FAa81kj943-pSzg4LgCFD7aLJIs5qMRs2DdQNTvJcAAAn&oe=6AF17C26",
       "tipo": "imagem",
       "roas": 81.11,
       "ctr": 1.29,
@@ -77139,7 +77151,7 @@
       "adName": "AD 01 - Danny Bond after",
       "adSet": "00 - afterparty",
       "campaign": "[Compra][Feed/Stories] Animextreme 34 - After",
-      "imageUrl": "https://external-sea5-1.xx.fbcdn.net/emg1/v/t13/3071389827059925750?url=https%3A%2F%2Fwww.facebook.com%2Fads%2Fimage%2F%3Fd%3DAQJSC5MFOkw2merUUTvbwdPEEjeirm7fehaQUZk-Gh2QO9Z97CUKgo03VOd4zvqpGGl64p0WK_QFnIFK88TrrEhFF82zdkxSaIoadbubhTjGbWkhrunFZISvbT9HqChdWJ5K1cHOPq3P0fpEpAHN3p6l&fb_obo=1&utld=facebook.com&_nc_sid=58080a&_nc_ht=external-sea5-1.xx.fbcdn.net&stp=c0.5000x0.5000f_dst-emg0_p64x64_q75_tt6&ccb=18-1&_nc_gid=bzGImB0cglGPQ-NyHeda-Q&edm=AAwGEdEEAAAA&_nc_zt=3&_nc_eui2=AeG6q7GBcL1ongdiiSTFsowApD0KOUTv61OkPQo5RO_rU3kfYoBPE3TPhwMyAYEaKPjgcu1IcL0CNX-v2lr_BmiN&_nc_tpa=Q5bMBQLJwbTkQJ7xPWlAb6v43F9uIHIAsVwEAM8jCDIWhQC0j9_GTM3RQ1RO8mwIZ3g0FTy4uxa6JpcWIw&oh=06_Q3_FATAXkXfd0LE27C_MrHZXpXceiPIvflGn_AeEkW1m__nH&oe=6AF09E5C",
+      "imageUrl": "https://external-sjc6-1.xx.fbcdn.net/emg1/v/t13/3071389827059925750?url=https%3A%2F%2Fwww.facebook.com%2Fads%2Fimage%2F%3Fd%3DAQJSC5MFOkw2merUUTvbwdPEEjeirm7fehaQUZk-Gh2QO9Z97CUKgo03VOd4zvqpGGl64p0WK_QFnIFK88TrrEhFF82zdkxSaIoadbubhTjGbWkhrunFZISvbT9HqChdWJ5K1cHOPq3P0fpEpAHN3p6l&fb_obo=1&utld=facebook.com&_nc_sid=58080a&_nc_ht=external-sjc6-1.xx.fbcdn.net&stp=c0.5000x0.5000f_dst-emg0_p64x64_q75_tt6&ccb=18-1&_nc_gid=h0lvTHmInOPXTbhrP7aooQ&edm=AAwGEdEEAAAA&_nc_zt=3&_nc_eui2=AeG6q7GBcL1ongdiiSTFsowApD0KOUTv61OkPQo5RO_rU3kfYoBPE3TPhwMyAYEaKPjgcu1IcL0CNX-v2lr_BmiN&_nc_tpa=Q5bMBQJoA2Q2ylysIXf_g07hYRXDO_mlBEW-sZ6z0BMEb251zU9o_-RiP3wgYpoJzWzDzETpR4H2gKN1sA&oh=06_Q3_FAViJMDIn757IVV2GhsV6s28jiXunHm96mgb2Y-DxP3WN&oe=6AF17F5C",
       "tipo": "imagem",
       "roas": 57.12,
       "ctr": 1.22,
@@ -77159,7 +77171,7 @@
       "adName": "AD 03 - Dj Kalisto",
       "adSet": "00 - afterparty",
       "campaign": "[Compra][Feed/Stories] Animextreme 34 - After",
-      "imageUrl": "https://scontent-sea5-1.xx.fbcdn.net/v/t39.30808-6/790505891_1482462670582837_2972995317429838408_n.jpg?_nc_cat=104&ccb=1-7&_nc_eui2=AeH60CwzEgpKaQm9NU3BPjf--GnTgmkZJAj4adOCaRkkCJqFEYZYdx5DQotvyVT3Tep9hPso49gOfUs-RLkbqN2R&_nc_ohc=5NWxk2eZ234Q7kNvwE_OKCb&_nc_oc=AdosbwDmZ78OJbiIQX6lVgkUC08vKD7LdL-78pcghY8cfelr3zXzcum44i8y7CHJ-dg&_nc_zt=23&_nc_ht=scontent-sea5-1.xx&edm=AAwGEdEEAAAA&_nc_gid=bzGImB0cglGPQ-NyHeda-Q&_nc_tpa=Q5bMBQLgUgXq87KwPHTqPytxyELVv1DymMvBoAx6Y73bR66tJzZ4QVWjMyJY1aH0b4zRpOIAaHl9nxbCHQ&stp=c0.5000x0.5000f_dst-emg0_p64x64_q75_tt6&ur=8c4ec0&_nc_sid=58080a&oh=00_AQSJkYmm7QqpyUPmGeUyqj987mVD3v-PTWJNDEifjaQuEg&oe=6AF47AA1",
+      "imageUrl": "https://scontent-sjc6-1.xx.fbcdn.net/v/t39.30808-6/790505891_1482462670582837_2972995317429838408_n.jpg?_nc_cat=104&ccb=1-7&_nc_eui2=AeH60CwzEgpKaQm9NU3BPjf--GnTgmkZJAj4adOCaRkkCJqFEYZYdx5DQotvyVT3Tep9hPso49gOfUs-RLkbqN2R&_nc_ohc=5NWxk2eZ234Q7kNvwFeYKM-&_nc_oc=Ado322IApT_g-y1_SXKpL7nJ0L8_ebYuAj043XIakIh--Tq6t-hl1YApEKFdo2Nu4p0&_nc_zt=23&_nc_ht=scontent-sjc6-1.xx&edm=AAwGEdEEAAAA&_nc_gid=h0lvTHmInOPXTbhrP7aooQ&_nc_tpa=Q5bMBQL2RAlnx-_f3nlrdzlgswyWggA9S0oeezRWneYTtKCLBFy-YaU-hQXdLS2R8JqPWhDsz9y7ZLOivg&stp=c0.5000x0.5000f_dst-emg0_p64x64_q75_tt6&ur=8c4ec0&_nc_sid=58080a&oh=00_AQQwjDp46GXnwCrJ1-hPdGVCEeYbF631csT1aZMbK6fd5A&oe=6AF55BA1",
       "tipo": "imagem",
       "roas": 47.3,
       "ctr": 0.92,
@@ -77179,7 +77191,7 @@
       "adName": "AD 02 - Mc Maha",
       "adSet": "00 - afterparty",
       "campaign": "[Compra][Feed/Stories] Animextreme 34 - After",
-      "imageUrl": "https://scontent-sea5-1.xx.fbcdn.net/v/t39.30808-6/814800598_1496826229146481_4825597847912635247_n.jpg?_nc_cat=110&ccb=1-7&_nc_eui2=AeEQDH0yb2_VlvN0rZrTL6Gj1p8WxuUWyOHWnxbG5RbI4YJQ6yIAb11avo49fPCMU52snX_Hzbo_CokDZkFxRx32&_nc_ohc=q0sVPDwVooQQ7kNvwGK27Jb&_nc_oc=AdrB6pkqsFh57Ohs1pxIcDgmEV0AZRCu0Ac1UIE9SvEJg_BGLa7AG3LFquUGD8lpa-I&_nc_zt=23&_nc_ht=scontent-sea5-1.xx&edm=AAwGEdEEAAAA&_nc_gid=bzGImB0cglGPQ-NyHeda-Q&_nc_tpa=Q5bMBQIE6Haa6XyqegR4fpUp1H0zEWZdGofVvYpm65BZo8Z_p-8uAWKiOZEstUE5rBmGrQw4M9ojVF5YLQ&stp=c0.5000x0.5000f_dst-emg0_p64x64_q75_tt6&ur=8c4ec0&_nc_sid=58080a&oh=00_AQTX0LhhSoWcAp4Z546SFR1D2Pu5oIb4WFOW9yXl6Kurwg&oe=6AF494A1",
+      "imageUrl": "https://scontent-sjc3-1.xx.fbcdn.net/v/t39.30808-6/814800598_1496826229146481_4825597847912635247_n.jpg?_nc_cat=110&ccb=1-7&_nc_eui2=AeEQDH0yb2_VlvN0rZrTL6Gj1p8WxuUWyOHWnxbG5RbI4YJQ6yIAb11avo49fPCMU52snX_Hzbo_CokDZkFxRx32&_nc_ohc=q0sVPDwVooQQ7kNvwGQnIaj&_nc_oc=AdqBKa8keZ-5Up9xb_jcwgIgDP7gkDT2u5Z_gDv-cdP4HFamJI8EKybbQqKw1LbAO28&_nc_zt=23&_nc_ht=scontent-sjc3-1.xx&edm=AAwGEdEEAAAA&_nc_gid=h0lvTHmInOPXTbhrP7aooQ&_nc_tpa=Q5bMBQJRrY6Ii9zdvq6cKf6I3QWa4SUgIf5o8HbPlwfio3Mn1B-1Yhmau5_PaDBJPvFqQ04SUDO0kyGFQA&stp=c0.5000x0.5000f_dst-emg0_p64x64_q75_tt6&ur=8c4ec0&_nc_sid=58080a&oh=00_AQQlZIbab1JM0CuwxRSVoBeSvjaL_xhPrLPJhL7A6xk1Wg&oe=6AF575A1",
       "tipo": "imagem",
       "roas": 47.09,
       "ctr": 1.12,
@@ -77199,7 +77211,7 @@
       "adName": "AD - Line Sábado",
       "adSet": "00 - afterparty",
       "campaign": "[Compra][Feed/Stories] Animextreme 34 - Interesses",
-      "imageUrl": "https://external-sea5-1.xx.fbcdn.net/emg1/v/t13/16223154695164381229?url=https%3A%2F%2Fwww.facebook.com%2Fads%2Fimage%2F%3Fd%3DAQLiOOjylshcrVSJzPXqID18mWXPuK8coU1C8gSnXWK6NsQ7nqeU3F_0HxNgzf0VwUz8TdSGfdq8lf8i9yLq9w5orH4c4Q_YlJWmLQcL_cmw7wHSclLtsFtUHc3zJB5vGv3YckddMmiNLGy-Iegwbrl2&fb_obo=1&utld=facebook.com&_nc_sid=58080a&_nc_ht=external-sea5-1.xx.fbcdn.net&stp=c0.5000x0.5000f_dst-emg0_p64x64_q75_tt6&ccb=18-1&_nc_gid=bzGImB0cglGPQ-NyHeda-Q&edm=AAwGEdEEAAAA&_nc_zt=3&_nc_eui2=AeFJ_Kgt6jVpMsQvAKt8IBadGv3NHM6GDtUa_c0czoYO1ROfluKGiGTdmjem2YUJGrXPYjwBpuh0M6zWFh6twrS0&_nc_tpa=Q5bMBQIr-CaMAjohcWo38UjeG-rpY5ZpHQE79gNCE0-y4mCjHsIbyZxtK5-hyQ5uSUHLainR0qR5y3km5w&oh=06_Q3_FARzHTexdM8Ryiv_CqEN_3erYkXyNv-uoDkjUWdLGwehK&oe=6AF0AF41",
+      "imageUrl": "https://external-sjc6-1.xx.fbcdn.net/emg1/v/t13/16223154695164381229?url=https%3A%2F%2Fwww.facebook.com%2Fads%2Fimage%2F%3Fd%3DAQLiOOjylshcrVSJzPXqID18mWXPuK8coU1C8gSnXWK6NsQ7nqeU3F_0HxNgzf0VwUz8TdSGfdq8lf8i9yLq9w5orH4c4Q_YlJWmLQcL_cmw7wHSclLtsFtUHc3zJB5vGv3YckddMmiNLGy-Iegwbrl2&fb_obo=1&utld=facebook.com&_nc_sid=58080a&_nc_ht=external-sjc6-1.xx.fbcdn.net&stp=c0.5000x0.5000f_dst-emg0_p64x64_q75_tt6&ccb=18-1&_nc_gid=h0lvTHmInOPXTbhrP7aooQ&edm=AAwGEdEEAAAA&_nc_zt=3&_nc_eui2=AeFJ_Kgt6jVpMsQvAKt8IBadGv3NHM6GDtUa_c0czoYO1ROfluKGiGTdmjem2YUJGrXPYjwBpuh0M6zWFh6twrS0&_nc_tpa=Q5bMBQJRMM5SmGAXRfM0TCBTF37qVxWOrQg4tfZ5GxRVbqVWWuXj2L1IYsv9HlB2taP1VfVkCltPpSUOUQ&oh=06_Q3_FAdgcwrj9nZX-iM8BG0qlqnDhfQAYDPA3PO7cuJFYUjDj&oe=6AF19041",
       "tipo": "imagem",
       "roas": 46.08,
       "ctr": 2.88,
@@ -77219,7 +77231,7 @@
       "adName": "AD - Line Domingo",
       "adSet": "00 - afterparty",
       "campaign": "[Compra][Feed/Stories] Animextreme 34 - Interesses",
-      "imageUrl": "https://external-sea5-1.xx.fbcdn.net/emg1/v/t13/10118164597555952331?url=https%3A%2F%2Fwww.facebook.com%2Fads%2Fimage%2F%3Fd%3DAQIYsm4QClgSQl-VpBexkL5bUky2x99xj1Cg2B79bN8yHc34gbK0pq-S_yjUqzCfWAb0TQNqtKRmBhVAZSWjxYn9wckd4JNFzVtLXDwFFsPd8DridijA4YjphDaMK9xaALJb6mTxXH3NaVB09xumwhT8&fb_obo=1&utld=facebook.com&_nc_sid=58080a&_nc_ht=external-sea5-1.xx.fbcdn.net&stp=c0.5000x0.5000f_dst-emg0_p64x64_q75_tt6&ccb=18-1&_nc_gid=bzGImB0cglGPQ-NyHeda-Q&edm=AAwGEdEEAAAA&_nc_zt=3&_nc_eui2=AeE-0Cw1t4HHVERKG_nIuat3PdC-vmTLZ6M90L6-ZMtno1tyAIyyMiAZshMlk4ZDEmrBOtxgqRHyjFbWA2iqi7s_&_nc_tpa=Q5bMBQL1ZTaN9BavzIVL6ZEz_ps8jhz39HJ1t2sT4ZTYgWf9nyfwoJpOT111UwXFW7Kec1PqEBjZmWuJEQ&oh=06_Q3_FAbu5H6L2IMVvC1Zx685v1HABpA69S0_4rc-GgFPlkh7F&oe=6AF07EB9",
+      "imageUrl": "https://external-sjc6-1.xx.fbcdn.net/emg1/v/t13/10118164597555952331?url=https%3A%2F%2Fwww.facebook.com%2Fads%2Fimage%2F%3Fd%3DAQIYsm4QClgSQl-VpBexkL5bUky2x99xj1Cg2B79bN8yHc34gbK0pq-S_yjUqzCfWAb0TQNqtKRmBhVAZSWjxYn9wckd4JNFzVtLXDwFFsPd8DridijA4YjphDaMK9xaALJb6mTxXH3NaVB09xumwhT8&fb_obo=1&utld=facebook.com&_nc_sid=58080a&_nc_ht=external-sjc6-1.xx.fbcdn.net&stp=c0.5000x0.5000f_dst-emg0_p64x64_q75_tt6&ccb=18-1&_nc_gid=h0lvTHmInOPXTbhrP7aooQ&edm=AAwGEdEEAAAA&_nc_zt=3&_nc_eui2=AeE-0Cw1t4HHVERKG_nIuat3PdC-vmTLZ6M90L6-ZMtno1tyAIyyMiAZshMlk4ZDEmrBOtxgqRHyjFbWA2iqi7s_&_nc_tpa=Q5bMBQJtr2h476yjot2hzR-Uvv37V1jkgnC-myq82lA86ZD3eGDICXY3Z3a5dLXb-Fnd4JqFBztGjq8eTg&oh=06_Q3_FATQ-SklNN7oFVT8PnkSeYhyOnSJKdw5G6qzMzATqOjlY&oe=6AF15FB9",
       "tipo": "imagem",
       "roas": 41.53,
       "ctr": 3.12,
@@ -77239,7 +77251,7 @@
       "adName": "VD 07 - Caduxinn + Feuripe",
       "adSet": "00 - anime e manga",
       "campaign": "[Compra][Feed/Stories] Animextreme 34 - V2",
-      "imageUrl": "https://scontent-sea5-1.xx.fbcdn.net/v/t15.5256-10/818552963_1052862491078939_7891847183084301384_n.jpg?_nc_cat=103&ccb=1-7&_nc_eui2=AeF0i06C5I5R4m38ACsI-L1gPizyeqxFLcM-LPJ6rEUtww4kBW55gvOz9kqVx4s9e8ArUypzDhGaw9hzsSY7HXS_&_nc_ohc=MSr2_mkpT0gQ7kNvwG-ayC_&_nc_oc=AdoqVmXKl9TW0OnaA3YTWyuKhH-4SxsLI71qPDvhcZh40cs9z9YDwUEnDsM1FMJqd60&_nc_zt=23&_nc_ht=scontent-sea5-1.xx&edm=AAwGEdEEAAAA&_nc_gid=bzGImB0cglGPQ-NyHeda-Q&_nc_tpa=Q5bMBQKo2Np8vp3zvnGNbMDgsjhN18FkqWegVi2cPulszx5OHkARmF4bpYM6Pcq6gYzHtNBCvnLJ0WrIWw&stp=c0.5000x0.5000f_dst-emg0_p64x64_q75_tt6&ur=5fad0e&_nc_sid=58080a&oh=00_AQSDZYqW2Pl_VaID2cXMjaTIkYp7k7XheVeC05m3dmtntQ&oe=6AF499D8",
+      "imageUrl": "https://scontent-sjc3-1.xx.fbcdn.net/v/t15.5256-10/818552963_1052862491078939_7891847183084301384_n.jpg?_nc_cat=103&ccb=1-7&_nc_eui2=AeF0i06C5I5R4m38ACsI-L1gPizyeqxFLcM-LPJ6rEUtww4kBW55gvOz9kqVx4s9e8ArUypzDhGaw9hzsSY7HXS_&_nc_ohc=u8pEQ0TG-VsQ7kNvwGtyNS4&_nc_oc=AdoaWmjTYC6mNYjmdsH0tSDyNKr99fZPHAnUESMVRNHEjpKWagSughEGiBdG-UQ-58I&_nc_zt=23&_nc_ht=scontent-sjc3-1.xx&edm=AAwGEdEEAAAA&_nc_gid=h0lvTHmInOPXTbhrP7aooQ&_nc_tpa=Q5bMBQI_EJduOH2FhGXUumkIHojkma83-qAd9O7HdvzZOPPX4fGOy__fCoXjynxTGuZsVaU5eDjFcI6mwA&stp=c0.5000x0.5000f_dst-emg0_p64x64_q75_tt6&ur=5fad0e&_nc_sid=58080a&oh=00_AQRA5xZw-Shtb1pk73diQ4bqWLdvdrRvDLUDiTFXHZ8lQA&oe=6AF57AD8",
       "tipo": "video",
       "roas": 34.59,
       "ctr": 0.59,
@@ -77259,7 +77271,7 @@
       "adName": "VD 11 - Barni",
       "adSet": "00 - afterparty",
       "campaign": "[Compra][Feed/Stories] Animextreme 34 - V2",
-      "imageUrl": "https://scontent-sea5-2.xx.fbcdn.net/v/t15.5256-10/818428349_1932554357912766_8519260741468270618_n.jpg?_nc_cat=107&ccb=1-7&_nc_eui2=AeEzVb4ClalDEV5wf7lGwXdlRDBTR-ypTt5EMFNH7KlO3iRmP6-AB46C9XsDCjI_S8DNUNJgx14qWw3Sveee32Zb&_nc_ohc=jx0x9b84wV8Q7kNvwH9KCjm&_nc_oc=Adq9KhnR6xtMAKCDcpfxhpiwDWbFihmmpR5c6IbUsoEvLTrLzqPTW3jC_Mv1qytWk9I&_nc_zt=23&_nc_ht=scontent-sea5-2.xx&edm=AAwGEdEEAAAA&_nc_gid=bzGImB0cglGPQ-NyHeda-Q&_nc_tpa=Q5bMBQL-i7l6x8B-iz5XyYLdGgh3tlRxXeEo7tniO3ysEKf3avSe3i9taVpjmvd-33MN5NCqDalHFLJWLA&stp=c0.5000x0.5000f_dst-emg0_p64x64_q75_tt6&ur=5fad0e&_nc_sid=58080a&oh=00_AQSG0Mx7sEUasYGEszIlyPcy8eOfyw0J0QKkdUM7lmVGdg&oe=6AF49A30",
+      "imageUrl": "https://scontent-sjc6-1.xx.fbcdn.net/v/t15.5256-10/818428349_1932554357912766_8519260741468270618_n.jpg?_nc_cat=107&ccb=1-7&_nc_eui2=AeEzVb4ClalDEV5wf7lGwXdlRDBTR-ypTt5EMFNH7KlO3iRmP6-AB46C9XsDCjI_S8DNUNJgx14qWw3Sveee32Zb&_nc_ohc=jx0x9b84wV8Q7kNvwEolTQU&_nc_oc=Adqyq7jX7eM6cYg1pRV34ptwZ76bpxH10w9xXMQuugOlJIKbDUt7gkFNwW2YdNgV8Zw&_nc_zt=23&_nc_ht=scontent-sjc6-1.xx&edm=AAwGEdEEAAAA&_nc_gid=h0lvTHmInOPXTbhrP7aooQ&_nc_tpa=Q5bMBQJYnCjBd1TSfTYKdJx4fHgTv_AS_xCzyHtl8QjTtRwx4u48F-XzjBbwsR6DUz1Qulm4yG-H5feg-g&stp=c0.5000x0.5000f_dst-emg0_p64x64_q75_tt6&ur=5fad0e&_nc_sid=58080a&oh=00_AQSZEAljeE9_U4jVBYkP0YcZAAILarYobJk52gYP04Nmpg&oe=6AF57B30",
       "tipo": "video",
       "roas": 33.85,
       "ctr": 1.17,
@@ -77277,363 +77289,363 @@
   ],
   "seguidores": [
     {
-      "data": "2026-10-09",
-      "novos": 125378,
-      "total": 0,
-      "rede": "facebook"
-    },
-    {
       "data": "2026-10-10",
-      "novos": 125374,
-      "total": 0,
-      "rede": "facebook"
-    },
-    {
-      "data": "2026-10-11",
-      "novos": 125373,
-      "total": 0,
-      "rede": "facebook"
-    },
-    {
-      "data": "2026-10-12",
-      "novos": 125366,
-      "total": 0,
-      "rede": "facebook"
-    },
-    {
-      "data": "2026-10-13",
-      "novos": 125369,
-      "total": 0,
-      "rede": "facebook"
-    },
-    {
-      "data": "2026-10-14",
-      "novos": 125369,
-      "total": 0,
-      "rede": "facebook"
-    },
-    {
-      "data": "2026-10-15",
-      "novos": 125364,
-      "total": 0,
-      "rede": "facebook"
-    },
-    {
-      "data": "2026-10-16",
-      "novos": 125363,
-      "total": 0,
-      "rede": "facebook"
-    },
-    {
-      "data": "2026-10-17",
-      "novos": 125363,
-      "total": 0,
-      "rede": "facebook"
-    },
-    {
-      "data": "2026-10-18",
-      "novos": 125367,
-      "total": 0,
-      "rede": "facebook"
-    },
-    {
-      "data": "2026-10-19",
-      "novos": 125374,
-      "total": 0,
-      "rede": "facebook"
-    },
-    {
-      "data": "2026-10-20",
       "novos": 125375,
       "total": 0,
       "rede": "facebook"
     },
     {
-      "data": "2026-10-21",
+      "data": "2026-10-11",
       "novos": 125374,
       "total": 0,
       "rede": "facebook"
     },
     {
-      "data": "2026-10-22",
-      "novos": 125372,
-      "total": 0,
-      "rede": "facebook"
-    },
-    {
-      "data": "2026-10-23",
-      "novos": 125370,
-      "total": 0,
-      "rede": "facebook"
-    },
-    {
-      "data": "2026-10-24",
-      "novos": 125370,
-      "total": 0,
-      "rede": "facebook"
-    },
-    {
-      "data": "2026-10-25",
-      "novos": 125369,
-      "total": 0,
-      "rede": "facebook"
-    },
-    {
-      "data": "2026-10-26",
+      "data": "2026-10-12",
       "novos": 125367,
       "total": 0,
       "rede": "facebook"
     },
     {
-      "data": "2026-10-27",
-      "novos": 125361,
-      "total": 0,
-      "rede": "facebook"
-    },
-    {
-      "data": "2026-10-28",
-      "novos": 125358,
-      "total": 0,
-      "rede": "facebook"
-    },
-    {
-      "data": "2026-10-29",
-      "novos": 125356,
-      "total": 0,
-      "rede": "facebook"
-    },
-    {
-      "data": "2026-10-30",
-      "novos": 125356,
-      "total": 0,
-      "rede": "facebook"
-    },
-    {
-      "data": "2026-10-31",
-      "novos": 125361,
-      "total": 0,
-      "rede": "facebook"
-    },
-    {
-      "data": "2026-11-01",
-      "novos": 125369,
-      "total": 0,
-      "rede": "facebook"
-    },
-    {
-      "data": "2026-11-02",
-      "novos": 125369,
-      "total": 0,
-      "rede": "facebook"
-    },
-    {
-      "data": "2026-11-03",
+      "data": "2026-10-13",
       "novos": 125370,
       "total": 0,
       "rede": "facebook"
     },
     {
-      "data": "2026-11-04",
-      "novos": 125369,
+      "data": "2026-10-14",
+      "novos": 125370,
       "total": 0,
       "rede": "facebook"
     },
     {
-      "data": "2026-11-05",
-      "novos": 125369,
+      "data": "2026-10-15",
+      "novos": 125365,
       "total": 0,
       "rede": "facebook"
     },
     {
-      "data": "2026-11-06",
+      "data": "2026-10-16",
+      "novos": 125364,
+      "total": 0,
+      "rede": "facebook"
+    },
+    {
+      "data": "2026-10-17",
+      "novos": 125364,
+      "total": 0,
+      "rede": "facebook"
+    },
+    {
+      "data": "2026-10-18",
       "novos": 125368,
       "total": 0,
       "rede": "facebook"
     },
     {
-      "data": "2026-11-07",
-      "novos": 125366,
-      "total": 125366,
+      "data": "2026-10-19",
+      "novos": 125375,
+      "total": 0,
       "rede": "facebook"
     },
     {
-      "data": "2026-10-08",
-      "novos": 172,
-      "total": 79113,
-      "rede": "instagram"
+      "data": "2026-10-20",
+      "novos": 125376,
+      "total": 0,
+      "rede": "facebook"
+    },
+    {
+      "data": "2026-10-21",
+      "novos": 125375,
+      "total": 0,
+      "rede": "facebook"
+    },
+    {
+      "data": "2026-10-22",
+      "novos": 125373,
+      "total": 0,
+      "rede": "facebook"
+    },
+    {
+      "data": "2026-10-23",
+      "novos": 125371,
+      "total": 0,
+      "rede": "facebook"
+    },
+    {
+      "data": "2026-10-24",
+      "novos": 125371,
+      "total": 0,
+      "rede": "facebook"
+    },
+    {
+      "data": "2026-10-25",
+      "novos": 125370,
+      "total": 0,
+      "rede": "facebook"
+    },
+    {
+      "data": "2026-10-26",
+      "novos": 125368,
+      "total": 0,
+      "rede": "facebook"
+    },
+    {
+      "data": "2026-10-27",
+      "novos": 125362,
+      "total": 0,
+      "rede": "facebook"
+    },
+    {
+      "data": "2026-10-28",
+      "novos": 125359,
+      "total": 0,
+      "rede": "facebook"
+    },
+    {
+      "data": "2026-10-29",
+      "novos": 125357,
+      "total": 0,
+      "rede": "facebook"
+    },
+    {
+      "data": "2026-10-30",
+      "novos": 125357,
+      "total": 0,
+      "rede": "facebook"
+    },
+    {
+      "data": "2026-10-31",
+      "novos": 125362,
+      "total": 0,
+      "rede": "facebook"
+    },
+    {
+      "data": "2026-11-01",
+      "novos": 125370,
+      "total": 0,
+      "rede": "facebook"
+    },
+    {
+      "data": "2026-11-02",
+      "novos": 125370,
+      "total": 0,
+      "rede": "facebook"
+    },
+    {
+      "data": "2026-11-03",
+      "novos": 125371,
+      "total": 0,
+      "rede": "facebook"
+    },
+    {
+      "data": "2026-11-04",
+      "novos": 125370,
+      "total": 0,
+      "rede": "facebook"
+    },
+    {
+      "data": "2026-11-05",
+      "novos": 125370,
+      "total": 0,
+      "rede": "facebook"
+    },
+    {
+      "data": "2026-11-06",
+      "novos": 125369,
+      "total": 0,
+      "rede": "facebook"
+    },
+    {
+      "data": "2026-11-07",
+      "novos": 125367,
+      "total": 0,
+      "rede": "facebook"
+    },
+    {
+      "data": "2026-11-08",
+      "novos": 125370,
+      "total": 125370,
+      "rede": "facebook"
     },
     {
       "data": "2026-10-09",
       "novos": 163,
-      "total": 79276,
+      "total": 79187,
       "rede": "instagram"
     },
     {
       "data": "2026-10-10",
       "novos": 224,
-      "total": 79500,
+      "total": 79411,
       "rede": "instagram"
     },
     {
       "data": "2026-10-11",
       "novos": 182,
-      "total": 79682,
+      "total": 79593,
       "rede": "instagram"
     },
     {
       "data": "2026-10-12",
       "novos": 195,
-      "total": 79877,
+      "total": 79788,
       "rede": "instagram"
     },
     {
       "data": "2026-10-13",
       "novos": 258,
-      "total": 80135,
+      "total": 80046,
       "rede": "instagram"
     },
     {
       "data": "2026-10-14",
       "novos": 295,
-      "total": 80430,
+      "total": 80341,
       "rede": "instagram"
     },
     {
       "data": "2026-10-15",
       "novos": 271,
-      "total": 80701,
+      "total": 80612,
       "rede": "instagram"
     },
     {
       "data": "2026-10-16",
       "novos": 399,
-      "total": 81100,
+      "total": 81011,
       "rede": "instagram"
     },
     {
       "data": "2026-10-17",
       "novos": 1838,
-      "total": 82938,
+      "total": 82849,
       "rede": "instagram"
     },
     {
       "data": "2026-10-18",
       "novos": 1694,
-      "total": 84632,
+      "total": 84543,
       "rede": "instagram"
     },
     {
       "data": "2026-10-19",
       "novos": 651,
-      "total": 85283,
+      "total": 85194,
       "rede": "instagram"
     },
     {
       "data": "2026-10-20",
       "novos": 306,
-      "total": 85589,
+      "total": 85500,
       "rede": "instagram"
     },
     {
       "data": "2026-10-21",
       "novos": 249,
-      "total": 85838,
+      "total": 85749,
       "rede": "instagram"
     },
     {
       "data": "2026-10-22",
       "novos": 153,
-      "total": 85991,
+      "total": 85902,
       "rede": "instagram"
     },
     {
       "data": "2026-10-23",
       "novos": 128,
-      "total": 86119,
+      "total": 86030,
       "rede": "instagram"
     },
     {
       "data": "2026-10-24",
       "novos": 102,
-      "total": 86221,
+      "total": 86132,
       "rede": "instagram"
     },
     {
       "data": "2026-10-25",
       "novos": 98,
-      "total": 86319,
+      "total": 86230,
       "rede": "instagram"
     },
     {
       "data": "2026-10-26",
       "novos": 102,
-      "total": 86421,
+      "total": 86332,
       "rede": "instagram"
     },
     {
       "data": "2026-10-27",
       "novos": 170,
-      "total": 86591,
+      "total": 86502,
       "rede": "instagram"
     },
     {
       "data": "2026-10-28",
       "novos": 163,
-      "total": 86754,
+      "total": 86665,
       "rede": "instagram"
     },
     {
       "data": "2026-10-29",
       "novos": 161,
-      "total": 86915,
+      "total": 86826,
       "rede": "instagram"
     },
     {
       "data": "2026-10-30",
       "novos": 152,
-      "total": 87067,
+      "total": 86978,
       "rede": "instagram"
     },
     {
       "data": "2026-10-31",
       "novos": 139,
-      "total": 87206,
+      "total": 87117,
       "rede": "instagram"
     },
     {
       "data": "2026-11-01",
       "novos": 191,
-      "total": 87397,
+      "total": 87308,
       "rede": "instagram"
     },
     {
       "data": "2026-11-02",
       "novos": 181,
-      "total": 87578,
+      "total": 87489,
       "rede": "instagram"
     },
     {
       "data": "2026-11-03",
       "novos": 114,
-      "total": 87692,
+      "total": 87603,
       "rede": "instagram"
     },
     {
       "data": "2026-11-04",
       "novos": 128,
-      "total": 87820,
+      "total": 87731,
       "rede": "instagram"
     },
     {
       "data": "2026-11-05",
       "novos": 126,
-      "total": 87946,
+      "total": 87857,
       "rede": "instagram"
     },
     {
       "data": "2026-11-06",
+      "novos": 125,
+      "total": 87982,
+      "rede": "instagram"
+    },
+    {
+      "data": "2026-11-07",
       "novos": 0,
-      "total": 87946,
+      "total": 87982,
       "rede": "instagram"
     }
   ]
